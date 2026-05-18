@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_integration_queue_tree" model="ir.ui.view">
+        <field name="name">tapis.integration.queue.tree</field>
+        <field name="model">tapis.integration.queue</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="create_date"/>
+                <field name="name"/>
+                <field name="model_name"/>
+                <field name="record_id"/>
+                <field name="operation_type"/>
+                <field name="state" decoration-warning="state=='pending'" decoration-danger="state=='failed'"/>
+                <field name="retry_count"/>
+            </tree>
+        </field>
+    </record>
+    <record id="view_integration_queue_form" model="ir.ui.view">
+        <field name="name">tapis.integration.queue.form</field>
+        <field name="model">tapis.integration.queue</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <button name="action_process" type="object" string="Process Now" class="btn-primary"
+                            attrs="{'invisible': [('state','!=','pending')]}"/>
+                </header>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="name"/>
+                            <field name="model_name"/>
+                            <field name="record_id"/>
+                            <field name="operation_type"/>
+                            <field name="state"/>
+                        </group>
+                        <group>
+                            <field name="connection_id"/>
+                            <field name="endpoint_id"/>
+                            <field name="retry_count"/>
+                            <field name="next_retry_datetime"/>
+                        </group>
+                    </group>
+                    <group string="Payload">
+                        <field name="payload" nolabel="1"/>
+                    </group>
+                    <group string="Error" attrs="{'invisible':[('last_error','=',False)]}">
+                        <field name="last_error" nolabel="1"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <record id="action_tapis_integration_queue" model="ir.actions.act_window">
+        <field name="name">Integration Queue</field>
+        <field name="res_model">tapis.integration.queue</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+</odoo>

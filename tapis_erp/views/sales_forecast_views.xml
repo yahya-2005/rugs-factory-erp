@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="view_sales_forecast_tree" model="ir.ui.view">
+            <field name="name">tapis.sales.forecast.tree</field>
+            <field name="model">tapis.sales.forecast</field>
+            <field name="arch" type="xml">
+                <tree string="Sales Forecasts" decoration-success="state == 'approved'" decoration-info="state == 'generated'" decoration-muted="state == 'draft'">
+                    <field name="name"/>
+                    <field name="forecast_type"/>
+                    <field name="product_id"/>
+                    <field name="customer_id"/>
+                    <field name="method"/>
+                    <field name="period_type"/>
+                    <field name="periods_ahead"/>
+                    <field name="total_forecast_qty"/>
+                    <field name="total_forecast_revenue"/>
+                    <field name="accuracy_percent"/>
+                    <field name="state"/>
+                    <field name="generated_date"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="view_sales_forecast_form" model="ir.ui.view">
+            <field name="name">tapis.sales.forecast.form</field>
+            <field name="model">tapis.sales.forecast</field>
+            <field name="arch" type="xml">
+                <form string="Sales Forecast">
+                    <header>
+                        <button name="action_generate_forecast" type="object" string="Generate Forecast" states="draft" class="btn-primary"/>
+                        <button name="action_approve_forecast" type="object" string="Approve" states="generated" class="btn-success"/>
+                        <button name="action_reset_to_draft" type="object" string="Reset to Draft" states="generated,approved" class="btn-secondary"/>
+                        <button name="%(action_report_sales_forecast)d" type="action" string="Forecast Report" class="btn-secondary"/>
+                        <field name="state" widget="statusbar" statusbar_visible="draft,generated,approved"/>
+                    </header>
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="forecast_type"/>
+                                <field name="product_id" attrs="{'invisible':[('forecast_type','!=','product')],'required':[('forecast_type','=','product')]}"/>
+                                <field name="category" attrs="{'invisible':[('forecast_type','!=','category')],'required':[('forecast_type','=','category')]}"/>
+                                <field name="customer_id" attrs="{'invisible':[('forecast_type','!=','customer')],'required':[('forecast_type','=','customer')]}"/>
+                                <field name="method"/>
+                            </group>
+                            <group>
+                                <field name="period_type"/>
+                                <field name="periods_ahead"/>
+                                <field name="history_start_date" readonly="1"/>
+                                <field name="history_end_date" readonly="1"/>
+                                <field name="generated_date" readonly="1"/>
+                            </group>
+                            <group>
+                                <field name="total_forecast_qty" readonly="1"/>
+                                <field name="total_forecast_revenue" readonly="1"/>
+                                <field name="accuracy_percent" readonly="1"/>
+                                <field name="confidence_percent" readonly="1"/>
+                            </group>
+                        </group>
+                        <notebook>
+                            <page string="Forecast Lines">
+                                <field name="line_ids" nolabel="1">
+                                    <tree editable="bottom">
+                                        <field name="sequence" optional="show"/>
+                                        <field name="forecast_date"/>
+                                        <field name="historical_qty"/>
+                                        <field name="historical_revenue"/>
+                                        <field name="forecast_qty"/>
+                                        <field name="forecast_revenue"/>
+                                        <field name="recommended_procurement_qty"/>
+                                        <field name="recommended_production_qty"/>
+                                        <field name="lower_bound_qty"/>
+                                        <field name="upper_bound_qty"/>
+                                        <field name="confidence_percent"/>
+                                    </tree>
+                                </field>
+                            </page>
+                            <page string="Charts">
+                                <div class="row">
+                                    <div class="col-lg-6">
+                                        <field name="total_forecast_qty" invisible="1"/>
+                                        <field name="total_forecast_revenue" invisible="1"/>
+                                        <field name="line_ids" invisible="1"/>
+                                        <p class="text-muted mb-2">Historical vs Forecast Quantity</p>
+                                        <field name="charts_qty_html" widget="html" nolabel="1"/>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <p class="text-muted mb-2">Historical vs Forecast Revenue</p>
+                                        <field name="charts_revenue_html" widget="html" nolabel="1"/>
+                                    </div>
+                                </div>
+                            </page>
+                            <page string="Analysis">
+                                <group>
+                                    <field name="notes"/>
+                                </group>
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="view_sales_forecast_search" model="ir.ui.view">
+            <field name="name">tapis.sales.forecast.search</field>
+            <field name="model">tapis.sales.forecast</field>
+            <field name="arch" type="xml">
+                <search string="Search Forecasts">
+                    <field name="name"/>
+                    <field name="product_id"/>
+                    <field name="customer_id"/>
+                    <field name="forecast_type"/>
+                    <field name="method"/>
+                    <filter name="draft" string="Draft" domain="[('state','=','draft')]"/>
+                    <filter name="generated" string="Generated" domain="[('state','=','generated')]"/>
+                    <filter name="approved" string="Approved" domain="[('state','=','approved')]"/>
+                    <filter name="monthly" string="Monthly" domain="[('period_type','=','monthly')]"/>
+                    <group expand="0" string="Group By">
+                        <filter name="group_by_type" string="Forecast Type" context="{'group_by':'forecast_type'}"/>
+                        <filter name="group_by_state" string="State" context="{'group_by':'state'}"/>
+                        <filter name="group_by_method" string="Method" context="{'group_by':'method'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
+        <record id="action_sales_forecast" model="ir.actions.act_window">
+            <field name="name">Sales Forecasts</field>
+            <field name="res_model">tapis.sales.forecast</field>
+            <field name="view_mode">tree,form</field>
+            <field name="search_view_id" ref="view_sales_forecast_search"/>
+        </record>
+
+    </data>
+</odoo>

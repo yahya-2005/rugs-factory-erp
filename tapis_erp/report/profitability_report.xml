@@ -1,15 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-    <record id="action_report_profitability" model="ir.actions.report">
-        <field name="name">Profitability Report</field>
-        <field name="model">tapis.sale</field>
-        <field name="report_type">qweb-pdf</field>
-        <field name="report_name">tapis_erp.report_profitability_document</field>
-        <field name="report_file">tapis_erp.report_profitability_document</field>
-        <field name="print_report_name">
-            'Profitability - ' + object.name
-        </field>
-        <field name="binding_model_id" ref="model_tapis_sale"/>
-        <field name="binding_type">report</field>
-    </record>
+    <data>
+
+        <record id="action_report_product_cost_sheet" model="ir.actions.report">
+            <field name="name">Product Cost Sheet</field>
+            <field name="model">tapis.product</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">tapis_erp.report_product_cost_sheet_template</field>
+            <field name="report_file">tapis_erp.report_product_cost_sheet_template</field>
+            <field name="binding_model_id" ref="model_tapis_product"/>
+            <field name="binding_type">report</field>
+            <field name="multi">True</field>
+        </record>
+
+        <record id="action_report_profitability_analysis" model="ir.actions.report">
+            <field name="name">Profitability Analysis Report</field>
+            <field name="model">tapis.profitability.analysis</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">tapis_erp.report_profitability_analysis_template</field>
+            <field name="report_file">tapis_erp.report_profitability_analysis_template</field>
+            <field name="binding_model_id" ref="model_tapis_profitability_analysis"/>
+            <field name="binding_type">report</field>
+            <field name="multi">True</field>
+        </record>
+
+        <record id="action_report_cost_variance" model="ir.actions.report">
+            <field name="name">Cost Variance Report</field>
+            <field name="model">tapis.production</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">tapis_erp.report_cost_variance_template</field>
+            <field name="report_file">tapis_erp.report_cost_variance_template</field>
+            <field name="binding_model_id" ref="model_tapis_production"/>
+            <field name="binding_type">report</field>
+            <field name="multi">True</field>
+        </record>
+
+    </data>
 </odoo>

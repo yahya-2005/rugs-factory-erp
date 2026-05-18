@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_automation_execution_log_tree" model="ir.ui.view">
+        <field name="name">tapis.automation.execution.log.tree</field>
+        <field name="model">tapis.automation.execution.log</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="execution_datetime"/>
+                <field name="rule_id"/>
+                <field name="model_name"/>
+                <field name="record_id"/>
+                <field name="status" decoration-danger="status == 'failed'"
+                        decoration-success="status == 'success'"
+                        decoration-warning="status in ('retried','skipped')"/>
+                <field name="attempt_number"/>
+                <field name="duration_seconds"/>
+                <field name="result_message"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_automation_execution_log_form" model="ir.ui.view">
+        <field name="name">tapis.automation.execution.log.form</field>
+        <field name="model">tapis.automation.execution.log</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="rule_id"/>
+                            <field name="action_id"/>
+                            <field name="execution_datetime"/>
+                            <field name="status"/>
+                            <field name="attempt_number"/>
+                            <field name="duration_seconds"/>
+                            <field name="triggered_by"/>
+                        </group>
+                        <group>
+                            <field name="model_name"/>
+                            <field name="record_id"/>
+                            <field name="record_ref"/>
+                            <button name="action_view_record" type="object"
+                                    string="View Record" class="btn-primary"
+                                    attrs="{'invisible': [('record_id', '=', 0)]}"/>
+                        </group>
+                    </group>
+                    <group string="Result">
+                        <field name="result_message" nolabel="1"/>
+                    </group>
+                    <group string="Error Traceback"
+                           attrs="{'invisible': [('error_traceback', '=', False)]}">
+                        <field name="error_traceback" nolabel="1"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_automation_execution_log_search" model="ir.ui.view">
+        <field name="name">tapis.automation.execution.log.search</field>
+        <field name="model">tapis.automation.execution.log</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="rule_id"/>
+                <field name="model_name"/>
+                <field name="status"/>
+                <filter name="success" string="Success" domain="[('status','=','success')]"/>
+                <filter name="failed" string="Failed" domain="[('status','=','failed')]"/>
+                <filter name="today" string="Today"
+                        domain="[('execution_datetime','&gt;=', datetime.datetime.now().strftime('%%Y-%%m-%%d 00:00:00'))]"/>
+                <separator/>
+                <group string="Group By">
+                    <filter name="grp_status" string="Status" context="{'group_by':'status'}"/>
+                    <filter name="grp_rule" string="Rule" context="{'group_by':'rule_id'}"/>
+                    <filter name="grp_model" string="Model" context="{'group_by':'model_name'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_tapis_automation_execution_log" model="ir.actions.act_window">
+        <field name="name">Execution Logs</field>
+        <field name="res_model">tapis.automation.execution.log</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+</odoo>

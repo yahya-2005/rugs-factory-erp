@@ -6,11 +6,14 @@
             <field name="name">tapis.production.tree</field>
             <field name="model">tapis.production</field>
             <field name="arch" type="xml">
-                <tree string="Production">
+                <tree string="Production" decoration-danger="state == 'cancelled'" decoration-success="state == 'done'" decoration-info="state == 'in_progress'">
                     <field name="name"/>
                     <field name="product_id"/>
                     <field name="design_id"/>
                     <field name="quantity"/>
+                    <field name="resource_id"/>
+                    <field name="planned_start_date"/>
+                    <field name="planned_end_date"/>
                     <field name="state"/>
                 </tree>
             </field>
@@ -23,10 +26,13 @@
             <field name="arch" type="xml">
                 <form string="Production">
                     <header>
-                        <button name="action_start" type="object" string="Start" states="planned" class="btn-primary"/>
-                        <button name="action_done" type="object" string="Done" states="in_progress" class="btn-success"/>
+                        <button name="action_start_production" type="object" string="Start" states="planned" class="btn-primary"/>
+                        <button name="action_finish_production" type="object" string="Finish" states="in_progress" class="btn-success"/>
+                        <button name="action_auto_schedule" type="object" string="Auto Schedule" states="planned" class="btn-info"/>
+                        <button name="action_detect_conflicts" type="object" string="Detect Conflicts" class="btn-warning"/>
                         <button name="action_cancel" type="object" string="Cancel" states="planned,in_progress" class="btn-danger"/>
                         <button name="%(action_report_production)d" type="action" string="Print Report" class="btn-secondary"/>
+                        <button name="%(action_report_production_schedule)d" type="action" string="Schedule Report" class="btn-secondary"/>
                         <field name="state" widget="statusbar" statusbar_visible="planned,in_progress,done,cancelled"/>
                     </header>
                     <sheet>
@@ -61,6 +67,29 @@
                                 </group>
                                 <group>
                                     <field name="note"/>
+                                </group>
+                            </page>
+                            <page string="Scheduling">
+                                <group>
+                                    <field name="resource_id"/>
+                                    <field name="supervisor_id"/>
+                                    <field name="priority"/>
+                                </group>
+                                <group>
+                                    <field name="planned_start_date"/>
+                                    <field name="planned_end_date"/>
+                                    <field name="actual_start_date"/>
+                                    <field name="actual_end_date"/>
+                                </group>
+                                <group>
+                                    <field name="estimated_hours"/>
+                                    <field name="estimated_days"/>
+                                    <field name="delay_days"/>
+                                    <field name="on_time_delivery"/>
+                                </group>
+                                <group string="Dependencies">
+                                    <field name="predecessor_ids" widget="many2many_tags"/>
+                                    <field name="successor_ids" widget="many2many_tags"/>
                                 </group>
                             </page>
                             <page string="Costs">
@@ -131,7 +160,7 @@
         <record id="action_tapis_production" model="ir.actions.act_window">
             <field name="name">Productions</field>
             <field name="res_model">tapis.production</field>
-            <field name="view_mode">tree,form</field>
+            <field name="view_mode">gantt,tree,form</field>
             <field name="search_view_id" ref="view_tapis_production_search"/>
         </record>
 

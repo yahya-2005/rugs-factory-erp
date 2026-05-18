@@ -3,7 +3,7 @@
     <record id="demo_ai_provider_gemini" model="tapis.ai.provider">
         <field name="name">Google Gemini</field>
         <field name="provider_type">gemini</field>
-        <field name="api_key">YOUR_GEMINI_API_KEY_HERE</field>
+        <field name="api_key">YOUR_GOOGLE_GEMINI_API_KEY_HERE</field>
         <field name="model_name">gemini-flash-latest</field>
         <field name="timeout_seconds" eval="120"/>
         <field name="active" eval="True"/>

@@ -26,6 +26,11 @@ class TapisCostCenter(models.Model):
     total_planned_budget = fields.Float(string='Total Planned Budget (MAD)', compute='_compute_budget_totals', store=True)
     total_actual_cost = fields.Float(string='Total Actual Cost (MAD)', compute='_compute_budget_totals', store=True)
 
+    allocation_rule_ids = fields.One2many('tapis.cost.allocation.rule',
+        'cost_center_id', string='Allocation Rules')
+    allocation_rule_count = fields.Integer(compute='_compute_allocation_rule_count',
+        string='Allocation Rule Count')
+
     @api.depends('budget_ids')
     def _compute_budget_counts(self):
         for rec in self:
@@ -38,12 +43,28 @@ class TapisCostCenter(models.Model):
             rec.total_planned_budget = sum(budgets.mapped('total_planned'))
             rec.total_actual_cost = sum(budgets.mapped('total_actual'))
 
+    @api.depends('allocation_rule_ids')
+    def _compute_allocation_rule_count(self):
+        for rec in self:
+            rec.allocation_rule_count = len(rec.allocation_rule_ids)
+
     def action_view_budgets(self):
         self.ensure_one()
         return {
             'type': 'ir.actions.act_window',
             'name': 'Budgets',
             'res_model': 'tapis.budget',
+            'view_mode': 'tree,form',
+            'domain': [('cost_center_id', '=', self.id)],
+            'context': {'default_cost_center_id': self.id},
+        }
+
+    def action_view_allocation_rules(self):
+        self.ensure_one()
+        return {
+            'type': 'ir.actions.act_window',
+            'name': 'Allocation Rules',
+            'res_model': 'tapis.cost.allocation.rule',
             'view_mode': 'tree,form',
             'domain': [('cost_center_id', '=', self.id)],
             'context': {'default_cost_center_id': self.id},

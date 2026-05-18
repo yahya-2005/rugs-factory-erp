@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_api_endpoint_tree" model="ir.ui.view">
+        <field name="name">tapis.api.endpoint.tree</field>
+        <field name="model">tapis.api.endpoint</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name"/>
+                <field name="connection_id"/>
+                <field name="http_method"/>
+                <field name="endpoint_path"/>
+                <field name="active"/>
+            </tree>
+        </field>
+    </record>
+    <record id="view_api_endpoint_form" model="ir.ui.view">
+        <field name="name">tapis.api.endpoint.form</field>
+        <field name="model">tapis.api.endpoint</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <div class="oe_title"><h1><field name="name"/></h1></div>
+                    <group>
+                        <group>
+                            <field name="connection_id"/>
+                            <field name="code"/>
+                            <field name="active"/>
+                            <field name="sequence"/>
+                        </group>
+                        <group string="Request">
+                            <field name="http_method"/>
+                            <field name="endpoint_path"/>
+                            <field name="success_codes"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Body">
+                            <field name="request_template" nolabel="1"/>
+                        </page>
+                        <page string="Headers">
+                            <field name="header_template" nolabel="1"/>
+                        </page>
+                        <page string="Response Mapping">
+                            <field name="response_mapping" nolabel="1"/>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <record id="action_tapis_api_endpoint" model="ir.actions.act_window">
+        <field name="name">API Endpoints</field>
+        <field name="res_model">tapis.api.endpoint</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+</odoo>

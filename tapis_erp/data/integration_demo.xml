@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+
+        <record id="api_conn_erpnext" model="tapis.api.connection">
+            <field name="name">ERPNext CRM Sync</field>
+            <field name="code">ERPNEXT_CRM</field>
+            <field name="connection_type">rest</field>
+            <field name="auth_type">api_key</field>
+            <field name="api_key">demo-api-key</field>
+            <field name="base_url">https://demo.erpnext.com</field>
+            <field name="timeout_seconds">30</field>
+            <field name="max_retries">3</field>
+            <field name="retry_interval_seconds">15</field>
+        </record>
+
+        <record id="api_ep_customers" model="tapis.api.endpoint">
+            <field name="connection_id" ref="api_conn_erpnext"/>
+            <field name="name">List Customers</field>
+            <field name="code">GET_CUSTOMERS</field>
+            <field name="http_method">GET</field>
+            <field name="endpoint_path">/api/resource/Customer</field>
+            <field name="sequence">10</field>
+        </record>
+
+        <record id="api_ep_create_customer" model="tapis.api.endpoint">
+            <field name="connection_id" ref="api_conn_erpnext"/>
+            <field name="name">Create Customer</field>
+            <field name="code">CREATE_CUSTOMER</field>
+            <field name="http_method">POST</field>
+            <field name="endpoint_path">/api/resource/Customer</field>
+            <field name="request_template">{'data': {'customer_name': '__NAME__'}}</field>
+            <field name="sequence">20</field>
+        </record>
+
+        <record id="webhook_shipstation" model="tapis.webhook.subscription">
+            <field name="name">ShipStation Shipment Updates</field>
+            <field name="event_code">production.completed</field>
+            <field name="target_url">https://ssapi.shipstation.com/webhook</field>
+            <field name="secret_key">demo-hmac-secret</field>
+            <field name="retry_policy">twice</field>
+            <field name="auth_headers">{'X-API-Key': 'demo-key'}</field>
+        </record>
+
+        <record id="webhook_crm_sync" model="tapis.webhook.subscription">
+            <field name="name">CRM Sync Webhook</field>
+            <field name="event_code">customer.created</field>
+            <field name="target_url">https://crm.example.com/webhook/tapis</field>
+            <field name="retry_policy">once</field>
+        </record>
+
+    </data>
+</odoo>

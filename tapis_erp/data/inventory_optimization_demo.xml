@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+
+        <!-- Demo Product 1: Traditional Carpet -->
+        <record id="inventory_opt_product_1" model="tapis.product">
+            <field name="name">Inventory Opt Carpet Traditional</field>
+            <field name="code">INV-PRD-001</field>
+            <field name="category">traditional</field>
+            <field name="price">4500.00</field>
+            <field name="cost">2200.00</field>
+            <field name="stock_qty">15</field>
+        </record>
+
+        <!-- Demo Product 2: Modern Carpet -->
+        <record id="inventory_opt_product_2" model="tapis.product">
+            <field name="name">Inventory Opt Carpet Modern</field>
+            <field name="code">INV-PRD-002</field>
+            <field name="category">modern</field>
+            <field name="price">5800.00</field>
+            <field name="cost">3100.00</field>
+            <field name="stock_qty">8</field>
+        </record>
+
+        <!-- Demo Optimizations -->
+        <record id="inventory_opt_demo_1" model="tapis.inventory.optimization">
+            <field name="product_id" ref="inventory_opt_product_1"/>
+            <field name="average_daily_demand">15.0</field>
+            <field name="demand_std_dev">4.0</field>
+            <field name="lead_time_days">7.0</field>
+            <field name="service_level_percent">95.0</field>
+            <field name="annual_holding_cost">12.5</field>
+            <field name="ordering_cost">50.0</field>
+            <field name="state">draft</field>
+        </record>
+
+        <record id="inventory_opt_demo_2" model="tapis.inventory.optimization">
+            <field name="product_id" ref="inventory_opt_product_2"/>
+            <field name="average_daily_demand">25.0</field>
+            <field name="demand_std_dev">8.0</field>
+            <field name="lead_time_days">10.0</field>
+            <field name="service_level_percent">97.5</field>
+            <field name="annual_holding_cost">15.0</field>
+            <field name="ordering_cost">50.0</field>
+            <field name="state">draft</field>
+        </record>
+
+    </data>
+</odoo>

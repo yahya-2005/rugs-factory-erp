@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+
+        <!-- ==========================================
+             PREBUILT AUTOMATION TEMPLATES
+             ========================================== -->
+
+        <!-- 1. Delayed Production Alert -->
+        <record id="automation_rule_delayed_production" model="tapis.automation.rule">
+            <field name="name">Delayed Production Alert</field>
+            <field name="code">DELAYED_PROD_ALERT</field>
+            <field name="trigger_type">on_state_change</field>
+            <field name="model_name">tapis.production</field>
+            <field name="trigger_field">state</field>
+            <field name="trigger_value">delayed</field>
+            <field name="state">draft</field>
+            <field name="sequence">10</field>
+            <field name="max_retries">3</field>
+            <field name="retry_interval_minutes">10</field>
+            <field name="stop_on_error" eval="True"/>
+            <field name="python_condition">record.date_deadline and record.date_deadline &lt; fields.Date.today()</field>
+        </record>
+
+        <record id="automation_action_delayed_prod_alert" model="tapis.automation.action">
+            <field name="rule_id" ref="automation_rule_delayed_production"/>
+            <field name="sequence">10</field>
+            <field name="action_type">send_notification</field>
+            <field name="notification_subject">Production Order Delayed: ${record.name}</field>
+            <field name="notification_body">Production order ${record.name} is delayed. Deadline was ${record.date_deadline}. Please take immediate action.</field>
+            <field name="continue_on_error" eval="False"/>
+        </record>
+
+        <record id="automation_action_delayed_prod_activity" model="tapis.automation.action">
+            <field name="rule_id" ref="automation_rule_delayed_production"/>
+            <field name="sequence">20</field>
+            <field name="action_type">create_activity</field>
+            <field name="activity_type_id" ref="mail.mail_activity_data_warning"/>
+            <field name="activity_summary">Production Delay: ${record.name}</field>
+            <field name="activity_note">Production order ${record.name} is past its deadline of ${record.date_deadline}. Review and reschedule.</field>
+            <field name="continue_on_error" eval="True"/>
+        </record>
+
+        <!-- 2. Low Stock Purchase Request -->
+        <record id="automation_rule_low_stock" model="tapis.automation.rule">
+            <field name="name">Low Stock Purchase Request</field>
+            <field name="code">LOW_STOCK_PURCHASE</field>
+            <field name="trigger_type">on_write</field>
+            <field name="model_name">tapis.inventory.optimization</field>
+            <field name="state">draft</field>
+            <field name="sequence">20</field>
+            <field name="max_retries">2</field>
+            <field name="retry_interval_minutes">30</field>
+            <field name="stop_on_error" eval="True"/>
+            <field name="python_condition">record.current_stock &lt; record.reorder_point and record.reorder_point &gt; 0</field>
+        </record>
+
+        <record id="automation_action_low_stock_create_po" model="tapis.automation.action">
+            <field name="rule_id" ref="automation_rule_low_stock"/>
+            <field name="sequence">10</field>
+            <field name="action_type">create_record</field>
+            <field name="values_expression">{'partner_id': record.supplier_id.id if record.supplier_id else False, 'order_line': [(0, 0, {'product_id': record.product_id.id, 'product_uom_qty': record.eoq or record.reorder_point})]}</field>
+            <field name="continue_on_error" eval="True"/>
+        </record>
+
+        <!-- 3. Urgent Ticket Auto Assignment -->
+        <record id="automation_rule_urgent_ticket" model="tapis.automation.rule">
+            <field name="name">Urgent Ticket Auto Assignment</field>
+            <field name="code">URGENT_TICKET_ASSIGN</field>
+            <field name="trigger_type">on_create</field>
+            <field name="model_name">tapis.support.ticket</field>
+            <field name="state">draft</field>
+            <field name="sequence">30</field>
+            <field name="max_retries">1</field>
+            <field name="stop_on_error" eval="False"/>
+            <field name="python_condition">record.priority in ('high', 'urgent') and not record.assigned_user_id</field>
+        </record>
+
+        <record id="automation_action_urgent_ticket_assign" model="tapis.automation.action">
+            <field name="rule_id" ref="automation_rule_urgent_ticket"/>
+            <field name="sequence">10</field>
+            <field name="action_type">update_record</field>
+            <field name="values_expression">{'assigned_user_id': env.ref('base.user_admin').id}</field>
+            <field name="continue_on_error" eval="True"/>
+        </record>
+
+        <!-- 4. Overdue Invoice Reminder -->
+        <record id="automation_rule_overdue_invoice" model="tapis.automation.rule">
+            <field name="name">Overdue Invoice Reminder</field>
+            <field name="code">OVERDUE_INV_REMINDER</field>
+            <field name="trigger_type">scheduled</field>
+            <field name="model_name">tapis.invoice</field>
+            <field name="state">draft</field>
+            <field name="sequence">40</field>
+            <field name="cron_interval_number">1</field>
+            <field name="cron_interval_type">days</field>
+            <field name="domain_expression">[('state', '=', 'posted'), ('date_due', '&lt;', datetime.datetime.now().strftime('%Y-%m-%d')), ('amount_residual', '&gt;', 0)]</field>
+        </record>
+
+        <record id="automation_action_overdue_inv_activity" model="tapis.automation.action">
+            <field name="rule_id" ref="automation_rule_overdue_invoice"/>
+            <field name="sequence">10</field>
+            <field name="action_type">create_activity</field>
+            <field name="activity_type_id" ref="mail.mail_activity_data_todo"/>
+            <field name="activity_summary">Follow up on overdue invoice ${record.name}</field>
+            <field name="activity_note">Invoice ${record.name} for ${record.partner_id.name} is overdue. Amount due: ${record.amount_residual}. Due date was: ${record.date_due}.</field>
+            <field name="continue_on_error" eval="True"/>
+        </record>
+
+        <!-- 5. Quote Approval Notification -->
+        <record id="automation_rule_quote_approved" model="tapis.automation.rule">
+            <field name="name">Quote Approval Notification</field>
+            <field name="code">QUOTE_APPROVED_NOTIF</field>
+            <field name="trigger_type">on_state_change</field>
+            <field name="model_name">tapis.sale</field>
+            <field name="trigger_field">state</field>
+            <field name="trigger_value">approved</field>
+            <field name="state">draft</field>
+            <field name="sequence">50</field>
+            <field name="max_retries">2</field>
+        </record>
+
+        <record id="automation_action_quote_approved_email" model="tapis.automation.action">
+            <field name="rule_id" ref="automation_rule_quote_approved"/>
+            <field name="sequence">10</field>
+            <field name="action_type">send_notification</field>
+            <field name="notification_subject">Quote Approved: ${record.name}</field>
+            <field name="notification_body">Sales order ${record.name} has been approved by the customer. Total: ${record.amount_total}. Please proceed with production.</field>
+            <field name="continue_on_error" eval="True"/>
+        </record>
+
+    </data>
+</odoo>

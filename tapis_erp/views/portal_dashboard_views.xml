@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="view_tapis_portal_dashboard_tree" model="ir.ui.view">
+            <field name="name">tapis.portal.dashboard.tree</field>
+            <field name="model">tapis.portal.dashboard</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="customer_id"/>
+                    <field name="total_orders"/>
+                    <field name="total_revenue"/>
+                    <field name="active_productions"/>
+                    <field name="open_tickets"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="view_tapis_portal_dashboard_form" model="ir.ui.view">
+            <field name="name">tapis.portal.dashboard.form</field>
+            <field name="model">tapis.portal.dashboard</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <group>
+                            <group string="Customer">
+                                <field name="customer_id" options="{'no_create': True}"/>
+                            </group>
+                        </group>
+                        <group>
+                            <group string="Orders &amp; Revenue">
+                                <field name="total_orders"/>
+                                <field name="total_quotes"/>
+                                <field name="total_revenue"/>
+                            </group>
+                            <group string="Invoices &amp; Payments">
+                                <field name="total_invoices"/>
+                                <field name="total_payments"/>
+                                <field name="overdue_invoices" widget="statinfo"/>
+                            </group>
+                            <group string="Activity">
+                                <field name="active_productions"/>
+                                <field name="total_projects"/>
+                                <field name="open_tickets"/>
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="view_tapis_portal_dashboard_search" model="ir.ui.view">
+            <field name="name">tapis.portal.dashboard.search</field>
+            <field name="model">tapis.portal.dashboard</field>
+            <field name="arch" type="xml">
+                <search>
+                    <field name="customer_id"/>
+                </search>
+            </field>
+        </record>
+
+        <record id="action_tapis_portal_dashboard" model="ir.actions.act_window">
+            <field name="name">Portal Dashboard</field>
+            <field name="res_model">tapis.portal.dashboard</field>
+            <field name="view_mode">tree,form</field>
+            <field name="search_view_id" ref="view_tapis_portal_dashboard_search"/>
+        </record>
+
+    </data>
+</odoo>

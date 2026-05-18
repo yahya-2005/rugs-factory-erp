@@ -139,5 +139,35 @@
             <field name="number_next">1</field>
             <field name="number_increment">1</field>
         </record>
+
+        <record id="seq_tapis_profitability_analysis" model="ir.sequence">
+            <field name="name">Profitability Analysis</field>
+            <field name="code">tapis.profitability.analysis</field>
+            <field name="prefix">PA/</field>
+            <field name="padding">5</field>
+            <field name="number_next">1</field>
+            <field name="number_increment">1</field>
+            <field name="company_id" eval="False"/>
+        </record>
+
+        <record id="seq_tapis_support_ticket" model="ir.sequence">
+            <field name="name">Support Ticket</field>
+            <field name="code">tapis.support.ticket</field>
+            <field name="prefix">TKT/</field>
+            <field name="padding">5</field>
+            <field name="number_next">1</field>
+            <field name="number_increment">1</field>
+            <field name="company_id" eval="False"/>
+        </record>
+
+        <record id="seq_inventory_optimization" model="ir.sequence">
+            <field name="name">Inventory Optimization</field>
+            <field name="code">tapis.inventory.optimization</field>
+            <field name="prefix">INV-OPT-</field>
+            <field name="padding">5</field>
+            <field name="number_next">1</field>
+            <field name="number_increment">1</field>
+            <field name="company_id" eval="False"/>
+        </record>
     </data>
 </odoo>

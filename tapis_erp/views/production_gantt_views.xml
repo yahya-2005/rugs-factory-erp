@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="view_tapis_production_gantt" model="ir.ui.view">
+            <field name="name">tapis.production.gantt</field>
+            <field name="model">tapis.production</field>
+            <field name="arch" type="xml">
+                <gantt string="Production Schedule"
+                       date_start="planned_start_date"
+                       date_stop="planned_end_date"
+                       color_by="state"
+                       default_group_by="resource_id"
+                       decoration-danger="state == 'cancelled'"
+                       decoration-success="state == 'done'"
+                       decoration-info="state == 'in_progress'"
+                       decoration-warning="state == 'planned'"
+                       cell_span="day">
+                    <field name="name"/>
+                    <field name="product_id"/>
+                    <field name="state"/>
+                    <field name="resource_id"/>
+                    <field name="priority"/>
+                </gantt>
+            </field>
+        </record>
+    </data>
+</odoo>

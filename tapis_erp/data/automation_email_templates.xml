@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+
+        <record id="email_template_automation_failure" model="mail.template">
+            <field name="name">Automation Rule Failure Notification</field>
+            <field name="model_id" ref="model_tapis_automation_rule"/>
+            <field name="subject">[AUTOMATION FAILURE] Rule: ${object.name}</field>
+            <field name="email_from">${object.company_id.email or ctx.company_id.email or 'noreply@tapis.ma'}</field>
+            <field name="partner_to">${object.env.user.partner_id.id}</field>
+            <field name="body_html"><![CDATA[
+<div style="font-family: Arial, sans-serif; padding: 20px;">
+    <h2 style="color: #d9534f;">Automation Rule Failed</h2>
+    <p>Rule: <strong>${object.name}</strong> (${object.code})</p>
+    <p>State: ${object.state}</p>
+    <p>Trigger Type: ${object.trigger_type}</p>
+    <p>Model: ${object.model_name}</p>
+    <hr/>
+    <p style="color: #666;">This is an automated notification from Tapis ERP Automation Engine.</p>
+</div>
+]]></field>
+        </record>
+
+        <record id="email_template_automation_success" model="mail.template">
+            <field name="name">Automation Rule Success Summary</field>
+            <field name="model_id" ref="model_tapis_automation_rule"/>
+            <field name="subject">[AUTOMATION SUCCESS] Rule: ${object.name}</field>
+            <field name="email_from">${object.company_id.email or ctx.company_id.email or 'noreply@tapis.ma'}</field>
+            <field name="partner_to">${object.env.user.partner_id.id}</field>
+            <field name="body_html"><![CDATA[
+<div style="font-family: Arial, sans-serif; padding: 20px;">
+    <h2 style="color: #5cb85c;">Automation Rule Executed Successfully</h2>
+    <p>Rule: <strong>${object.name}</strong> (${object.code})</p>
+    <p>Total Executions: ${object.execution_count}</p>
+    <p>Success Rate: ${object.success_rate}%</p>
+    <hr/>
+    <p style="color: #666;">This is an automated notification from Tapis ERP Automation Engine.</p>
+</div>
+]]></field>
+        </record>
+
+    </data>
+</odoo>

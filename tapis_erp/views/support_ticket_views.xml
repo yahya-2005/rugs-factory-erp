@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="view_tapis_support_ticket_tree" model="ir.ui.view">
+            <field name="name">tapis.support.ticket.tree</field>
+            <field name="model">tapis.support.ticket</field>
+            <field name="arch" type="xml">
+                <tree decoration-danger="state in ('new','assigned') and priority in ('high','urgent')"
+                      decoration-success="state == 'resolved'">
+                    <field name="name"/>
+                    <field name="customer_id"/>
+                    <field name="subject"/>
+                    <field name="category" widget="badge"/>
+                    <field name="priority" widget="priority"/>
+                    <field name="state"/>
+                    <field name="assigned_user_id"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="view_tapis_support_ticket_form" model="ir.ui.view">
+            <field name="name">tapis.support.ticket.form</field>
+            <field name="model">tapis.support.ticket</field>
+            <field name="arch" type="xml">
+                <form>
+                    <header>
+                        <button name="action_assign" type="object" string="Assign" class="btn-primary" states="new"/>
+                        <button name="action_start" type="object" string="Start" class="btn-primary" states="assigned"/>
+                        <button name="action_wait_customer" type="object" string="Wait Customer" states="in_progress"/>
+                        <button name="action_resolve" type="object" string="Resolve" class="btn-success" states="in_progress,waiting_customer"/>
+                        <button name="action_close" type="object" string="Close" states="resolved"/>
+                        <button name="action_reopen" type="object" string="Reopen" states="closed"/>
+                        <field name="state" widget="statusbar"/>
+                    </header>
+                    <sheet>
+                        <div class="oe_title">
+                            <h1><field name="name"/></h1>
+                        </div>
+                        <group>
+                            <group string="Ticket Info">
+                                <field name="customer_id" options="{'no_create': True}"/>
+                                <field name="subject"/>
+                                <field name="category"/>
+                                <field name="priority" widget="priority"/>
+                            </group>
+                            <group string="Assignment">
+                                <field name="assigned_user_id"/>
+                                <field name="contact_name"/>
+                                <field name="contact_email"/>
+                            </group>
+                        </group>
+                        <notebook>
+                            <page string="Description">
+                                <field name="description" nolabel="1"/>
+                            </page>
+                            <page string="Resolution">
+                                <field name="resolution_notes" nolabel="1"/>
+                            </page>
+                            <page string="Messages">
+                                <field name="message_ids" widget="mail_thread"/>
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="view_tapis_support_ticket_search" model="ir.ui.view">
+            <field name="name">tapis.support.ticket.search</field>
+            <field name="model">tapis.support.ticket</field>
+            <field name="arch" type="xml">
+                <search>
+                    <field name="name"/>
+                    <field name="subject"/>
+                    <field name="customer_id"/>
+                    <field name="assigned_user_id"/>
+                    <field name="category"/>
+                    <field name="state"/>
+                    <filter name="open" string="Open" domain="[('state', 'not in', ('resolved','closed'))]"/>
+                    <filter name="urgent" string="Urgent" domain="[('priority', '=', 'urgent')]"/>
+                    <group expand="0" string="Group By">
+                        <filter name="group_state" string="State" context="{'group_by': 'state'}"/>
+                        <filter name="group_category" string="Category" context="{'group_by': 'category'}"/>
+                        <filter name="group_priority" string="Priority" context="{'group_by': 'priority'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
+        <record id="action_tapis_support_ticket" model="ir.actions.act_window">
+            <field name="name">Support Tickets</field>
+            <field name="res_model">tapis.support.ticket</field>
+            <field name="view_mode">tree,form</field>
+            <field name="search_view_id" ref="view_tapis_support_ticket_search"/>
+        </record>
+
+    </data>
+</odoo>

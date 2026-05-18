@@ -1,0 +1,310 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <template id="portal_layout" name="Portal Layout">
+            <t t-call="website.layout">
+                <div class="container mt-4">
+                    <div class="row">
+                        <div class="col-md-3">
+                            <div class="list-group mb-4">
+                                <a href="/my/dashboard" class="list-group-item list-group-item-action">Dashboard</a>
+                                <a href="/my/orders" class="list-group-item list-group-item-action">Orders</a>
+                                <a href="/my/quotes" class="list-group-item list-group-item-action">Quotes</a>
+                                <a href="/my/invoices" class="list-group-item list-group-item-action">Invoices</a>
+                                <a href="/my/productions" class="list-group-item list-group-item-action">Productions</a>
+                                <a href="/my/designs" class="list-group-item list-group-item-action">Designs</a>
+                                <a href="/my/documents" class="list-group-item list-group-item-action">Documents</a>
+                                <a href="/my/tickets" class="list-group-item list-group-item-action">Support Tickets</a>
+                            </div>
+                        </div>
+                        <div class="col-md-9">
+                            <t t-out="0"/>
+                        </div>
+                    </div>
+                </div>
+            </t>
+        </template>
+
+        <template id="portal_not_found">
+            <t t-call="website.layout">
+                <div class="container mt-4 text-center">
+                    <h2>Access Denied</h2>
+                    <p>You do not have portal access. Please contact your administrator.</p>
+                </div>
+            </t>
+        </template>
+
+        <template id="portal_dashboard_template">
+            <t t-call="tapis_erp.portal_layout">
+                <h2 class="mb-4">Dashboard</h2>
+                <div class="row">
+                    <div class="col-md-4 mb-3">
+                        <div class="card text-white bg-primary">
+                            <div class="card-body">
+                                <h5 class="card-title"><t t-esc="dashboard.total_orders"/></h5>
+                                <p class="card-text">Orders</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <div class="card text-white bg-success">
+                            <div class="card-body">
+                                <h5 class="card-title"><t t-esc="dashboard.total_quotes"/></h5>
+                                <p class="card-text">Open Quotes</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <div class="card text-white bg-warning">
+                            <div class="card-body">
+                                <h5 class="card-title"><t t-esc="dashboard.active_productions"/></h5>
+                                <p class="card-text">Active Productions</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4 mb-3">
+                        <div class="card text-white bg-info">
+                            <div class="card-body">
+                                <h5 class="card-title"><t t-esc="dashboard.overdue_invoices"/></h5>
+                                <p class="card-text">Overdue Invoices</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <div class="card text-white bg-danger">
+                            <div class="card-body">
+                                <h5 class="card-title"><t t-esc="dashboard.open_tickets"/></h5>
+                                <p class="card-text">Open Tickets</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <div class="card text-white bg-secondary">
+                            <div class="card-body">
+                                <h5 class="card-title"><t t-esc="dashboard.total_revenue"/></h5>
+                                <p class="card-text">Total Revenue</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </t>
+        </template>
+
+        <template id="portal_orders_template">
+            <t t-call="tapis_erp.portal_layout">
+                <h2 class="mb-4">My Orders</h2>
+                <table class="table table-striped">
+                    <thead>
+                        <tr><th>Reference</th><th>Date</th><th>Product</th><th>Qty</th><th>Total</th><th>Status</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr t-foreach="orders" t-as="o">
+                            <td><t t-esc="o.name"/></td>
+                            <td><t t-esc="o.order_date"/></td>
+                            <td><t t-esc="o.product_id.name"/></td>
+                            <td><t t-esc="o.quantity"/></td>
+                            <td><t t-esc="o.total_price"/></td>
+                            <td><t t-esc="o.state"/></td>
+                        </tr>
+                        <t t-if="not orders">
+                            <tr><td colspan="6" class="text-center">No orders found.</td></tr>
+                        </t>
+                    </tbody>
+                </table>
+            </t>
+        </template>
+
+        <template id="portal_quotes_template">
+            <t t-call="tapis_erp.portal_layout">
+                <h2 class="mb-4">My Quotes</h2>
+                <table class="table table-striped">
+                    <thead>
+                        <tr><th>Reference</th><th>Date</th><th>Product</th><th>Qty</th><th>Total</th><th>Actions</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr t-foreach="quotes" t-as="q">
+                            <td><t t-esc="q.name"/></td>
+                            <td><t t-esc="q.order_date"/></td>
+                            <td><t t-esc="q.product_id.name"/></td>
+                            <td><t t-esc="q.quantity"/></td>
+                            <td><t t-esc="q.total_price"/></td>
+                            <td>
+                                <a t-attf-href="/my/quote/{{ q.id }}/accept" class="btn btn-success btn-sm">Accept</a>
+                                <a t-attf-href="/my/quote/{{ q.id }}/reject" class="btn btn-danger btn-sm">Reject</a>
+                            </td>
+                        </tr>
+                        <t t-if="not quotes">
+                            <tr><td colspan="6" class="text-center">No quotes found.</td></tr>
+                        </t>
+                    </tbody>
+                </table>
+            </t>
+        </template>
+
+        <template id="portal_invoices_template">
+            <t t-call="tapis_erp.portal_layout">
+                <h2 class="mb-4">My Invoices</h2>
+                <table class="table table-striped">
+                    <thead>
+                        <tr><th>Reference</th><th>Date</th><th>Due Date</th><th>Total</th><th>Due</th><th>Status</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr t-foreach="invoices" t-as="inv">
+                            <td><t t-esc="inv.name"/></td>
+                            <td><t t-esc="inv.invoice_date"/></td>
+                            <td><t t-esc="inv.due_date"/></td>
+                            <td><t t-esc="inv.amount_total"/></td>
+                            <td><t t-esc="inv.amount_due"/></td>
+                            <td><t t-esc="inv.payment_status"/></td>
+                        </tr>
+                        <t t-if="not invoices">
+                            <tr><td colspan="6" class="text-center">No invoices found.</td></tr>
+                        </t>
+                    </tbody>
+                </table>
+            </t>
+        </template>
+
+        <template id="portal_productions_template">
+            <t t-call="tapis_erp.portal_layout">
+                <h2 class="mb-4">My Productions</h2>
+                <table class="table table-striped">
+                    <thead>
+                        <tr><th>Reference</th><th>Product</th><th>Qty</th><th>Start</th><th>End</th><th>Status</th><th>Resource</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr t-foreach="productions" t-as="p">
+                            <td><t t-esc="p.name"/></td>
+                            <td><t t-esc="p.product_id.name"/></td>
+                            <td><t t-esc="p.quantity"/></td>
+                            <td><t t-esc="p.planned_start_date"/></td>
+                            <td><t t-esc="p.planned_end_date"/></td>
+                            <td><t t-esc="p.state"/></td>
+                            <td><t t-esc="p.resource_id.name or ''"/></td>
+                        </tr>
+                        <t t-if="not productions">
+                            <tr><td colspan="7" class="text-center">No productions found.</td></tr>
+                        </t>
+                    </tbody>
+                </table>
+            </t>
+        </template>
+
+        <template id="portal_designs_template">
+            <t t-call="tapis_erp.portal_layout">
+                <h2 class="mb-4">My Designs</h2>
+                <div class="row">
+                    <t t-foreach="designs" t-as="d">
+                        <div class="col-md-4 mb-3">
+                            <div class="card">
+                                <t t-if="d.image">
+                                    <img t-att-src="'data:image/png;base64,%s' % d.image" class="card-img-top" style="max-height:200px;object-fit:cover;"/>
+                                </t>
+                                <div class="card-body">
+                                    <h5 class="card-title"><t t-esc="d.name"/></h5>
+                                    <p class="card-text"><t t-esc="d.description or ''"/></p>
+                                </div>
+                            </div>
+                        </div>
+                    </t>
+                    <t t-if="not designs">
+                        <div class="col-12 text-center">No designs found.</div>
+                    </t>
+                </div>
+            </t>
+        </template>
+
+        <template id="portal_documents_template">
+            <t t-call="tapis_erp.portal_layout">
+                <h2 class="mb-4">My Documents</h2>
+                <table class="table table-striped">
+                    <thead>
+                        <tr><th>Name</th><th>Type</th><th>Date</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr t-foreach="documents" t-as="doc">
+                            <td><t t-esc="doc.name"/></td>
+                            <td><t t-esc="doc.doc_type or ''"/></td>
+                            <td><t t-esc="doc.create_date"/></td>
+                        </tr>
+                        <t t-if="not documents">
+                            <tr><td colspan="3" class="text-center">No documents found.</td></tr>
+                        </t>
+                    </tbody>
+                </table>
+            </t>
+        </template>
+
+        <template id="portal_tickets_template">
+            <t t-call="tapis_erp.portal_layout">
+                <h2 class="mb-4">Support Tickets</h2>
+                <a href="/my/tickets/new" class="btn btn-primary mb-3">New Ticket</a>
+                <table class="table table-striped">
+                    <thead>
+                        <tr><th>Ticket</th><th>Subject</th><th>Category</th><th>Priority</th><th>Status</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr t-foreach="tickets" t-as="t">
+                            <td><t t-esc="t.name"/></td>
+                            <td><t t-esc="t.subject"/></td>
+                            <td><t t-esc="t.category"/></td>
+                            <td><t t-esc="t.priority"/></td>
+                            <td><t t-esc="t.state"/></td>
+                        </tr>
+                        <t t-if="not tickets">
+                            <tr><td colspan="5" class="text-center">No tickets found.</td></tr>
+                        </t>
+                    </tbody>
+                </table>
+            </t>
+        </template>
+
+        <template id="portal_ticket_new_template">
+            <t t-call="tapis_erp.portal_layout">
+                <h2 class="mb-4">New Support Ticket</h2>
+                <form method="POST" action="/my/tickets/new">
+                    <div class="mb-3">
+                        <label>Contact Name</label>
+                        <input type="text" name="contact_name" class="form-control" t-att-value="customer.contact_person"/>
+                    </div>
+                    <div class="mb-3">
+                        <label>Email</label>
+                        <input type="email" name="contact_email" class="form-control" t-att-value="customer.email"/>
+                    </div>
+                    <div class="mb-3">
+                        <label>Subject</label>
+                        <input type="text" name="subject" class="form-control" required="1"/>
+                    </div>
+                    <div class="mb-3">
+                        <label>Category</label>
+                        <select name="category" class="form-control">
+                            <option value="sales">Sales</option>
+                            <option value="production">Production</option>
+                            <option value="invoice">Invoice</option>
+                            <option value="delivery">Delivery</option>
+                            <option value="technical">Technical</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label>Priority</label>
+                        <select name="priority" class="form-control">
+                            <option value="low">Low</option>
+                            <option value="medium" selected="1">Medium</option>
+                            <option value="high">High</option>
+                            <option value="urgent">Urgent</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label>Description</label>
+                        <textarea name="description" class="form-control" rows="5"></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Submit Ticket</button>
+                </form>
+            </t>
+        </template>
+
+    </data>
+</odoo>

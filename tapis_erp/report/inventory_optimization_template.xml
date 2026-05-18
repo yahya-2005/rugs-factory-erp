@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <template id="report_inventory_optimization_template">
+            <t t-call="web.html_container">
+                <t t-foreach="docs" t-as="o">
+                    <t t-call="web.external_layout">
+                        <div class="page" style="font-size:12px;">
+                            <h2 style="text-align:center;">Inventory Optimization Report</h2>
+                            <h4 style="text-align:center;"><span t-field="o.name"/></h4>
+                            <hr/>
+                            <h4>Product Details</h4>
+                            <table class="table table-bordered" style="width:100%;">
+                                <tr>
+                                    <td><strong>Product</strong></td>
+                                    <td><span t-field="o.product_id.name"/></td>
+                                    <td><strong>Warehouse</strong></td>
+                                    <td><span t-field="o.warehouse_id.name"/></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Avg Daily Demand</strong></td>
+                                    <td><span t-field="o.average_daily_demand"/></td>
+                                    <td><strong>Lead Time (Days)</strong></td>
+                                    <td><span t-field="o.lead_time_days"/></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Demand Std Dev</strong></td>
+                                    <td><span t-field="o.demand_std_dev"/></td>
+                                    <td><strong>Service Level</strong></td>
+                                    <td><span t-field="o.service_level_percent"/>%</td>
+                                </tr>
+                            </table>
+                            <h4>Calculated Metrics</h4>
+                            <table class="table table-bordered" style="width:100%;">
+                                <tr>
+                                    <td><strong>Safety Stock</strong></td>
+                                    <td><span t-field="o.safety_stock_qty" t-options='{"widget": "float", "precision": 2}'/></td>
+                                    <td><strong>Reorder Point</strong></td>
+                                    <td><span t-field="o.reorder_point_qty" t-options='{"widget": "float", "precision": 2}'/></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>EOQ</strong></td>
+                                    <td><span t-field="o.eoq_qty" t-options='{"widget": "float", "precision": 2}'/></td>
+                                    <td><strong>Annual Demand</strong></td>
+                                    <td><span t-field="o.annual_demand" t-options='{"widget": "float", "precision": 2}'/></td>
+                                </tr>
+                            </table>
+                            <h4>Stock Status</h4>
+                            <table class="table table-bordered" style="width:100%;">
+                                <tr>
+                                    <td><strong>Current Stock</strong></td>
+                                    <td><span t-field="o.current_stock_qty" t-options='{"widget": "float", "precision": 2}'/></td>
+                                    <td><strong>Stock Gap</strong></td>
+                                    <td><span t-field="o.stock_gap_qty" t-options='{"widget": "float", "precision": 2}'/></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Stockout Risk</strong></td>
+                                    <td><span t-field="o.stockout_risk_level"/></td>
+                                    <td><strong>Risk %</strong></td>
+                                    <td><span t-field="o.stockout_risk_percent" t-options='{"widget": "float", "precision": 1}'/>%</td>
+                                </tr>
+                            </table>
+                            <h4>Recommendation</h4>
+                            <table class="table table-bordered" style="width:100%;">
+                                <tr>
+                                    <td><strong>Recommended Order Qty</strong></td>
+                                    <td><span t-field="o.recommended_order_qty" t-options='{"widget": "float", "precision": 2}'/></td>
+                                    <td><strong>Recommended Supplier</strong></td>
+                                    <td><span t-field="o.recommended_supplier_id.name"/></td>
+                                </tr>
+                            </table>
+                            <p t-if="o.notes"><strong>Notes:</strong> <span t-field="o.notes"/></p>
+                            <hr/>
+                            <p style="text-align:right;">
+                                Generated on: <span t-esc="time.strftime('%Y-%m-%d %H:%M')"/>
+                            </p>
+                        </div>
+                    </t>
+                </t>
+            </t>
+        </template>
+
+        <template id="report_replenishment_recommendation_template">
+            <t t-call="web.html_container">
+                <t t-foreach="docs" t-as="o">
+                    <t t-call="web.external_layout">
+                        <div class="page" style="font-size:12px;">
+                            <h2 style="text-align:center;">Replenishment Recommendation</h2>
+                            <h4 style="text-align:center;"><span t-field="o.name"/></h4>
+                            <hr/>
+                            <h4>Product &amp; Supplier</h4>
+                            <table class="table table-bordered" style="width:100%;">
+                                <tr>
+                                    <td><strong>Product</strong></td>
+                                    <td><span t-field="o.product_id.name"/></td>
+                                    <td><strong>Warehouse</strong></td>
+                                    <td><span t-field="o.warehouse_id.name"/></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Current Stock</strong></td>
+                                    <td><span t-field="o.current_stock_qty" t-options='{"widget": "float", "precision": 2}'/></td>
+                                    <td><strong>Reorder Point</strong></td>
+                                    <td><span t-field="o.reorder_point_qty" t-options='{"widget": "float", "precision": 2}'/></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Recommended Qty</strong></td>
+                                    <td><span t-field="o.recommended_order_qty" t-options='{"widget": "float", "precision": 2}'/></td>
+                                    <td><strong>Recommended Supplier</strong></td>
+                                    <td><span t-field="o.recommended_supplier_id.name"/></td>
+                                </tr>
+                            </table>
+                            <h4>Supplier Comparison</h4>
+                            <table class="table table-bordered" style="width:100%;">
+                                <thead>
+                                    <tr>
+                                        <th>Supplier</th>
+                                        <th>Price</th>
+                                        <th>Lead Time</th>
+                                        <th>Quality</th>
+                                        <th>On-Time</th>
+                                        <th>Score</th>
+                                        <th>Recommended</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr t-foreach="o.recommendation_line_ids" t-as="l">
+                                        <td><span t-field="l.supplier_id.name"/></td>
+                                        <td><span t-field="l.supplier_price"/></td>
+                                        <td><span t-field="l.lead_time_days"/></td>
+                                        <td><span t-field="l.quality_score"/></td>
+                                        <td><span t-field="l.on_time_delivery_rate"/></td>
+                                        <td><span t-field="l.total_score"/></td>
+                                        <td><span t-esc="'Yes' if l.recommended else 'No'"/></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <p t-if="o.notes"><strong>Notes:</strong> <span t-field="o.notes"/></p>
+                            <hr/>
+                            <p style="text-align:right;">
+                                Generated on: <span t-esc="time.strftime('%Y-%m-%d %H:%M')"/>
+                            </p>
+                        </div>
+                    </t>
+                </t>
+            </t>
+        </template>
+
+    </data>
+</odoo>

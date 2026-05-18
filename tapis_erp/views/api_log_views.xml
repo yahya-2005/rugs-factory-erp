@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_api_log_tree" model="ir.ui.view">
+        <field name="name">tapis.api.log.tree</field>
+        <field name="model">tapis.api.log</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="request_datetime"/>
+                <field name="connection_id"/>
+                <field name="request_method"/>
+                <field name="request_url"/>
+                <field name="response_status_code"/>
+                <field name="duration_seconds"/>
+                <field name="status" decoration-danger="status=='failed'" decoration-success="status=='success'"/>
+            </tree>
+        </field>
+    </record>
+    <record id="view_api_log_form" model="ir.ui.view">
+        <field name="name">tapis.api.log.form</field>
+        <field name="model">tapis.api.log</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="connection_id"/>
+                            <field name="endpoint_id"/>
+                            <field name="request_datetime"/>
+                            <field name="response_datetime"/>
+                            <field name="duration_seconds"/>
+                            <field name="status"/>
+                            <field name="attempt_number"/>
+                        </group>
+                        <group>
+                            <field name="request_method"/>
+                            <field name="request_url"/>
+                            <field name="response_status_code"/>
+                        </group>
+                    </group>
+                    <group string="Error" attrs="{'invisible':[('error_message','=',False)]}">
+                        <field name="error_message" nolabel="1"/>
+                    </group>
+                    <notebook>
+                        <page string="Request Headers"><field name="request_headers" nolabel="1"/></page>
+                        <page string="Request Body"><field name="request_body" nolabel="1"/></page>
+                        <page string="Response Headers"><field name="response_headers" nolabel="1"/></page>
+                        <page string="Response Body"><field name="response_body" nolabel="1"/></page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <record id="action_tapis_api_log" model="ir.actions.act_window">
+        <field name="name">API Logs</field>
+        <field name="res_model">tapis.api.log</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+</odoo>

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+        <record id="sales_forecast_demo_1" model="tapis.sales.forecast">
+            <field name="name">DEMO-001 - Monthly Product Forecast</field>
+            <field name="forecast_type">product</field>
+            <field name="method">moving_average</field>
+            <field name="period_type">monthly</field>
+            <field name="periods_ahead">6</field>
+            <field name="state">draft</field>
+        </record>
+
+        <record id="sales_forecast_demo_2" model="tapis.sales.forecast">
+            <field name="name">DEMO-002 - Company Forecast</field>
+            <field name="forecast_type">company</field>
+            <field name="method">exponential_smoothing</field>
+            <field name="period_type">monthly</field>
+            <field name="periods_ahead">12</field>
+            <field name="state">draft</field>
+        </record>
+
+        <record id="sales_forecast_demo_3" model="tapis.sales.forecast">
+            <field name="name">DEMO-003 - Customer Forecast</field>
+            <field name="forecast_type">customer</field>
+            <field name="method">seasonal_index</field>
+            <field name="period_type">quarterly</field>
+            <field name="periods_ahead">4</field>
+            <field name="state">draft</field>
+        </record>
+    </data>
+</odoo>

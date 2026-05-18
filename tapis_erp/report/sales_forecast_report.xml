@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="action_report_sales_forecast" model="ir.actions.report">
+            <field name="name">Sales Forecast Report</field>
+            <field name="model">tapis.sales.forecast</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">tapis_erp.report_sales_forecast_template</field>
+            <field name="report_file">tapis_erp.report_sales_forecast_template</field>
+            <field name="binding_model_id" ref="model_tapis_sales_forecast"/>
+            <field name="binding_type">report</field>
+            <field name="multi">True</field>
+        </record>
+    </data>
+</odoo>

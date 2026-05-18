@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="email_template_portal_invitation" model="mail.template">
+            <field name="name">Portal Invitation</field>
+            <field name="model_id" ref="model_tapis_customer"/>
+            <field name="subject">Portal Access Invitation - Tapis ERP</field>
+            <field name="email_from">${object.company_id.email or ''}</field>
+            <field name="email_to">${object.email}</field>
+            <field name="body_html"><![CDATA[
+<p>Dear ${object.name},</p>
+<p>You have been granted access to the Tapis ERP customer portal.</p>
+<p>Please log in to view your orders, invoices, productions, and more.</p>
+<p>Thank you,<br/>Tapis Team</p>
+]]></field>
+        </record>
+
+        <record id="email_template_ticket_confirmation" model="mail.template">
+            <field name="name">Ticket Confirmation</field>
+            <field name="model_id" ref="model_tapis_support_ticket"/>
+            <field name="subject">Support Ticket Created: ${object.name} - ${object.subject}</field>
+            <field name="email_from">${object.company_id.email or ''}</field>
+            <field name="email_to">${object.contact_email or object.customer_id.email}</field>
+            <field name="body_html"><![CDATA[
+<p>Dear ${object.contact_name or object.customer_id.name},</p>
+<p>Your support ticket has been created.</p>
+<p><strong>Ticket:</strong> ${object.name}<br/>
+<strong>Subject:</strong> ${object.subject}<br/>
+<strong>Category:</strong> ${object.category}<br/>
+<strong>Priority:</strong> ${object.priority}<br/>
+<strong>Status:</strong> ${object.state}</p>
+<p>We will get back to you shortly.</p>
+<p>Thank you,<br/>Tapis Support Team</p>
+]]></field>
+        </record>
+
+        <record id="email_template_ticket_resolution" model="mail.template">
+            <field name="name">Ticket Resolution</field>
+            <field name="model_id" ref="model_tapis_support_ticket"/>
+            <field name="subject">Support Ticket Resolved: ${object.name}</field>
+            <field name="email_from">${object.company_id.email or ''}</field>
+            <field name="email_to">${object.contact_email or object.customer_id.email}</field>
+            <field name="body_html"><![CDATA[
+<p>Dear ${object.contact_name or object.customer_id.name},</p>
+<p>Your support ticket has been resolved.</p>
+<p><strong>Ticket:</strong> ${object.name}<br/>
+<strong>Subject:</strong> ${object.subject}</p>
+<p>Please log in to the portal to review the resolution.</p>
+<p>Thank you,<br/>Tapis Support Team</p>
+]]></field>
+        </record>
+
+        <record id="email_template_quote_approved" model="mail.template">
+            <field name="name">Quote Approved Confirmation</field>
+            <field name="model_id" ref="model_tapis_sale"/>
+            <field name="subject">Quote Approved: ${object.name}</field>
+            <field name="email_from">${object.company_id.email or ''}</field>
+            <field name="email_to">${object.customer_id.email}</field>
+            <field name="body_html"><![CDATA[
+<p>Dear ${object.customer_id.name},</p>
+<p>Thank you for approving your quote.</p>
+<p><strong>Quote:</strong> ${object.name}<br/>
+<strong>Total:</strong> ${object.total_price}</p>
+<p>We will begin processing your order.</p>
+<p>Thank you,<br/>Tapis Team</p>
+]]></field>
+        </record>
+
+    </data>
+</odoo>

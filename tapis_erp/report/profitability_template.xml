@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <template id="report_product_cost_sheet_template">
+            <t t-call="web.html_container">
+                <t t-foreach="docs" t-as="o">
+                    <t t-call="web.external_layout">
+                        <div class="page" style="font-size:12px;">
+                            <h2 style="text-align:center;">Product Cost Sheet</h2>
+                            <h4 style="text-align:center;"><span t-field="o.name"/></h4>
+                            <hr/>
+                            <table class="table table-bordered" style="width:100%;">
+                                <tr>
+                                    <td><strong>Product Code</strong></td>
+                                    <td><span t-field="o.code"/></td>
+                                    <td><strong>Category</strong></td>
+                                    <td><span t-field="o.category"/></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Selling Price</strong></td>
+                                    <td><span t-field="o.price"/></td>
+                                    <td><strong>Cost</strong></td>
+                                    <td><span t-field="o.cost"/></td>
+                                </tr>
+                            </table>
+                            <h4>Standard Cost Breakdown</h4>
+                            <table class="table table-bordered" style="width:100%;">
+                                <tr>
+                                    <td><strong>Standard Material Cost</strong></td>
+                                    <td><span t-field="o.standard_material_cost"/></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Standard Labor Cost</strong></td>
+                                    <td><span t-field="o.standard_labor_cost"/></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Standard Overhead Cost</strong></td>
+                                    <td><span t-field="o.standard_overhead_cost"/></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Total Standard Cost</strong></td>
+                                    <td><span t-field="o.total_standard_cost"/></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Gross Margin</strong></td>
+                                    <td><span t-field="o.gross_margin_percent" t-options='{"widget": "float", "precision": 1}'/>%</td>
+                                </tr>
+                            </table>
+                            <hr/>
+                            <p style="text-align:right;">
+                                Generated on: <span t-esc="time.strftime('%Y-%m-%d %H:%M')"/>
+                            </p>
+                        </div>
+                    </t>
+                </t>
+            </t>
+        </template>
+
+        <template id="report_profitability_analysis_template">
+            <t t-call="web.html_container">
+                <t t-foreach="docs" t-as="o">
+                    <t t-call="web.external_layout">
+                        <div class="page" style="font-size:12px;">
+                            <h2 style="text-align:center;">Profitability Analysis Report</h2>
+                            <h4 style="text-align:center;"><span t-field="o.name"/></h4>
+                            <hr/>
+                            <table class="table table-bordered" style="width:100%;">
+                                <tr>
+                                    <td><strong>Analysis Type</strong></td>
+                                    <td><span t-field="o.analysis_type"/></td>
+                                    <td><strong>Status</strong></td>
+                                    <td><span t-field="o.state"/></td>
+                                </tr>
+                            </table>
+                            <h4>Financial Summary</h4>
+                            <table class="table table-bordered" style="width:100%;">
+                                <tr><td><strong>Revenue</strong></td><td><span t-field="o.revenue"/></td></tr>
+                                <tr><td><strong>Material Cost</strong></td><td><span t-field="o.material_cost"/></td></tr>
+                                <tr><td><strong>Labor Cost</strong></td><td><span t-field="o.labor_cost"/></td></tr>
+                                <tr><td><strong>Overhead Cost</strong></td><td><span t-field="o.overhead_cost"/></td></tr>
+                                <tr><td><strong>Total Cost</strong></td><td><span t-field="o.total_cost"/></td></tr>
+                                <tr><td><strong>Gross Profit</strong></td><td><span t-field="o.gross_profit"/></td></tr>
+                                <tr><td><strong>Gross Margin</strong></td><td><span t-field="o.gross_margin_percent" t-options='{"widget": "float", "precision": 1}'/>%</td></tr>
+                                <tr><td><strong>Net Margin</strong></td><td><span t-field="o.net_margin_percent" t-options='{"widget": "float", "precision": 1}'/>%</td></tr>
+                                <tr><td><strong>ROI</strong></td><td><span t-field="o.roi_percent" t-options='{"widget": "float", "precision": 1}'/>%</td></tr>
+                            </table>
+                            <p t-if="o.notes"><strong>Notes:</strong> <span t-field="o.notes"/></p>
+                            <hr/>
+                            <p style="text-align:right;">
+                                Generated on: <span t-esc="time.strftime('%Y-%m-%d %H:%M')"/>
+                            </p>
+                        </div>
+                    </t>
+                </t>
+            </t>
+        </template>
+
+        <template id="report_cost_variance_template">
+            <t t-call="web.html_container">
+                <t t-foreach="docs" t-as="o">
+                    <t t-call="web.external_layout">
+                        <div class="page" style="font-size:12px;">
+                            <h2 style="text-align:center;">Cost Variance Report</h2>
+                            <h4 style="text-align:center;"><span t-field="o.name"/></h4>
+                            <hr/>
+                            <table class="table table-bordered" style="width:100%;">
+                                <tr>
+                                    <td><strong>Product</strong></td>
+                                    <td><span t-field="o.product_id.name"/></td>
+                                    <td><strong>Quantity</strong></td>
+                                    <td><span t-field="o.quantity"/></td>
+                                </tr>
+                            </table>
+                            <h4>Cost Comparison</h4>
+                            <table class="table table-bordered" style="width:100%;">
+                                <thead>
+                                    <tr>
+                                        <th>Cost Type</th>
+                                        <th>Standard</th>
+                                        <th>Actual</th>
+                                        <th>Variance</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><strong>Material</strong></td>
+                                        <td><span t-field="o.standard_material_cost"/></td>
+                                        <td><span t-field="o.material_cost"/></td>
+                                        <td><span t-field="o.material_variance"/></td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Labor</strong></td>
+                                        <td><span t-field="o.standard_labor_cost"/></td>
+                                        <td><span t-field="o.labor_cost"/></td>
+                                        <td><span t-field="o.labor_variance"/></td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Overhead</strong></td>
+                                        <td><span t-field="o.standard_overhead_cost"/></td>
+                                        <td><span t-field="o.overhead_cost"/></td>
+                                        <td><span t-field="o.overhead_variance"/></td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Total</strong></td>
+                                        <td><span t-field="o.total_standard_cost"/></td>
+                                        <td><span t-field="o.total_production_cost"/></td>
+                                        <td><span t-field="o.total_variance"/></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <hr/>
+                            <p style="text-align:right;">
+                                Generated on: <span t-esc="time.strftime('%Y-%m-%d %H:%M')"/>
+                            </p>
+                        </div>
+                    </t>
+                </t>
+            </t>
+        </template>
+
+    </data>
+</odoo>

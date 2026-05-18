@@ -57,6 +57,7 @@
         action="action_customer"
         sequence="20"/>
     <menuitem id="menu_sale" name="Sales Orders" parent="menu_sales_root" action="action_sale" sequence="30"/>
+    <menuitem id="menu_sales_forecast" name="Sales Forecasts" action="action_sales_forecast" parent="menu_sales_root" sequence="35"/>
     <menuitem id="menu_invoice" name="Invoices" action="action_invoice" parent="menu_sales_root" sequence="40"/>
     <menuitem id="menu_customer_payment"
         name="Customer Payments"
@@ -71,6 +72,16 @@
     -->
     <menuitem id="menu_manufacturing_root" name="Manufacturing" parent="menu_tapis_root" sequence="40"/>
     <menuitem id="menu_production" name="Productions" action="action_tapis_production" parent="menu_manufacturing_root" sequence="10"/>
+    <menuitem id="menu_production_resource"
+              name="Production Resources"
+              action="action_production_resource"
+              parent="menu_manufacturing_root"
+              sequence="15"/>
+    <menuitem id="menu_production_conflict"
+              name="Production Conflicts"
+              action="action_production_conflict"
+              parent="menu_manufacturing_root"
+              sequence="16"/>
     <menuitem id="menu_quality" name="Quality Inspections"
               action="action_quality_inspection" parent="menu_manufacturing_root" sequence="20"/>
     <menuitem id="menu_tapis_equipment"
@@ -111,6 +122,16 @@
         parent="menu_inventory_root"
         action="action_reorder_rule"
         sequence="50"/>
+
+    <menuitem id="menu_inventory_planning"
+        name="Planning"
+        parent="menu_inventory_root"
+        sequence="55"/>
+    <menuitem id="menu_inventory_optimization"
+        name="Inventory Optimization"
+        parent="menu_inventory_planning"
+        action="action_inventory_optimization"
+        sequence="10"/>
 
     <!--
     ====================================================
@@ -173,6 +194,20 @@
         name="Budgets"
         parent="menu_accounting_root"
         action="action_tapis_budget"
+        sequence="20"/>
+    <menuitem id="menu_cost_accounting_root"
+        name="Cost Accounting"
+        parent="menu_accounting_root"
+        sequence="25"/>
+    <menuitem id="menu_tapis_allocation_rule"
+        name="Allocation Rules"
+        parent="menu_cost_accounting_root"
+        action="action_tapis_cost_allocation_rule"
+        sequence="10"/>
+    <menuitem id="menu_tapis_profitability_analysis"
+        name="Profitability Analysis"
+        parent="menu_cost_accounting_root"
+        action="action_profitability_analysis"
         sequence="20"/>
 
     <!--
@@ -250,12 +285,65 @@
         parent="menu_tapis_automation_root"
         action="action_tapis_automation_job_log"
         sequence="20"/>
+    <menuitem id="menu_tapis_automation_rule"
+        name="Automation Rules"
+        parent="menu_tapis_automation_root"
+        action="action_tapis_automation_rule"
+        sequence="30"
+        groups="tapis_erp.group_automation_admin"/>
+    <menuitem id="menu_tapis_automation_execution_log"
+        name="Execution Logs"
+        parent="menu_tapis_automation_root"
+        action="action_tapis_automation_execution_log"
+        sequence="40"/>
+    <menuitem id="menu_tapis_integration_root"
+        name="Integrations"
+        parent="menu_configuration_root"
+        sequence="45"/>
+    <menuitem id="menu_tapis_api_connection"
+        name="API Connections"
+        parent="menu_tapis_integration_root"
+        action="action_tapis_api_connection"
+        sequence="10"
+        groups="tapis_erp.group_integration_admin"/>
+    <menuitem id="menu_tapis_api_endpoint"
+        name="API Endpoints"
+        parent="menu_tapis_integration_root"
+        action="action_tapis_api_endpoint"
+        sequence="20"/>
+    <menuitem id="menu_tapis_webhook_subscription"
+        name="Webhook Subscriptions"
+        parent="menu_tapis_integration_root"
+        action="action_tapis_webhook_subscription"
+        sequence="30"/>
+    <menuitem id="menu_tapis_integration_queue"
+        name="Integration Queue"
+        parent="menu_tapis_integration_root"
+        action="action_tapis_integration_queue"
+        sequence="40"/>
+    <menuitem id="menu_tapis_api_log"
+        name="API Logs"
+        parent="menu_tapis_integration_root"
+        action="action_tapis_api_log"
+        sequence="50"/>
     <menuitem id="menu_tapis_audit_log"
         name="Audit Logs"
         parent="menu_configuration_root"
         action="action_tapis_audit_log"
         groups="tapis_erp.group_audit_manager"
         sequence="50"/>
+
+    <!--
+    ====================================================
+    SUPPORT (sequence 67)
+    ====================================================
+    -->
+    <menuitem id="menu_support_root" name="Support" parent="menu_tapis_root" sequence="67"/>
+    <menuitem id="menu_tapis_support_ticket"
+        name="Tickets"
+        parent="menu_support_root"
+        action="action_tapis_support_ticket"
+        sequence="10"/>
     <menuitem id="menu_tapis_signature_root"
         name="Signature"
         parent="menu_configuration_root"

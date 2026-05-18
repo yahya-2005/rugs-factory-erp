@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_automation_rule_tree" model="ir.ui.view">
+        <field name="name">tapis.automation.rule.tree</field>
+        <field name="model">tapis.automation.rule</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name"/>
+                <field name="code"/>
+                <field name="trigger_type"/>
+                <field name="model_name"/>
+                <field name="state"/>
+                <field name="execution_count"/>
+                <field name="success_rate" widget="progressbar"/>
+                <field name="active"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_automation_rule_form" model="ir.ui.view">
+        <field name="name">tapis.automation.rule.form</field>
+        <field name="model">tapis.automation.rule</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <button name="action_activate" type="object" string="Activate"
+                            class="btn-primary"
+                            attrs="{'invisible': [('state', 'in', ('active', 'archived'))]}"/>
+                    <button name="action_pause" type="object" string="Pause"
+                            class="btn-warning"
+                            attrs="{'invisible': [('state', '!=', 'active')]}"/>
+                    <button name="action_run_now" type="object" string="Run Now"
+                            class="btn-info"
+                            attrs="{'invisible': [('state', 'not in', ('draft', 'active'))]}"/>
+                    <button name="action_archive" type="object" string="Archive"
+                            class="btn-secondary"
+                            attrs="{'invisible': [('state', 'in', ('draft', 'archived'))]}"/>
+                    <button name="action_reset_to_draft" type="object" string="Reset to Draft"
+                            class="btn-secondary"
+                            attrs="{'invisible': [('state', '!=', 'archived')]}"/>
+                    <button name="action_open_logs" type="object" string="View Logs"
+                            class="btn-secondary"/>
+                    <field name="state" widget="statusbar"/>
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <h1><field name="name" placeholder="Rule Name"/></h1>
+                        <group>
+                            <field name="code"/>
+                            <field name="active"/>
+                            <field name="company_id" groups="base.group_multi_company"/>
+                        </group>
+                    </div>
+                    <notebook>
+                        <page string="Trigger Configuration">
+                            <group>
+                                <group string="Trigger">
+                                    <field name="trigger_type"/>
+                                    <field name="model_name"/>
+                                    <field name="trigger_field"
+                                           attrs="{'required': [('trigger_type', '=', 'on_state_change')],
+                                                   'invisible': [('trigger_type', 'not in', ('on_state_change',))]}"/>
+                                    <field name="trigger_value"
+                                           attrs="{'invisible': [('trigger_type', 'not in', ('on_state_change',))]}"/>
+                                </group>
+                                <group string="Schedule"
+                                       attrs="{'invisible': [('trigger_type', '!=', 'scheduled')]}">
+                                    <field name="cron_interval_number"/>
+                                    <field name="cron_interval_type"/>
+                                </group>
+                            </group>
+                        </page>
+                        <page string="Conditions">
+                            <group>
+                                <group string="Domain Condition">
+                                    <field name="domain_expression" nolabel="1" placeholder="e.g. [('state','=','draft')]"/>
+                                </group>
+                                <group string="Python Condition">
+                                    <field name="python_condition" nolabel="1" placeholder="e.g. record.amount_total > 1000"/>
+                                </group>
+                            </group>
+                        </page>
+                        <page string="Actions">
+                            <field name="action_line_ids">
+                                <tree editable="bottom">
+                                    <field name="sequence" widget="handle"/>
+                                    <field name="action_type"/>
+                                    <field name="email_template_id"
+                                           attrs="{'invisible': [('action_type', '!=', 'send_email')]}"/>
+                                    <field name="activity_type_id"
+                                           attrs="{'invisible': [('action_type', '!=', 'create_activity')]}"/>
+                                    <field name="webhook_url"
+                                           attrs="{'invisible': [('action_type', '!=', 'webhook')]}"/>
+                                    <field name="continue_on_error"/>
+                                </tree>
+                            </field>
+                        </page>
+                        <page string="Execution Logs">
+                            <field name="execution_log_ids">
+                                <tree>
+                                    <field name="execution_datetime"/>
+                                    <field name="status"/>
+                                    <field name="attempt_number"/>
+                                    <field name="duration_seconds"/>
+                                    <field name="result_message"/>
+                                </tree>
+                            </field>
+                        </page>
+                        <page string="Metrics">
+                            <group>
+                                <group string="Execution Statistics">
+                                    <field name="execution_count"/>
+                                    <field name="success_count"/>
+                                    <field name="failure_count"/>
+                                    <field name="success_rate" widget="progressbar"/>
+                                    <field name="average_duration"/>
+                                </group>
+                                <group string="Retry Configuration">
+                                    <field name="max_retries"/>
+                                    <field name="retry_interval_minutes"/>
+                                    <field name="stop_on_error"/>
+                                </group>
+                            </group>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_automation_rule_search" model="ir.ui.view">
+        <field name="name">tapis.automation.rule.search</field>
+        <field name="model">tapis.automation.rule</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name"/>
+                <field name="code"/>
+                <field name="model_name"/>
+                <filter name="active" string="Active" domain="[('state','=','active')]"/>
+                <filter name="scheduled" string="Scheduled" domain="[('trigger_type','=','scheduled')]"/>
+                <separator/>
+                <group string="Group By">
+                    <filter name="grp_trigger" string="Trigger Type" context="{'group_by':'trigger_type'}"/>
+                    <filter name="grp_model" string="Model" context="{'group_by':'model_name'}"/>
+                    <filter name="grp_state" string="State" context="{'group_by':'state'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_tapis_automation_rule" model="ir.actions.act_window">
+        <field name="name">Automation Rules</field>
+        <field name="res_model">tapis.automation.rule</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+            <p>Define no-code automation rules for the Tapis ERP system.</p>
+            <p>Rules trigger on record creation, update, deletion, state changes,
+               scheduled intervals, or manual execution.</p>
+        </field>
+    </record>
+</odoo>

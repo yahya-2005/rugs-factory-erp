@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+
+        <!-- Demo Cost Centers -->
+        <record id="cost_center_production" model="tapis.cost.center">
+            <field name="name">Production Cost Center</field>
+            <field name="code">CC-PROD</field>
+            <field name="cost_type">production</field>
+        </record>
+
+        <record id="cost_center_admin" model="tapis.cost.center">
+            <field name="name">Administrative Cost Center</field>
+            <field name="code">CC-ADMIN</field>
+            <field name="cost_type">administrative</field>
+        </record>
+
+        <record id="cost_center_sales" model="tapis.cost.center">
+            <field name="name">Sales Cost Center</field>
+            <field name="code">CC-SALES</field>
+            <field name="cost_type">overhead</field>
+        </record>
+
+        <record id="cost_center_logistics" model="tapis.cost.center">
+            <field name="name">Logistics Cost Center</field>
+            <field name="code">CC-LOG</field>
+            <field name="cost_type">overhead</field>
+        </record>
+
+        <record id="cost_center_quality" model="tapis.cost.center">
+            <field name="name">Quality Cost Center</field>
+            <field name="code">CC-QC</field>
+            <field name="cost_type">overhead</field>
+        </record>
+
+        <!-- Allocation Rules -->
+        <record id="allocation_rule_prod_labor" model="tapis.cost.allocation.rule">
+            <field name="name">Machine Hours Allocation</field>
+            <field name="cost_center_id" ref="cost_center_production"/>
+            <field name="allocation_method">machine_hours</field>
+            <field name="percentage">60.0</field>
+        </record>
+
+        <record id="allocation_rule_admin_fixed" model="tapis.cost.allocation.rule">
+            <field name="name">Administrative Overhead</field>
+            <field name="cost_center_id" ref="cost_center_admin"/>
+            <field name="allocation_method">fixed_percentage</field>
+            <field name="percentage">10.0</field>
+        </record>
+
+        <record id="allocation_rule_sales_revenue" model="tapis.cost.allocation.rule">
+            <field name="name">Sales Based Allocation</field>
+            <field name="cost_center_id" ref="cost_center_sales"/>
+            <field name="allocation_method">revenue</field>
+            <field name="percentage">15.0</field>
+        </record>
+
+        <!-- Demo Profitability Analyses -->
+        <record id="profitability_analysis_demo_1" model="tapis.profitability.analysis">
+            <field name="analysis_type">product</field>
+            <field name="state">draft</field>
+        </record>
+
+        <record id="profitability_analysis_demo_2" model="tapis.profitability.analysis">
+            <field name="analysis_type">customer</field>
+            <field name="state">draft</field>
+        </record>
+
+    </data>
+</odoo>

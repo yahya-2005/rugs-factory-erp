@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <template id="report_production_schedule_template">
+            <t t-call="web.html_container">
+                <t t-foreach="docs" t-as="o">
+                    <t t-call="web.external_layout">
+                        <div class="page" style="font-size:12px;">
+                            <h2 style="text-align:center;">Production Schedule Report</h2>
+                            <h4 style="text-align:center;">Reference: <span t-esc="o.name"/></h4>
+                            <hr/>
+                            <table class="table table-bordered" style="width:100%;">
+                                <tr><td><strong>Product</strong></td><td t-esc="o.product_id.name"/></tr>
+                                <tr><td><strong>Quantity</strong></td><td t-esc="o.quantity"/></tr>
+                                <tr><td><strong>State</strong></td><td t-esc="o.state"/></tr>
+                                <tr><td><strong>Priority</strong></td>
+                                    <td t-esc="dict(o._fields['priority'].selection).get(o.priority, '')"/>
+                                </tr>
+                                <tr><td><strong>Resource</strong></td><td t-esc="o.resource_id.name or ''"/></tr>
+                                <tr><td><strong>Supervisor</strong></td><td t-esc="o.supervisor_id.name or ''"/></tr>
+                                <tr><td><strong>Planned Start</strong></td><td t-esc="o.planned_start_date or ''"/></tr>
+                                <tr><td><strong>Planned End</strong></td><td t-esc="o.planned_end_date or ''"/></tr>
+                                <tr><td><strong>Actual Start</strong></td><td t-esc="o.actual_start_date or ''"/></tr>
+                                <tr><td><strong>Actual End</strong></td><td t-esc="o.actual_end_date or ''"/></tr>
+                                <tr><td><strong>Estimated Hours</strong></td><td t-esc="o.estimated_hours"/></tr>
+                                <tr><td><strong>Estimated Days</strong></td><td t-esc="'%.1f' % o.estimated_days"/></tr>
+                                <tr><td><strong>Delay (Days)</strong></td><td t-esc="'%.1f' % o.delay_days"/></tr>
+                                <tr><td><strong>On Time</strong></td><td t-esc="'Yes' if o.on_time_delivery else 'No'"/></tr>
+                            </table>
+                            <p><strong>Predecessors:</strong>
+                                <t t-foreach="o.predecessor_ids" t-as="pred">
+                                    <span t-esc="pred.name"/>,
+                                </t>
+                            </p>
+                            <p><strong>Successors:</strong>
+                                <t t-foreach="o.successor_ids" t-as="succ">
+                                    <span t-esc="succ.name"/>,
+                                </t>
+                            </p>
+                            <p><strong>Notes:</strong> <span t-esc="o.note or ''"/></p>
+                            <hr/>
+                            <p style="text-align:right;">
+                                Generated on: <span t-esc="time.strftime('%Y-%m-%d %H:%M')"/>
+                            </p>
+                        </div>
+                    </t>
+                </t>
+            </t>
+        </template>
+
+        <template id="report_resource_utilization_template">
+            <t t-call="web.html_container">
+                <t t-foreach="docs" t-as="o">
+                    <t t-call="web.external_layout">
+                        <div class="page" style="font-size:12px;">
+                            <h2 style="text-align:center;">Resource Utilization Report</h2>
+                            <h4 style="text-align:center;" t-esc="o.name"/>
+                            <hr/>
+                            <table class="table table-bordered" style="width:100%;">
+                                <tr><td><strong>Code</strong></td><td t-esc="o.code"/></tr>
+                                <tr><td><strong>Type</strong></td>
+                                    <td t-esc="dict(o._fields['resource_type'].selection).get(o.resource_type, '')"/>
+                                </tr>
+                                <tr><td><strong>Capacity (hrs/day)</strong></td><td t-esc="o.capacity_hours_per_day"/></tr>
+                                <tr><td><strong>Efficiency</strong></td><td t-esc="'%.0f%%' % o.efficiency_percent"/></tr>
+                                <tr><td><strong>Supervisor</strong></td><td t-esc="o.supervisor_id.name or ''"/></tr>
+                                <tr><td><strong>Total Assigned Hours</strong></td><td t-esc="'%.1f' % o.total_assigned_hours"/></tr>
+                                <tr><td><strong>Conflicts</strong></td><td t-esc="o.conflict_count"/></tr>
+                            </table>
+                            <h4>Assignments</h4>
+                            <table class="table table-bordered" style="width:100%;">
+                                <thead>
+                                    <tr><th>Production</th><th>Product</th><th>State</th>
+                                        <th>Start</th><th>End</th><th>Hours</th></tr>
+                                </thead>
+                                <tbody>
+                                    <tr t-foreach="o.production_ids" t-as="p">
+                                        <td t-esc="p.name"/>
+                                        <td t-esc="p.product_id.name"/>
+                                        <td t-esc="p.state"/>
+                                        <td t-esc="p.planned_start_date or ''"/>
+                                        <td t-esc="p.planned_end_date or ''"/>
+                                        <td t-esc="p.estimated_hours"/>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <hr/>
+                            <p style="text-align:right;">
+                                Generated on: <span t-esc="time.strftime('%Y-%m-%d %H:%M')"/>
+                            </p>
+                        </div>
+                    </t>
+                </t>
+            </t>
+        </template>
+    </data>
+</odoo>

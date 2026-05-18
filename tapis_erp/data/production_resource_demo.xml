@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+        <record id="production_resource_loom_a" model="tapis.production.resource">
+            <field name="name">Loom A</field>
+            <field name="code">LOOM-A</field>
+            <field name="resource_type">loom</field>
+            <field name="capacity_hours_per_day">8.0</field>
+            <field name="efficiency_percent">95.0</field>
+        </record>
+
+        <record id="production_resource_loom_b" model="tapis.production.resource">
+            <field name="name">Loom B</field>
+            <field name="code">LOOM-B</field>
+            <field name="resource_type">loom</field>
+            <field name="capacity_hours_per_day">8.0</field>
+            <field name="efficiency_percent">90.0</field>
+        </record>
+
+        <record id="production_resource_weaving_team_alpha" model="tapis.production.resource">
+            <field name="name">Weaving Team Alpha</field>
+            <field name="code">TEAM-ALPHA</field>
+            <field name="resource_type">weaving_team</field>
+            <field name="capacity_hours_per_day">8.0</field>
+            <field name="efficiency_percent">100.0</field>
+        </record>
+
+        <record id="production_resource_dyeing_station" model="tapis.production.resource">
+            <field name="name">Dyeing Station 1</field>
+            <field name="code">DYE-1</field>
+            <field name="resource_type">dyeing_station</field>
+            <field name="capacity_hours_per_day">8.0</field>
+            <field name="efficiency_percent">85.0</field>
+        </record>
+
+        <record id="production_resource_finishing_station" model="tapis.production.resource">
+            <field name="name">Finishing Station 1</field>
+            <field name="code">FINISH-1</field>
+            <field name="resource_type">finishing_station</field>
+            <field name="capacity_hours_per_day">8.0</field>
+            <field name="efficiency_percent">90.0</field>
+        </record>
+    </data>
+</odoo>

@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_api_connection_tree" model="ir.ui.view">
+        <field name="name">tapis.api.connection.tree</field>
+        <field name="model">tapis.api.connection</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name"/>
+                <field name="code"/>
+                <field name="connection_type"/>
+                <field name="auth_type"/>
+                <field name="base_url"/>
+                <field name="active"/>
+            </tree>
+        </field>
+    </record>
+    <record id="view_api_connection_form" model="ir.ui.view">
+        <field name="name">tapis.api.connection.form</field>
+        <field name="model">tapis.api.connection</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <button name="action_test_connection" type="object" string="Test Connection" class="btn-primary"/>
+                    <button name="action_generate_token" type="object" string="Generate Token"
+                            attrs="{'invisible': [('auth_type', '!=', 'oauth2')]}"/>
+                </header>
+                <sheet>
+                    <div class="oe_title"><h1><field name="name"/></h1></div>
+                    <group>
+                        <group>
+                            <field name="code"/>
+                            <field name="active"/>
+                            <field name="connection_type"/>
+                            <field name="company_id" groups="base.group_multi_company"/>
+                        </group>
+                        <group string="Authentication">
+                            <field name="auth_type"/>
+                            <field name="api_key" attrs="{'invisible': [('auth_type','!=','api_key')]}"/>
+                            <field name="bearer_token" attrs="{'invisible': [('auth_type','!=','bearer_token')]}"/>
+                            <field name="username" attrs="{'invisible': [('auth_type','!=','basic')]}"/>
+                            <field name="password" attrs="{'invisible': [('auth_type','!=','basic')]}"/>
+                            <field name="client_id" attrs="{'invisible': [('auth_type','!=','oauth2')]}"/>
+                            <field name="client_secret" attrs="{'invisible': [('auth_type','!=','oauth2')]}"/>
+                            <field name="token_url" attrs="{'invisible': [('auth_type','!=','oauth2')]}"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Endpoints">
+                            <field name="endpoint_ids">
+                                <tree editable="bottom">
+                                    <field name="sequence" widget="handle"/>
+                                    <field name="name"/>
+                                    <field name="http_method"/>
+                                    <field name="endpoint_path"/>
+                                    <field name="active"/>
+                                </tree>
+                            </field>
+                        </page>
+                        <page string="Configuration">
+                            <group>
+                                <group string="Connection">
+                                    <field name="base_url"/>
+                                    <field name="default_headers"/>
+                                </group>
+                                <group string="Limits">
+                                    <field name="timeout_seconds"/>
+                                    <field name="verify_ssl"/>
+                                    <field name="requests_per_minute"/>
+                                    <field name="max_retries"/>
+                                    <field name="retry_interval_seconds"/>
+                                </group>
+                            </group>
+                        </page>
+                        <page string="Logs">
+                            <field name="log_ids">
+                                <tree>
+                                    <field name="request_datetime"/>
+                                    <field name="request_method"/>
+                                    <field name="request_url"/>
+                                    <field name="response_status_code"/>
+                                    <field name="duration_seconds"/>
+                                    <field name="status"/>
+                                </tree>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <record id="view_api_connection_search" model="ir.ui.view">
+        <field name="name">tapis.api.connection.search</field>
+        <field name="model">tapis.api.connection</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name"/><field name="code"/><field name="connection_type"/>
+                <filter name="active" string="Active" domain="[('active','=',True)]"/>
+            </search>
+        </field>
+    </record>
+    <record id="action_tapis_api_connection" model="ir.actions.act_window">
+        <field name="name">API Connections</field>
+        <field name="res_model">tapis.api.connection</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+</odoo>

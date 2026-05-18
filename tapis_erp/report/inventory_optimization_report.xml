@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="action_report_inventory_optimization" model="ir.actions.report">
+            <field name="name">Inventory Optimization Report</field>
+            <field name="model">tapis.inventory.optimization</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">tapis_erp.report_inventory_optimization_template</field>
+            <field name="report_file">tapis_erp.report_inventory_optimization_template</field>
+            <field name="binding_model_id" ref="model_tapis_inventory_optimization"/>
+            <field name="binding_type">report</field>
+            <field name="multi">True</field>
+        </record>
+
+        <record id="action_report_replenishment_recommendation" model="ir.actions.report">
+            <field name="name">Replenishment Recommendation</field>
+            <field name="model">tapis.inventory.optimization</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">tapis_erp.report_replenishment_recommendation_template</field>
+            <field name="report_file">tapis_erp.report_replenishment_recommendation_template</field>
+            <field name="binding_model_id" ref="model_tapis_inventory_optimization"/>
+            <field name="binding_type">report</field>
+            <field name="multi">True</field>
+        </record>
+
+    </data>
+</odoo>

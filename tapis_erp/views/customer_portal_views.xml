@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="view_customer_portal_form_inherit" model="ir.ui.view">
+            <field name="name">tapis.customer.portal.form.inherit</field>
+            <field name="model">tapis.customer</field>
+            <field name="inherit_id" ref="view_customer_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//notebook" position="inside">
+                    <page string="Portal">
+                        <group>
+                            <group string="Portal Access">
+                                <field name="portal_enabled"/>
+                                <field name="portal_user_id" options="{'no_create': True}"
+                                    attrs="{'invisible': [('portal_enabled', '=', False)]}"/>
+                                <field name="portal_last_login"
+                                    attrs="{'invisible': [('portal_enabled', '=', False)]}"/>
+                            </group>
+                        </group>
+                        <group attrs="{'invisible': [('portal_enabled', '=', False)]}">
+                            <button name="action_send_portal_invitation" type="object"
+                                string="Send Portal Invitation" class="btn-primary"/>
+                            <br/>
+                            <field name="portal_access_token_ids" nolabel="1">
+                                <tree>
+                                    <field name="token"/>
+                                    <field name="expiration_date"/>
+                                    <field name="active"/>
+                                    <field name="last_access_datetime"/>
+                                </tree>
+                            </field>
+                        </group>
+                    </page>
+                </xpath>
+            </field>
+        </record>
+
+
+
+    </data>
+</odoo>

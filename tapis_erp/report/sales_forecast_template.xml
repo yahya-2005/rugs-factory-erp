@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <template id="report_sales_forecast_template">
+            <t t-call="web.html_container">
+                <t t-foreach="docs" t-as="o">
+                    <t t-call="web.external_layout">
+                        <div class="page" style="font-size:12px;">
+                            <h2 style="text-align:center;">Sales Forecast Report</h2>
+                            <h4 style="text-align:center;" t-field="o.name"/>
+                            <hr/>
+                            <table class="table table-bordered" style="width:100%;">
+                                <tr><td><strong>Forecast Type</strong></td>
+                                    <td><span t-field="o.forecast_type"/></td>
+                                    <td><strong>Method</strong></td>
+                                    <td><span t-field="o.method"/></td></tr>
+                                <tr><td><strong>Product</strong></td><td><span t-field="o.product_id.name"/></td>
+                                    <td><strong>Customer</strong></td><td><span t-field="o.customer_id.name"/></td></tr>
+                                <tr><td><strong>Period Type</strong></td>
+                                    <td><span t-field="o.period_type"/></td>
+                                    <td><strong>Periods Ahead</strong></td><td><span t-field="o.periods_ahead"/></td></tr>
+                                <tr><td><strong>History</strong></td><td><span t-field="o.history_start_date"/> to <span t-field="o.history_end_date"/></td>
+                                    <td><strong>Generated</strong></td><td><span t-field="o.generated_date"/></td></tr>
+                                <tr><td><strong>Accuracy</strong></td><td><span t-field="o.accuracy_percent" t-options='{"widget": "float", "precision": 1}'/>%</td>
+                                    <td><strong>Confidence</strong></td><td><span t-field="o.confidence_percent" t-options='{"widget": "float", "precision": 1}'/>%</td></tr>
+                                <tr><td><strong>Total Forecast Qty</strong></td><td><span t-field="o.total_forecast_qty"/></td>
+                                    <td><strong>Total Forecast Revenue</strong></td><td><span t-field="o.total_forecast_revenue"/></td></tr>
+                            </table>
+                            <h4>Forecast Lines</h4>
+                            <table class="table table-bordered" style="width:100%;">
+                                <thead>
+                                    <tr><th>Period</th><th>Historical Qty</th><th>Historical Revenue</th>
+                                        <th>Forecast Qty</th><th>Forecast Revenue</th>
+                                        <th>Procurement</th><th>Production</th></tr>
+                                </thead>
+                                <tbody>
+                                    <tr t-foreach="o.line_ids" t-as="l">
+                                        <td><span t-field="l.forecast_date"/></td>
+                                        <td><span t-field="l.historical_qty"/></td>
+                                        <td><span t-field="l.historical_revenue"/></td>
+                                        <td><span t-field="l.forecast_qty"/></td>
+                                        <td><span t-field="l.forecast_revenue"/></td>
+                                        <td><span t-field="l.recommended_procurement_qty"/></td>
+                                        <td><span t-field="l.recommended_production_qty"/></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <p t-if="o.notes"><strong>Notes:</strong> <span t-field="o.notes"/></p>
+                            <hr/>
+                            <p style="text-align:right;">Generated on: <span t-esc="time.strftime('%Y-%m-%d %H:%M')"/></p>
+                        </div>
+                    </t>
+                </t>
+            </t>
+        </template>
+
+        <template id="report_demand_planning_template">
+            <t t-call="web.html_container">
+                <t t-foreach="docs" t-as="o">
+                    <t t-call="web.external_layout">
+                        <div class="page" style="font-size:12px;">
+                            <h2 style="text-align:center;">Demand Planning Report</h2>
+                            <h4 style="text-align:center;" t-field="o.name"/>
+                            <hr/>
+                            <table class="table table-bordered" style="width:100%;">
+                                <tr><td><strong>Forecast Method</strong></td>
+                                    <td><span t-field="o.method"/></td></tr>
+                                <tr><td><strong>Accuracy</strong></td><td><span t-field="o.accuracy_percent" t-options='{"widget": "float", "precision": 1}'/>%</td></tr>
+                                <tr><td><strong>Total Forecast Revenue</strong></td><td><span t-field="o.total_forecast_revenue"/></td></tr>
+                            </table>
+                            <h4>Procurement Recommendations</h4>
+                            <table class="table table-bordered" style="width:100%;">
+                                <thead>
+                                    <tr><th>Period</th><th>Forecast Qty</th>
+                                        <th>Recommended Procurement</th><th>Recommended Production</th></tr>
+                                </thead>
+                                <tbody>
+                                    <tr t-foreach="o.line_ids" t-as="l">
+                                        <td><span t-field="l.forecast_date"/></td>
+                                        <td><span t-field="l.forecast_qty"/></td>
+                                        <td><span t-field="l.recommended_procurement_qty"/></td>
+                                        <td><span t-field="l.recommended_production_qty"/></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <hr/>
+                            <p style="text-align:right;">Generated on: <span t-esc="time.strftime('%Y-%m-%d %H:%M')"/></p>
+                        </div>
+                    </t>
+                </t>
+            </t>
+        </template>
+    </data>
+</odoo>

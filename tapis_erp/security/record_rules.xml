@@ -512,5 +512,41 @@
             <field name="perm_unlink" eval="True"/>
         </record>
 
+        <!-- ==========================================
+             SUPPORT TICKET RECORD RULES
+             ========================================== -->
+        <record id="rule_support_ticket_customer" model="ir.rule">
+            <field name="name">Support Ticket: Own Customer Only</field>
+            <field name="model_id" ref="model_tapis_support_ticket"/>
+            <field name="global" eval="True"/>
+            <field name="domain_force">[('customer_id.portal_user_id', '=', user.id)]</field>
+            <field name="perm_read" eval="True"/>
+            <field name="perm_write" eval="True"/>
+            <field name="perm_create" eval="True"/>
+            <field name="perm_unlink" eval="False"/>
+        </record>
+
+        <record id="rule_support_ticket_manager" model="ir.rule">
+            <field name="name">Support Ticket: Manager Full Access</field>
+            <field name="model_id" ref="model_tapis_support_ticket"/>
+            <field name="groups" eval="[(4, ref('group_tapis_manager'))]"/>
+            <field name="domain_force" eval="[(1,'=',1)]"/>
+            <field name="perm_read" eval="True"/>
+            <field name="perm_write" eval="True"/>
+            <field name="perm_create" eval="True"/>
+            <field name="perm_unlink" eval="True"/>
+        </record>
+
+        <record id="rule_support_ticket_support" model="ir.rule">
+            <field name="name">Support Ticket: Support Agent Full Access</field>
+            <field name="model_id" ref="model_tapis_support_ticket"/>
+            <field name="groups" eval="[(4, ref('group_support_agent'))]"/>
+            <field name="domain_force" eval="[(1,'=',1)]"/>
+            <field name="perm_read" eval="True"/>
+            <field name="perm_write" eval="True"/>
+            <field name="perm_create" eval="True"/>
+            <field name="perm_unlink" eval="True"/>
+        </record>
+
     </data>
 </odoo>

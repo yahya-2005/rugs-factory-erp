@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <!-- Tree View -->
+        <record id="view_tapis_inventory_optimization_tree" model="ir.ui.view">
+            <field name="name">tapis.inventory.optimization.tree</field>
+            <field name="model">tapis.inventory.optimization</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="name"/>
+                    <field name="product_id"/>
+                    <field name="warehouse_id"/>
+                    <field name="current_stock_qty"/>
+                    <field name="reorder_point_qty"/>
+                    <field name="safety_stock_qty"/>
+                    <field name="stockout_risk_level"/>
+                    <field name="stockout_risk_percent" string="Risk %"/>
+                    <field name="state"/>
+                </tree>
+            </field>
+        </record>
+
+        <!-- Form View -->
+        <record id="view_tapis_inventory_optimization_form" model="ir.ui.view">
+            <field name="name">tapis.inventory.optimization.form</field>
+            <field name="model">tapis.inventory.optimization</field>
+            <field name="arch" type="xml">
+                <form>
+                    <header>
+                        <button name="action_analyze_inventory" type="object"
+                            string="Analyze Inventory" class="btn-primary"
+                            states="draft"/>
+                        <button name="action_approve" type="object"
+                            string="Approve" class="btn-success"
+                            states="analyzed"/>
+                        <button name="action_create_purchase_order" type="object"
+                            string="Create Purchase Order" class="btn-info"
+                            states="analyzed,approved"/>
+                        <button name="action_mark_ordered" type="object"
+                            string="Mark Ordered"
+                            states="approved"/>
+                        <field name="state" widget="statusbar"/>
+                    </header>
+                    <sheet>
+                        <div class="oe_title">
+                            <h1><field name="name"/></h1>
+                        </div>
+                        <group>
+                            <group string="Scope">
+                                <field name="product_id" options="{'no_create': True}"/>
+                                <field name="warehouse_id" options="{'no_create': True}"/>
+                            </group>
+                            <group string="Demand Inputs">
+                                <field name="average_daily_demand"/>
+                                <field name="demand_std_dev"/>
+                                <field name="lead_time_days"/>
+                                <field name="service_level_percent"/>
+                            </group>
+                        </group>
+                        <notebook>
+                            <page string="Analysis Results">
+                                <group>
+                                    <group string="Inventory Formulas">
+                                        <field name="annual_demand" widget="float" options="{'precision': 2}"/>
+                                        <field name="safety_stock_qty" widget="float" options="{'precision': 2}"/>
+                                        <field name="reorder_point_qty" widget="float" options="{'precision': 2}"/>
+                                        <field name="eoq_qty" widget="float" options="{'precision': 2}"/>
+                                        <field name="annual_holding_cost"/>
+                                        <field name="ordering_cost"/>
+                                    </group>
+                                    <group string="Current Stock Status">
+                                        <field name="current_stock_qty" widget="float" options="{'precision': 2}"/>
+                                        <field name="stock_gap_qty" widget="float" options="{'precision': 2}"/>
+                                        <field name="stockout_risk_level" widget="badge"/>
+                                        <field name="stockout_risk_percent" widget="progressbar"/>
+                                        <field name="recommended_order_qty" widget="float" options="{'precision': 2}"/>
+                                        <field name="recommended_supplier_id" options="{'no_create': True}"/>
+                                    </group>
+                                </group>
+                            </page>
+                            <page string="Supplier Recommendations">
+                                <field name="recommendation_line_ids">
+                                    <tree editable="bottom">
+                                        <field name="sequence" widget="handle"/>
+                                        <field name="supplier_id" options="{'no_create': True}"/>
+                                        <field name="supplier_price"/>
+                                        <field name="lead_time_days"/>
+                                        <field name="quality_score"/>
+                                        <field name="on_time_delivery_rate"/>
+                                        <field name="total_score"/>
+                                        <field name="recommended"/>
+                                    </tree>
+                                </field>
+                            </page>
+                            <page string="Notes">
+                                <field name="notes"/>
+                            </page>
+                        </notebook>
+                    </sheet>
+                    <div class="oe_chatter">
+                        <field name="purchase_order_id" readonly="1"/>
+                    </div>
+                </form>
+            </field>
+        </record>
+
+        <!-- Search View -->
+        <record id="view_tapis_inventory_optimization_search" model="ir.ui.view">
+            <field name="name">tapis.inventory.optimization.search</field>
+            <field name="model">tapis.inventory.optimization</field>
+            <field name="arch" type="xml">
+                <search>
+                    <field name="name"/>
+                    <field name="product_id"/>
+                    <field name="warehouse_id"/>
+                    <field name="state"/>
+                    <filter name="risk_critical" string="Critical Stockout"
+                        domain="[('stockout_risk_level', '=', 'critical')]"/>
+                    <filter name="risk_high" string="High Stockout Risk"
+                        domain="[('stockout_risk_level', '=', 'high')]"/>
+                    <separator/>
+                    <filter name="draft" string="Draft"
+                        domain="[('state', '=', 'draft')]"/>
+                    <filter name="analyzed" string="Analyzed"
+                        domain="[('state', '=', 'analyzed')]"/>
+                    <group expand="0" string="Group By">
+                        <filter name="group_state" string="State"
+                            context="{'group_by': 'state'}"/>
+                        <filter name="group_risk" string="Stockout Risk"
+                            context="{'group_by': 'stockout_risk_level'}"/>
+                        <filter name="group_product" string="Product"
+                            context="{'group_by': 'product_id'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
+        <!-- Window Action -->
+        <record id="action_inventory_optimization" model="ir.actions.act_window">
+            <field name="name">Inventory Optimization</field>
+            <field name="res_model">tapis.inventory.optimization</field>
+            <field name="view_mode">tree,form</field>
+            <field name="search_view_id" ref="view_tapis_inventory_optimization_search"/>
+            <field name="context">{'default_state': 'draft'}</field>
+        </record>
+
+    </data>
+</odoo>
