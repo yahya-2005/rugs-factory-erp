@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="view_tapis_document_folder_tree" model="ir.ui.view">
+            <field name="name">tapis.document.folder.tree</field>
+            <field name="model">tapis.document.folder</field>
+            <field name="arch" type="xml">
+                <tree string="Document Folders" decoration-muted="not active">
+                    <field name="name"/>
+                    <field name="complete_name"/>
+                    <field name="parent_id"/>
+                    <field name="sequence"/>
+                    <field name="document_count"/>
+                    <field name="active" invisible="1"/>
+                </tree>
+            </field>
+        </record>
+        <record id="view_tapis_document_folder_form" model="ir.ui.view">
+            <field name="name">tapis.document.folder.form</field>
+            <field name="model">tapis.document.folder</field>
+            <field name="arch" type="xml">
+                <form string="Document Folder">
+                    <sheet>
+                        <div class="oe_button_box" name="button_box">
+                        </div>
+                        <group>
+                            <group string="General">
+                                <field name="name"/>
+                                <field name="parent_id" options="{'no_create': True}"/>
+                                <field name="sequence"/>
+                                <field name="color" widget="color_picker"/>
+                                <field name="active"/>
+                            </group>
+                            <group string="Information">
+                                <field name="complete_name"/>
+                                <field name="document_count"/>
+                            </group>
+                        </group>
+                        <notebook>
+                            <page string="Description">
+                                <field name="description" nolabel="1"/>
+                            </page>
+                            <page string="Sub-Folders">
+                                <field name="child_ids" readonly="1">
+                                    <tree>
+                                        <field name="name"/>
+                                        <field name="sequence"/>
+                                        <field name="document_count"/>
+                                    </tree>
+                                </field>
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        <record id="action_tapis_document_folder" model="ir.actions.act_window">
+            <field name="name">Document Folders</field>
+            <field name="res_model">tapis.document.folder</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+    </data>
+</odoo>

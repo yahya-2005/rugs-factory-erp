@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+        <record id="seq_tapis_product" model="ir.sequence">
+            <field name="name">Product Code</field>
+            <field name="code">tapis.product.code</field>
+            <field name="prefix">PRD-</field>
+            <field name="padding">5</field>
+            <field name="number_next">1</field>
+            <field name="number_increment">1</field>
+        </record>
+
+        <record id="seq_tapis_sale" model="ir.sequence">
+            <field name="name">Sale Reference</field>
+            <field name="code">tapis.sale.code</field>
+            <field name="prefix">SALE-</field>
+            <field name="padding">5</field>
+            <field name="number_next">1</field>
+            <field name="number_increment">1</field>
+        </record>
+
+        <record id="seq_tapis_production" model="ir.sequence">
+            <field name="name">Production Reference</field>
+            <field name="code">tapis.production.code</field>
+            <field name="prefix">MFG-</field>
+            <field name="padding">5</field>
+            <field name="number_next">1</field>
+            <field name="number_increment">1</field>
+        </record>
+
+        <record id="seq_tapis_purchase" model="ir.sequence">
+            <field name="name">Purchase Reference</field>
+            <field name="code">tapis.purchase.code</field>
+            <field name="prefix">PUR-</field>
+            <field name="padding">5</field>
+            <field name="number_next">1</field>
+            <field name="number_increment">1</field>
+        </record>
+
+        <record id="seq_tapis_transfer" model="ir.sequence">
+            <field name="name">Transfer Reference</field>
+            <field name="code">tapis.transfer.code</field>
+            <field name="prefix">TRF-</field>
+            <field name="padding">5</field>
+            <field name="number_next">1</field>
+            <field name="number_increment">1</field>
+        </record>
+
+        <record id="seq_tapis_quality_inspection" model="ir.sequence">
+            <field name="name">Quality Inspection Reference</field>
+            <field name="code">tapis.quality.inspection.code</field>
+            <field name="prefix">QI-</field>
+            <field name="padding">5</field>
+            <field name="number_next">1</field>
+            <field name="number_increment">1</field>
+        </record>
+
+        <record id="seq_tapis_invoice" model="ir.sequence">
+            <field name="name">Invoice Reference</field>
+            <field name="code">tapis.invoice.code</field>
+            <field name="prefix">INV/</field>
+            <field name="padding">5</field>
+            <field name="number_next">1</field>
+            <field name="number_increment">1</field>
+        </record>
+
+        <record id="seq_tapis_equipment" model="ir.sequence">
+            <field name="name">Equipment Code</field>
+            <field name="code">tapis.equipment.code</field>
+            <field name="prefix">EQ/</field>
+            <field name="padding">5</field>
+            <field name="number_next">1</field>
+            <field name="number_increment">1</field>
+        </record>
+
+        <record id="seq_tapis_maintenance_order" model="ir.sequence">
+            <field name="name">Maintenance Order Reference</field>
+            <field name="code">tapis.maintenance.order.code</field>
+            <field name="prefix">MO/</field>
+            <field name="padding">5</field>
+            <field name="number_next">1</field>
+            <field name="number_increment">1</field>
+        </record>
+        <record id="seq_tapis_project" model="ir.sequence">
+            <field name="name">Project Code</field>
+            <field name="code">tapis.project.code</field>
+            <field name="prefix">PRJ/</field>
+            <field name="padding">5</field>
+            <field name="number_next">1</field>
+            <field name="number_increment">1</field>
+        </record>
+        <record id="seq_tapis_task" model="ir.sequence">
+            <field name="name">Task Code</field>
+            <field name="code">tapis.task.code</field>
+            <field name="prefix">TASK/</field>
+            <field name="padding">5</field>
+            <field name="number_next">1</field>
+            <field name="number_increment">1</field>
+        </record>
+        <record id="seq_tapis_cost_center" model="ir.sequence">
+            <field name="name">Cost Center Code</field>
+            <field name="code">tapis.cost.center.code</field>
+            <field name="prefix">CC/</field>
+            <field name="padding">5</field>
+            <field name="number_next">1</field>
+            <field name="number_increment">1</field>
+        </record>
+        <record id="seq_tapis_budget" model="ir.sequence">
+            <field name="name">Budget Reference</field>
+            <field name="code">tapis.budget.code</field>
+            <field name="prefix">BGT/</field>
+            <field name="padding">5</field>
+            <field name="number_next">1</field>
+            <field name="number_increment">1</field>
+        </record>
+        <record id="seq_tapis_approval_request" model="ir.sequence">
+            <field name="name">Approval Request Reference</field>
+            <field name="code">tapis.approval.request.code</field>
+            <field name="prefix">APR/</field>
+            <field name="padding">5</field>
+            <field name="number_next">1</field>
+            <field name="number_increment">1</field>
+        </record>
+
+        <record id="seq_tapis_document" model="ir.sequence">
+            <field name="name">Document Code</field>
+            <field name="code">tapis.document.code</field>
+            <field name="prefix">DOC/</field>
+            <field name="padding">5</field>
+            <field name="number_next">1</field>
+            <field name="number_increment">1</field>
+        </record>
+
+        <record id="seq_tapis_signature_request" model="ir.sequence">
+            <field name="name">Signature Request Reference</field>
+            <field name="code">tapis.signature.request</field>
+            <field name="prefix">SIG/</field>
+            <field name="padding">5</field>
+            <field name="number_next">1</field>
+            <field name="number_increment">1</field>
+        </record>
+    </data>
+</odoo>

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+        <record id="folder_products" model="tapis.document.folder">
+            <field name="name">Products</field>
+            <field name="sequence">10</field>
+        </record>
+        <record id="folder_customers" model="tapis.document.folder">
+            <field name="name">Customers</field>
+            <field name="sequence">20</field>
+        </record>
+        <record id="folder_purchasing" model="tapis.document.folder">
+            <field name="name">Purchasing</field>
+            <field name="sequence">30</field>
+        </record>
+        <record id="folder_manufacturing" model="tapis.document.folder">
+            <field name="name">Manufacturing</field>
+            <field name="sequence">40</field>
+        </record>
+        <record id="folder_quality" model="tapis.document.folder">
+            <field name="name">Quality</field>
+            <field name="sequence">50</field>
+        </record>
+        <record id="folder_maintenance" model="tapis.document.folder">
+            <field name="name">Maintenance</field>
+            <field name="sequence">60</field>
+        </record>
+        <record id="folder_hr" model="tapis.document.folder">
+            <field name="name">Human Resources</field>
+            <field name="sequence">70</field>
+        </record>
+        <record id="folder_projects" model="tapis.document.folder">
+            <field name="name">Projects</field>
+            <field name="sequence">80</field>
+        </record>
+        <record id="folder_finance" model="tapis.document.folder">
+            <field name="name">Finance</field>
+            <field name="sequence">90</field>
+        </record>
+    </data>
+</odoo>

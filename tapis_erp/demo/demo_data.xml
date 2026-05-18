@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- Tags -->
+        <record id="tag_luxury" model="tapis.tag">
+            <field name="name">Luxury</field>
+            <field name="color">3</field>
+        </record>
+
+        <record id="tag_handmade" model="tapis.tag">
+            <field name="name">Handmade</field>
+            <field name="color">4</field>
+        </record>
+
+        <record id="tag_traditional" model="tapis.tag">
+            <field name="name">Traditional</field>
+            <field name="color">5</field>
+        </record>
+
+        <record id="tag_export" model="tapis.tag">
+            <field name="name">Export</field>
+            <field name="color">2</field>
+        </record>
+
+        <record id="tag_vip" model="tapis.tag">
+            <field name="name">VIP</field>
+            <field name="color">1</field>
+        </record>
+
+        <!-- Employees -->
+        <record id="employee_ahmed" model="tapis.employee">
+            <field name="name">Ahmed Benali</field>
+            <field name="role">designer</field>
+            <field name="phone">+212 6 12 34 56 78</field>
+            <field name="email">ahmed@tapis.ma</field>
+        </record>
+
+        <record id="employee_fatima" model="tapis.employee">
+            <field name="name">Fatima Zahra</field>
+            <field name="role">production</field>
+            <field name="phone">+212 6 23 45 67 89</field>
+            <field name="email">fatima@tapis.ma</field>
+        </record>
+
+        <record id="employee_hassan" model="tapis.employee">
+            <field name="name">Hassan El Amrani</field>
+            <field name="role">commercial</field>
+            <field name="phone">+212 6 34 56 78 90</field>
+            <field name="email">hassan@tapis.ma</field>
+        </record>
+
+        <!-- Suppliers -->
+        <record id="supplier_maroc_wool" model="tapis.supplier">
+            <field name="name">Maroc Wool SARL</field>
+            <field name="contact_person">Karim Tazi</field>
+            <field name="phone">+212 5 22 33 44 55</field>
+            <field name="email">karim@marocwool.ma</field>
+            <field name="address">Avenue Hassan II, Casablanca</field>
+        </record>
+
+        <record id="supplier_atlas_textiles" model="tapis.supplier">
+            <field name="name">Atlas Textiles SA</field>
+            <field name="contact_person">Samir Bennis</field>
+            <field name="phone">+212 5 24 44 55 66</field>
+            <field name="email">samir@atlastextiles.ma</field>
+            <field name="address">Boulevard Mohammed V, Marrakech</field>
+        </record>
+
+        <!-- Products -->
+        <record id="product_carpet_berbere" model="tapis.product">
+            <field name="name">Berbere Carpet</field>
+            <field name="code">PRD-00001</field>
+            <field name="category">traditional</field>
+            <field name="price">2500.00</field>
+            <field name="cost">1200.00</field>
+            <field name="stock__qy">15</field>
+            <field name="tag_ids" eval="[(4, ref('tag_luxury')), (4, ref('tag_traditional')), (4, ref('tag_handmade'))]"/>
+        </record>
+
+        <record id="product_carpet_moderne" model="tapis.product">
+            <field name="name">Tapis Moderne Abstract</field>
+            <field name="code">PRD-00002</field>
+            <field name="category">modern</field>
+            <field name="price">3200.00</field>
+            <field name="cost">1800.00</field>
+            <field name="stock__qy">8</field>
+            <field name="tag_ids" eval="[(4, ref('tag_luxury')), (4, ref('tag_export'))]"/>
+        </record>
+
+        <record id="product_carpet_vip" model="tapis.product">
+            <field name="name">VIP Silk Carpet</field>
+            <field name="code">PRD-00003</field>
+            <field name="category">custom</field>
+            <field name="price">8500.00</field>
+            <field name="cost">4200.00</field>
+            <field name="stock__qy">3</field>
+            <field name="tag_ids" eval="[(4, ref('tag_vip')), (4, ref('tag_luxury')), (4, ref('tag_handmade'))]"/>
+        </record>
+
+        <!-- Raw Materials -->
+        <record id="raw_wool" model="tapis.raw.material">
+            <field name="name">Natural Wool</field>
+            <field name="code">RM-00001</field>
+            <field name="uom">kg</field>
+            <field name="cost_per_unit">80.00</field>
+            <field name="stock_qty">100</field>
+            <field name="supplier_id" ref="supplier_maroc_wool"/>
+        </record>
+
+        <record id="raw_cotton" model="tapis.raw.material">
+            <field name="name">Egyptian Cotton</field>
+            <field name="code">RM-00002</field>
+            <field name="uom">kg</field>
+            <field name="cost_per_unit">120.00</field>
+            <field name="stock_qty">50</field>
+            <field name="supplier_id" ref="supplier_atlas_textiles"/>
+        </record>
+
+        <record id="raw_silk" model="tapis.raw.material">
+            <field name="name">Silk Yarn</field>
+            <field name="code">RM-00003</field>
+            <field name="uom">kg</field>
+            <field name="cost_per_unit">350.00</field>
+            <field name="stock_qty">20</field>
+            <field name="supplier_id" ref="supplier_atlas_textiles"/>
+        </record>
+
+        <record id="raw_dye_red" model="tapis.raw.material">
+            <field name="name">Red Fabric Dye</field>
+            <field name="code">RM-00004</field>
+            <field name="uom">liter</field>
+            <field name="cost_per_unit">45.00</field>
+            <field name="stock_qty">30</field>
+        </record>
+
+        <record id="raw_loom_thread" model="tapis.raw.material">
+            <field name="name">Loom Thread</field>
+            <field name="code">RM-00005</field>
+            <field name="uom">meter</field>
+            <field name="cost_per_unit">5.00</field>
+            <field name="stock_qty">500</field>
+        </record>
+
+        <!-- BOM for Berbere Carpet -->
+        <record id="bom_berbere" model="tapis.bom">
+            <field name="name">BOM - Berbere Carpet</field>
+            <field name="product_id" ref="product_carpet_berbere"/>
+            <field name="version">1.0</field>
+        </record>
+
+        <record id="bom_line_wool" model="tapis.bom.line">
+            <field name="bom_id" ref="bom_berbere"/>
+            <field name="raw_material_id" ref="raw_wool"/>
+            <field name="quantity">3.0</field>
+        </record>
+
+        <record id="bom_line_cotton" model="tapis.bom.line">
+            <field name="bom_id" ref="bom_berbere"/>
+            <field name="raw_material_id" ref="raw_cotton"/>
+            <field name="quantity">1.5</field>
+        </record>
+
+        <record id="bom_line_dye" model="tapis.bom.line">
+            <field name="bom_id" ref="bom_berbere"/>
+            <field name="raw_material_id" ref="raw_dye_red"/>
+            <field name="quantity">0.5</field>
+        </record>
+
+        <record id="bom_line_thread" model="tapis.bom.line">
+            <field name="bom_id" ref="bom_berbere"/>
+            <field name="raw_material_id" ref="raw_loom_thread"/>
+            <field name="quantity">20.0</field>
+        </record>
+    </data>
+</odoo>

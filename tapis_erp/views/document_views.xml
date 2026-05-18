@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="view_tapis_document_search" model="ir.ui.view">
+            <field name="name">tapis.document.search</field>
+            <field name="model">tapis.document</field>
+            <field name="arch" type="xml">
+                <search string="Search Documents">
+                    <field name="name"/>
+                    <field name="code"/>
+                    <field name="folder_id"/>
+                    <field name="tag_ids"/>
+                    <field name="uploaded_by_id"/>
+                    <filter name="filter_draft" string="Draft" domain="[('state','=','draft')]"/>
+                    <filter name="filter_approved" string="Approved" domain="[('state','=','approved')]"/>
+                    <filter name="filter_archived" string="Archived" domain="[('state','=','archived')]"/>
+                    <filter name="filter_expired" string="Expired" domain="[('is_expired','=',True)]"/>
+                    <filter name="filter_my_uploads" string="My Uploads" domain="[('uploaded_by_id','=',uid)]"/>
+                    <separator/>
+                    <group expand="0" string="Group By">
+                        <filter name="group_by_folder" string="Folder" context="{'group_by':'folder_id'}"/>
+                        <filter name="group_by_file_type" string="File Type" context="{'group_by':'file_type'}"/>
+                        <filter name="group_by_uploaded_by" string="Uploaded By" context="{'group_by':'uploaded_by_id'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+        <record id="view_tapis_document_tree" model="ir.ui.view">
+            <field name="name">tapis.document.tree</field>
+            <field name="model">tapis.document</field>
+            <field name="arch" type="xml">
+                <tree string="Documents" decoration-danger="is_expired == True" decoration-warning="state == 'draft'" decoration-success="state == 'approved'" decoration-muted="state == 'archived'">
+                    <field name="name"/>
+                    <field name="folder_id"/>
+                    <field name="file_type" widget="badge"/>
+                    <field name="version"/>
+                    <field name="upload_date"/>
+                    <field name="expiration_date"/>
+                    <field name="is_expired" invisible="1"/>
+                    <field name="state" widget="badge" decoration-success="state == 'approved'" decoration-warning="state == 'draft'" decoration-muted="state == 'archived'"/>
+                </tree>
+            </field>
+        </record>
+        <record id="view_tapis_document_form" model="ir.ui.view">
+            <field name="name">tapis.document.form</field>
+            <field name="model">tapis.document</field>
+            <field name="arch" type="xml">
+                <form string="Document">
+                    <header>
+                        <button name="action_approve" type="object" string="Approve" states="draft" class="btn-success"/>
+                        <button name="action_archive" type="object" string="Archive" states="draft,approved" class="btn-warning"/>
+                        <button name="action_reset_draft" type="object" string="Reset to Draft" states="approved,archived" class="btn-default"/>
+                        <button name="action_request_approval" type="object" string="Request Approval" states="draft" class="btn-primary" confirm="Submit this document for approval?"/>
+                        <button name="action_download" type="object" string="Download" class="btn-primary"/>
+                        <field name="state" widget="statusbar" statusbar_visible="draft,approved,archived"/>
+                    </header>
+                    <sheet>
+                        <field name="approval_request_id" invisible="1"/>
+                        <div class="oe_button_box" name="button_box">
+                            <button name="action_open_approval_request" type="object" class="oe_stat_button" icon="fa-check-circle"
+                                attrs="{'invisible': [('approval_request_id', '=', False)]}">
+                                <div class="o_stat_info">
+                                    <field name="approval_state" widget="statinfo"/>
+                                    <span class="o_stat_text">Approval</span>
+                                </div>
+                            </button>
+                        </div>
+                        <div class="row mt16">
+                            <div class="col-lg-6">
+                                <group string="General">
+                                    <field name="name"/>
+                                    <field name="code"/>
+                                    <field name="folder_id" options="{'no_create': True}"/>
+                                    <field name="version"/>
+                                    <field name="tag_ids" widget="many2many_tags"/>
+                                </group>
+                            </div>
+                            <div class="col-lg-6">
+                                <group string="File">
+                                    <field name="attachment" filename="attachment_filename"/>
+                                    <field name="attachment_filename" invisible="1"/>
+                                    <field name="file_type" widget="badge"/>
+                                    <field name="file_size_kb"/>
+                                </group>
+                            </div>
+                        </div>
+                        <notebook>
+                            <page string="File Info">
+                                <group string="Upload Details">
+                                    <field name="uploaded_by_id"/>
+                                    <field name="upload_date"/>
+                                    <field name="expiration_date"/>
+                                    <field name="is_expired"/>
+                                </group>
+                            </page>
+                            <page string="Links">
+                                <group string="Linked Records">
+                                    <field name="product_id" options="{'no_create': True}"/>
+                                    <field name="customer_id" options="{'no_create': True}"/>
+                                    <field name="supplier_id" options="{'no_create': True}"/>
+                                    <field name="purchase_id" options="{'no_create': True}"/>
+                                    <field name="sale_id" options="{'no_create': True}"/>
+                                    <field name="design_id" options="{'no_create': True}"/>
+                                    <field name="production_id" options="{'no_create': True}"/>
+                                    <field name="invoice_id" options="{'no_create': True}"/>
+                                    <field name="quality_inspection_id" options="{'no_create': True}"/>
+                                    <field name="equipment_id" options="{'no_create': True}"/>
+                                    <field name="maintenance_id" options="{'no_create': True}"/>
+                                    <field name="employee_id" options="{'no_create': True}"/>
+                                    <field name="project_id" options="{'no_create': True}"/>
+                                    <field name="task_id" options="{'no_create': True}"/>
+                                    <field name="budget_id" options="{'no_create': True}"/>
+                                </group>
+                            </page>
+                            <page string="Description">
+                                <field name="description" nolabel="1"/>
+                            </page>
+                        </notebook>
+                    </sheet>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids"/>
+                        <field name="activity_ids"/>
+                        <field name="message_ids"/>
+                    </div>
+                </form>
+            </field>
+        </record>
+        <record id="action_tapis_document" model="ir.actions.act_window">
+            <field name="name">Documents</field>
+            <field name="res_model">tapis.document</field>
+            <field name="view_mode">tree,form</field>
+            <field name="search_view_id" ref="view_tapis_document_search"/>
+        </record>
+    </data>
+</odoo>

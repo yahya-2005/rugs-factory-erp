@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="report_supplier_scorecard_document">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="o">
+                <t t-call="web.external_layout">
+                    <div class="page">
+                        <div class="row">
+                            <div class="col-xs-6">
+                                <strong>SUPPLIER SCORECARD</strong>
+                                <br/>
+                                <span>Date: </span><span t-esc="time.strftime('%Y-%m-%d')"/>
+                            </div>
+                            <div class="col-xs-6 text-right">
+                                <strong>Tapis Morocco</strong>
+                                <br/>
+                                <span>Marrakech, Morocco</span>
+                            </div>
+                        </div>
+                        <hr/>
+                        <h4><span t-field="o.name"/></h4>
+                        <table class="table table-bordered">
+                            <tr>
+                                <td><strong>Contact Person</strong></td>
+                                <td><span t-field="o.contact_person"/></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Phone</strong></td>
+                                <td><span t-field="o.phone"/></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Email</strong></td>
+                                <td><span t-field="o.email"/></td>
+                            </tr>
+                        </table>
+                        <hr/>
+                        <h4>Performance Metrics</h4>
+                        <table class="table table-bordered">
+                            <tr>
+                                <td><strong>Quality Score (0-100)</strong></td>
+                                <td><span t-esc="'{:,.1f}'.format(o.quality_score)"/></td>
+                            </tr>
+                            <tr>
+                                <td><strong>On-Time Delivery Rate (%)</strong></td>
+                                <td><span t-esc="'{:,.1f}'.format(o.on_time_delivery_rate)"/></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Overall Score</strong></td>
+                                <td><span t-esc="'{:,.1f}'.format(o.overall_score)"/></td>
+                            </tr>
+                        </table>
+                        <hr/>
+                        <h4>Purchase History</h4>
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>Reference</th>
+                                    <th>Product</th>
+                                    <th>Qty</th>
+                                    <th>Total</th>
+                                    <th>Delay (Days)</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr t-foreach="o.purchase_ids" t-as="p">
+                                    <td><span t-field="p.name"/></td>
+                                    <td><span t-field="p.product_id.name"/></td>
+                                    <td><span t-field="p.quantity"/></td>
+                                    <td><span t-esc="'{:,.2f}'.format(p.total_price)"/></td>
+                                    <td><span t-field="p.delivery_delay_days"/></td>
+                                    <td><span t-field="p.state"/></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <hr/>
+                        <p class="text-center">Tapis ERP - Supplier Evaluation Report</p>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+</odoo>

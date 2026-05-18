@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="view_customer_payment_tree" model="ir.ui.view">
+            <field name="name">tapis.customer.payment.tree</field>
+            <field name="model">tapis.customer.payment</field>
+            <field name="arch" type="xml">
+                <tree string="Customer Payments"
+                    decoration-success="state == 'posted'"
+                    decoration-danger="state == 'cancelled'">
+                    <field name="name"/>
+                    <field name="customer_id"/>
+                    <field name="sale_id"/>
+                    <field name="payment_date"/>
+                    <field name="amount" sum="Total Payments"/>
+                    <field name="payment_method"/>
+                    <field name="state"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="view_customer_payment_form" model="ir.ui.view">
+            <field name="name">tapis.customer.payment.form</field>
+            <field name="model">tapis.customer.payment</field>
+            <field name="arch" type="xml">
+                <form string="Customer Payment">
+                    <header>
+                        <button name="action_post" type="object" string="Post" states="draft" class="btn-primary"/>
+                        <button name="action_cancel" type="object" string="Cancel" states="draft,posted" class="btn-danger"/>
+                        <field name="state" widget="statusbar" statusbar_visible="draft,posted,cancelled"/>
+                    </header>
+                    <sheet>
+                        <group>
+                            <field name="name"/>
+                            <field name="customer_id"/>
+                            <field name="sale_id"/>
+                            <field name="payment_date"/>
+                            <field name="amount"/>
+                            <field name="payment_method"/>
+                        </group>
+                        <group>
+                            <field name="note"/>
+                        </group>
+                    </sheet>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids"/>
+                        <field name="activity_ids"/>
+                        <field name="message_ids"/>
+                    </div>
+                </form>
+            </field>
+        </record>
+
+        <record id="view_customer_payment_search" model="ir.ui.view">
+            <field name="name">tapis.customer.payment.search</field>
+            <field name="model">tapis.customer.payment</field>
+            <field name="arch" type="xml">
+                <search string="Search Payments">
+                    <field name="name"/>
+                    <field name="customer_id"/>
+                    <field name="sale_id"/>
+                    <filter name="filter_draft" string="Draft" domain="[('state','=','draft')]"/>
+                    <filter name="filter_posted" string="Posted" domain="[('state','=','posted')]"/>
+                    <filter name="filter_cancelled" string="Cancelled" domain="[('state','=','cancelled')]"/>
+                    <group expand="0" string="Group By">
+                        <filter name="group_by_customer" string="Customer" context="{'group_by':'customer_id'}"/>
+                        <filter name="group_by_method" string="Payment Method" context="{'group_by':'payment_method'}"/>
+                        <filter name="group_by_state" string="State" context="{'group_by':'state'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
+        <record id="action_customer_payment" model="ir.actions.act_window">
+            <field name="name">Customer Payments</field>
+            <field name="res_model">tapis.customer.payment</field>
+            <field name="view_mode">tree,form</field>
+            <field name="search_view_id" ref="view_customer_payment_search"/>
+        </record>
+    </data>
+</odoo>

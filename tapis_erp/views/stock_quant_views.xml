@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="view_stock_quant_tree" model="ir.ui.view">
+            <field name="name">tapis.stock.quant.tree</field>
+            <field name="model">tapis.stock.quant</field>
+            <field name="arch" type="xml">
+                <tree string="Stock by Warehouse" decoration-success="available_quantity > 10"
+                      decoration-warning="available_quantity > 0 and available_quantity &lt;= 10"
+                      decoration-danger="available_quantity &lt;= 0">
+                    <field name="product_id"/>
+                    <field name="warehouse_id"/>
+                    <field name="quantity"/>
+                    <field name="reserved_quantity"/>
+                    <field name="available_quantity"/>
+                    <field name="inventory_value" sum="Total Value"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="view_stock_quant_form" model="ir.ui.view">
+            <field name="name">tapis.stock.quant.form</field>
+            <field name="model">tapis.stock.quant</field>
+            <field name="arch" type="xml">
+                <form string="Stock Quant">
+                    <sheet>
+                        <group>
+                            <field name="product_id"/>
+                            <field name="warehouse_id"/>
+                            <field name="quantity"/>
+                            <field name="reserved_quantity"/>
+                            <field name="available_quantity"/>
+                            <field name="inventory_value"/>
+                        </group>
+                        <group>
+                            <field name="note"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="view_stock_quant_search" model="ir.ui.view">
+            <field name="name">tapis.stock.quant.search</field>
+            <field name="model">tapis.stock.quant</field>
+            <field name="arch" type="xml">
+                <search string="Search Stock">
+                    <field name="product_id"/>
+                    <field name="warehouse_id"/>
+                    <filter name="low_stock" string="Low Stock" domain="[('available_quantity','&lt;',5)]"/>
+                    <filter name="out_of_stock" string="Out of Stock" domain="[('available_quantity','&lt;=',0)]"/>
+                    <group expand="0" string="Group By">
+                        <filter name="group_by_warehouse" string="Warehouse" context="{'group_by':'warehouse_id'}"/>
+                        <filter name="group_by_product" string="Product" context="{'group_by':'product_id'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
+        <record id="action_stock_quant" model="ir.actions.act_window">
+            <field name="name">Stock by Warehouse</field>
+            <field name="res_model">tapis.stock.quant</field>
+            <field name="view_mode">tree,form</field>
+            <field name="search_view_id" ref="view_stock_quant_search"/>
+        </record>
+
+    </data>
+</odoo>

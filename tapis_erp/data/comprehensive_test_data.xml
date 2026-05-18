@@ -1,0 +1,496 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo noupdate="0">
+
+    <!-- ============================================
+         PRODUCTS (in both companies, some shared)
+         ============================================ -->
+    <record id="test_product_atlas" model="tapis.product">
+        <field name="name">Atlas Diamond Carpet</field>
+        <field name="code">PRD-T001</field>
+        <field name="category">traditional</field>
+        <field name="price">4500.00</field>
+        <field name="cost">2200.00</field>
+        <field name="stock_qty">25</field>
+        <field name="company_id" ref="company_tapis_maroc"/>
+    </record>
+
+    <record id="test_product_modern" model="tapis.product">
+        <field name="name">Modern Geometric</field>
+        <field name="code">PRD-T002</field>
+        <field name="category">modern</field>
+        <field name="price">5800.00</field>
+        <field name="cost">3100.00</field>
+        <field name="stock_qty">12</field>
+        <field name="company_id" ref="company_tapis_maroc"/>
+    </record>
+
+    <record id="test_product_silk" model="tapis.product">
+        <field name="name">Silk Royal Premium</field>
+        <field name="code">PRD-T003</field>
+        <field name="category">custom</field>
+        <field name="price">12000.00</field>
+        <field name="cost">6500.00</field>
+        <field name="stock_qty">5</field>
+        <field name="is_shared" eval="True"/>
+        <field name="company_id" ref="company_tapis_maroc"/>
+    </record>
+
+    <record id="test_product_export" model="tapis.product">
+        <field name="name">Export Collection Wool</field>
+        <field name="code">PRD-T004</field>
+        <field name="category">traditional</field>
+        <field name="price">3200.00</field>
+        <field name="cost">1500.00</field>
+        <field name="stock_qty">40</field>
+        <field name="company_id" ref="company_tapis_export"/>
+    </record>
+
+    <!-- ============================================
+         CUSTOMERS
+         ============================================ -->
+    <record id="test_customer_paris" model="tapis.customer">
+        <field name="name">Paris Décor SARL</field>
+        <field name="phone">+33 1 23 45 67 89</field>
+        <field name="email">contact@parisdecor.fr</field>
+        <field name="address">15 Rue de la Paix, Paris</field>
+        <field name="company_id" ref="company_tapis_maroc"/>
+    </record>
+
+    <record id="test_customer_dubai" model="tapis.customer">
+        <field name="name">Dubai Luxury Homes</field>
+        <field name="phone">+971 4 123 4567</field>
+        <field name="email">info@dubailuxury.ae</field>
+        <field name="address">Sheikh Zayed Road, Dubai</field>
+        <field name="company_id" ref="company_tapis_maroc"/>
+    </record>
+
+    <record id="test_customer_berlin" model="tapis.customer">
+        <field name="name">Berlin Interiors GmbH</field>
+        <field name="phone">+49 30 9876 5432</field>
+        <field name="email">info@berlininteriors.de</field>
+        <field name="address">Unter den Linden 25, Berlin</field>
+        <field name="company_id" ref="company_tapis_export"/>
+    </record>
+
+    <!-- ============================================
+         WAREHOUSES
+         ============================================ -->
+    <record id="test_wh_casa" model="tapis.warehouse">
+        <field name="name">Casablanca Main Warehouse</field>
+        <field name="address">Zone Industrielle, Casablanca</field>
+        <field name="company_id" ref="company_tapis_maroc"/>
+    </record>
+
+    <record id="test_wh_marrakech" model="tapis.warehouse">
+        <field name="name">Marrakech Workshop</field>
+        <field name="address">Quartier Industriel, Marrakech</field>
+        <field name="company_id" ref="company_tapis_maroc"/>
+    </record>
+
+    <record id="test_wh_berlin" model="tapis.warehouse">
+        <field name="name">Berlin Distribution Center</field>
+        <field name="address">Gewerbegebiet, Berlin</field>
+        <field name="company_id" ref="company_tapis_export"/>
+    </record>
+
+    <!-- ============================================
+         STOCK QUANTS
+         ============================================ -->
+    <record id="test_quant_atlas_casa" model="tapis.stock.quant">
+        <field name="product_id" ref="test_product_atlas"/>
+        <field name="warehouse_id" ref="test_wh_casa"/>
+        <field name="quantity" eval="15"/>
+        <field name="company_id" ref="company_tapis_maroc"/>
+    </record>
+
+    <record id="test_quant_atlas_marrakech" model="tapis.stock.quant">
+        <field name="product_id" ref="test_product_atlas"/>
+        <field name="warehouse_id" ref="test_wh_marrakech"/>
+        <field name="quantity" eval="10"/>
+        <field name="company_id" ref="company_tapis_maroc"/>
+    </record>
+
+    <record id="test_quant_modern_casa" model="tapis.stock.quant">
+        <field name="product_id" ref="test_product_modern"/>
+        <field name="warehouse_id" ref="test_wh_casa"/>
+        <field name="quantity" eval="8"/>
+        <field name="company_id" ref="company_tapis_maroc"/>
+    </record>
+
+    <record id="test_quant_export_berlin" model="tapis.stock.quant">
+        <field name="product_id" ref="test_product_export"/>
+        <field name="warehouse_id" ref="test_wh_berlin"/>
+        <field name="quantity" eval="30"/>
+        <field name="company_id" ref="company_tapis_export"/>
+    </record>
+
+    <!-- ============================================
+         SALES ORDERS
+         ============================================ -->
+    <record id="test_sale_paris" model="tapis.sale">
+        <field name="customer_id" ref="test_customer_paris"/>
+        <field name="product_id" ref="test_product_atlas"/>
+        <field name="quantity" eval="3"/>
+        <field name="unit_price" eval="4500.00"/>
+        <field name="state">confirmed</field>
+        <field name="company_id" ref="company_tapis_maroc"/>
+    </record>
+
+    <record id="test_sale_dubai" model="tapis.sale">
+        <field name="customer_id" ref="test_customer_dubai"/>
+        <field name="product_id" ref="test_product_silk"/>
+        <field name="quantity" eval="2"/>
+        <field name="unit_price" eval="12000.00"/>
+        <field name="state">draft</field>
+        <field name="company_id" ref="company_tapis_maroc"/>
+    </record>
+
+    <record id="test_sale_berlin" model="tapis.sale">
+        <field name="customer_id" ref="test_customer_berlin"/>
+        <field name="product_id" ref="test_product_export"/>
+        <field name="quantity" eval="5"/>
+        <field name="unit_price" eval="3200.00"/>
+        <field name="state">delivered</field>
+        <field name="company_id" ref="company_tapis_export"/>
+    </record>
+
+    <!-- ============================================
+         PURCHASES
+         ============================================ -->
+    <record id="test_purchase_wool" model="tapis.purchase">
+        <field name="supplier_id" ref="supplier_maroc_wool"/>
+        <field name="product_id" ref="test_product_atlas"/>
+        <field name="quantity" eval="50"/>
+        <field name="unit_price" eval="2200.00"/>
+        <field name="state">approved</field>
+        <field name="company_id" ref="company_tapis_maroc"/>
+    </record>
+
+    <record id="test_purchase_textile" model="tapis.purchase">
+        <field name="supplier_id" ref="supplier_atlas_textiles"/>
+        <field name="product_id" ref="test_product_modern"/>
+        <field name="quantity" eval="20"/>
+        <field name="unit_price" eval="3100.00"/>
+        <field name="state">pending_approval</field>
+        <field name="company_id" ref="company_tapis_maroc"/>
+    </record>
+
+    <!-- ============================================
+         INVOICES
+         ============================================ -->
+    <record id="test_invoice_paris" model="tapis.invoice">
+        <field name="name">INV/T001</field>
+        <field name="sale_id" ref="test_sale_paris"/>
+        <field name="amount_untaxed" eval="13500.00"/>
+        <field name="tax_rate" eval="20"/>
+        <field name="state">posted</field>
+        <field name="payment_status">unpaid</field>
+        <field name="company_id" ref="company_tapis_maroc"/>
+    </record>
+
+    <record id="test_invoice_berlin" model="tapis.invoice">
+        <field name="name">INV/T002</field>
+        <field name="sale_id" ref="test_sale_berlin"/>
+        <field name="amount_untaxed" eval="16000.00"/>
+        <field name="tax_rate" eval="19"/>
+        <field name="state">posted</field>
+        <field name="payment_status">paid</field>
+        <field name="company_id" ref="company_tapis_export"/>
+    </record>
+
+    <!-- ============================================
+         PRODUCTIONS
+         ============================================ -->
+    <record id="test_production_berbere" model="tapis.production">
+        <field name="name">MFG/T001</field>
+        <field name="product_id" ref="test_product_atlas"/>
+        <field name="quantity" eval="5"/>
+        <field name="state">planned</field>
+        <field name="company_id" ref="company_tapis_maroc"/>
+    </record>
+
+    <record id="test_production_silk" model="tapis.production">
+        <field name="name">MFG/T002</field>
+        <field name="product_id" ref="test_product_silk"/>
+        <field name="quantity" eval="2"/>
+        <field name="state">in_progress</field>
+        <field name="company_id" ref="company_tapis_maroc"/>
+    </record>
+
+    <!-- ============================================
+         BOMS
+         ============================================ -->
+    <record id="test_bom_modern" model="tapis.bom">
+        <field name="name">BOM - Modern Geometric</field>
+        <field name="product_id" ref="test_product_modern"/>
+        <field name="version" eval="1.0"/>
+        <field name="company_id" ref="company_tapis_maroc"/>
+    </record>
+
+    <!-- ============================================
+         QUALITY INSPECTIONS
+         ============================================ -->
+    <record id="test_qi_silk" model="tapis.quality.inspection">
+        <field name="name">QI/T001</field>
+        <field name="product_id" ref="test_product_silk"/>
+        <field name="production_id" ref="test_production_silk"/>
+        <field name="result">passed</field>
+        <field name="company_id" ref="company_tapis_maroc"/>
+    </record>
+
+    <record id="test_qi_atlas" model="tapis.quality.inspection">
+        <field name="name">QI/T002</field>
+        <field name="product_id" ref="test_product_atlas"/>
+        <field name="production_id" ref="test_production_berbere"/>
+        <field name="result">failed</field>
+        <field name="company_id" ref="company_tapis_maroc"/>
+    </record>
+
+    <!-- ============================================
+         EQUIPMENT
+         ============================================ -->
+    <record id="test_equip_loom" model="tapis.equipment">
+        <field name="name">Jacquard Loom-01</field>
+        <field name="code">EQ/T001</field>
+        <field name="state">operational</field>
+        <field name="company_id" ref="company_tapis_maroc"/>
+    </record>
+
+    <record id="test_equip_dye" model="tapis.equipment">
+        <field name="name">Dyeing Machine-01</field>
+        <field name="code">EQ/T002</field>
+        <field name="state">maintenance</field>
+        <field name="company_id" ref="company_tapis_maroc"/>
+    </record>
+
+    <record id="test_equip_cutting" model="tapis.equipment">
+        <field name="name">CNC Cutter-01</field>
+        <field name="code">EQ/T003</field>
+        <field name="state">operational</field>
+        <field name="company_id" ref="company_tapis_export"/>
+    </record>
+
+    <!-- ============================================
+         MAINTENANCE ORDERS
+         ============================================ -->
+    <record id="test_maint_dye" model="tapis.maintenance.order">
+        <field name="name">MO/T001</field>
+        <field name="equipment_id" ref="test_equip_dye"/>
+        <field name="description">Routine maintenance of dyeing machine</field>
+        <field name="state">in_progress</field>
+        <field name="company_id" ref="company_tapis_maroc"/>
+    </record>
+
+    <!-- ============================================
+         PROJECTS
+         ============================================ -->
+    <record id="test_project_hotel" model="tapis.project">
+        <field name="name">Hotel Royal Palace Project</field>
+        <field name="description">Supply and installation of carpets for Hotel Royal Palace</field>
+        <field name="state">in_progress</field>
+        <field name="budget_amount" eval="250000.00"/>
+        <field name="company_id" ref="company_tapis_maroc"/>
+    </record>
+
+    <record id="test_project_export" model="tapis.project">
+        <field name="name">European Expansion Q2</field>
+        <field name="description">European market expansion project</field>
+        <field name="state">draft</field>
+        <field name="budget_amount" eval="180000.00"/>
+        <field name="company_id" ref="company_tapis_export"/>
+    </record>
+
+    <!-- ============================================
+         TASKS
+         ============================================ -->
+    <record id="test_task_design" model="tapis.task">
+        <field name="name">Design custom patterns for Hotel</field>
+        <field name="project_id" ref="test_project_hotel"/>
+        <field name="state">in_progress</field>
+        <field name="planned_hours" eval="120.0"/>
+        <field name="company_id" ref="company_tapis_maroc"/>
+    </record>
+
+    <record id="test_task_production" model="tapis.task">
+        <field name="name">Produce 50 carpets for Hotel</field>
+        <field name="project_id" ref="test_project_hotel"/>
+        <field name="state">todo</field>
+        <field name="planned_hours" eval="400.0"/>
+        <field name="deadline" eval="2026-07-15"/>
+        <field name="company_id" ref="company_tapis_maroc"/>
+    </record>
+
+    <!-- ============================================
+         CRM LEADS
+         ============================================ -->
+    <record id="test_lead_italy" model="tapis.crm.lead">
+        <field name="name">Milan Design Store</field>
+        <field name="expected_revenue" eval="75000.00"/>
+        <field name="probability" eval="60"/>
+        <field name="state">open</field>
+        <field name="company_id" ref="company_tapis_maroc"/>
+    </record>
+
+    <record id="test_lead_spain" model="tapis.crm.lead">
+        <field name="name">Barcelona Hotel Chain</field>
+        <field name="expected_revenue" eval="120000.00"/>
+        <field name="probability" eval="40"/>
+        <field name="state">open</field>
+        <field name="company_id" ref="company_tapis_export"/>
+    </record>
+
+    <record id="test_lead_won" model="tapis.crm.lead">
+        <field name="name">Casablanca Office Tower</field>
+        <field name="expected_revenue" eval="95000.00"/>
+        <field name="probability" eval="100"/>
+        <field name="state">won</field>
+        <field name="company_id" ref="company_tapis_maroc"/>
+    </record>
+
+    <!-- ============================================
+         COST CENTERS
+         ============================================ -->
+    <record id="test_cc_production" model="tapis.cost.center">
+        <field name="name">Production Department</field>
+        <field name="code">CC/T001</field>
+        <field name="company_id" ref="company_tapis_maroc"/>
+    </record>
+
+    <record id="test_cc_sales" model="tapis.cost.center">
+        <field name="name">Sales &amp; Marketing</field>
+        <field name="code">CC/T002</field>
+        <field name="company_id" ref="company_tapis_maroc"/>
+    </record>
+
+    <!-- ============================================
+         BUDGETS
+         ============================================ -->
+    <record id="test_budget_2026" model="tapis.budget">
+        <field name="name">BGT/T001</field>
+        <field name="fiscal_year" eval="2026"/>
+        <field name="state">approved</field>
+        <field name="company_id" ref="company_tapis_maroc"/>
+    </record>
+
+    <!-- ============================================
+         DOCUMENTS
+         ============================================ -->
+    <record id="test_doc_quality" model="tapis.document">
+        <field name="name">Quality Certificate ISO 9001</field>
+        <field name="code">DOC/T001</field>
+        <field name="state">approved</field>
+        <field name="company_id" ref="company_tapis_maroc"/>
+    </record>
+
+    <record id="test_doc_contract" model="tapis.document">
+        <field name="name">Export Contract EU-2026</field>
+        <field name="code">DOC/T002</field>
+        <field name="state">draft</field>
+        <field name="is_shared" eval="True"/>
+        <field name="company_id" ref="company_tapis_maroc"/>
+    </record>
+
+    <!-- ============================================
+         APPROVAL REQUESTS
+         ============================================ -->
+    <record id="test_approval_budget" model="tapis.approval.request">
+        <field name="name">APR/T001</field>
+        <field name="amount" eval="50000.00"/>
+        <field name="description">Budget approval for new looms</field>
+        <field name="state">pending</field>
+        <field name="company_id" ref="company_tapis_maroc"/>
+    </record>
+
+    <!-- ============================================
+         SIGNATURE REQUESTS
+         ============================================ -->
+    <record id="test_sign_contract" model="tapis.signature.request">
+        <field name="name">SIG/T001</field>
+        <field name="state">pending</field>
+        <field name="company_id" ref="company_tapis_maroc"/>
+    </record>
+
+    <!-- ============================================
+         COMMUNICATION LOGS
+         ============================================ -->
+    <record id="test_comm_email" model="tapis.communication.log">
+        <field name="name">Welcome email to Paris Décor</field>
+        <field name="status">sent</field>
+        <field name="company_id" ref="company_tapis_maroc"/>
+    </record>
+
+    <!-- ============================================
+         AUTOMATION JOBS
+         ============================================ -->
+    <record id="test_auto_job" model="tapis.automation.job">
+        <field name="name">Daily Stock Report</field>
+        <field name="code">AUTO/T001</field>
+        <field name="model_name">tapis.stock.quant</field>
+        <field name="method_name">action_check_low_stock</field>
+        <field name="company_id" ref="company_tapis_maroc"/>
+    </record>
+
+    <!-- ============================================
+         AUDIT LOGS
+         ============================================ -->
+    <record id="test_audit_1" model="tapis.audit.log">
+        <field name="name">Created product Atlas Diamond</field>
+        <field name="model_name">tapis.product</field>
+        <field name="action_type">create</field>
+        <field name="company_id" ref="company_tapis_maroc"/>
+    </record>
+
+    <record id="test_audit_2" model="tapis.audit.log">
+        <field name="name">Updated sale order Paris</field>
+        <field name="model_name">tapis.sale</field>
+        <field name="action_type">write</field>
+        <field name="company_id" ref="company_tapis_maroc"/>
+    </record>
+
+    <!-- ============================================
+         STOCK MOVES
+         ============================================ -->
+    <record id="test_stock_move_1" model="tapis.stock.move">
+        <field name="name">SM/T001</field>
+        <field name="product_id" ref="test_product_atlas"/>
+        <field name="from_warehouse_id" ref="test_wh_marrakech"/>
+        <field name="to_warehouse_id" ref="test_wh_casa"/>
+        <field name="quantity" eval="5"/>
+        <field name="company_id" ref="company_tapis_maroc"/>
+    </record>
+
+    <!-- ============================================
+         CUSTOMER PAYMENTS
+         ============================================ -->
+    <record id="test_payment_paris" model="tapis.customer.payment">
+        <field name="customer_id" ref="test_customer_paris"/>
+        <field name="amount" eval="13500.00"/>
+        <field name="company_id" ref="company_tapis_maroc"/>
+    </record>
+
+    <!-- ============================================
+         SECURITY INCIDENTS
+         ============================================ -->
+    <record id="test_security_incident" model="tapis.security.incident">
+        <field name="name">Test: Unauthorized access attempt</field>
+        <field name="model_name">tapis.budget</field>
+        <field name="operation">unauthorized_access</field>
+        <field name="severity">medium</field>
+    </record>
+
+    <!-- ============================================
+         SECURITY DEPARTMENTS
+         ============================================ -->
+    <record id="test_sec_dept_it" model="tapis.security.department">
+        <field name="name">IT Security</field>
+        <field name="code">SEC-IT</field>
+        <field name="description">Information technology security team</field>
+    </record>
+
+    <record id="test_sec_dept_finance" model="tapis.security.department">
+        <field name="name">Financial Control</field>
+        <field name="code">SEC-FIN</field>
+        <field name="description">Financial security and compliance</field>
+    </record>
+
+</odoo>

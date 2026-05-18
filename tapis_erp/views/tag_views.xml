@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- TREE VIEW -->
+        <record id="view_tag_tree" model="ir.ui.view">
+            <field name="name">tapis.tag.tree</field>
+            <field name="model">tapis.tag</field>
+            <field name="arch" type="xml">
+                <tree string="Tags">
+                    <field name="name"/>
+                    <field name="color"/>
+                </tree>
+            </field>
+        </record>
+
+        <!-- FORM VIEW -->
+        <record id="view_tag_form" model="ir.ui.view">
+            <field name="name">tapis.tag.form</field>
+            <field name="model">tapis.tag</field>
+            <field name="arch" type="xml">
+                <form string="Tag">
+                    <sheet>
+                        <group>
+                            <field name="name"/>
+                            <field name="color" widget="color_picker"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <!-- SEARCH VIEW -->
+        <record id="view_tag_search" model="ir.ui.view">
+            <field name="name">tapis.tag.search</field>
+            <field name="model">tapis.tag</field>
+            <field name="arch" type="xml">
+                <search string="Search Tags">
+                    <field name="name"/>
+                </search>
+            </field>
+        </record>
+
+        <!-- ACTION -->
+        <record id="action_tag" model="ir.actions.act_window">
+            <field name="name">Tags</field>
+            <field name="res_model">tapis.tag</field>
+            <field name="view_mode">tree,form</field>
+            <field name="search_view_id" ref="view_tag_search"/>
+        </record>
+
+        </data>
+</odoo>

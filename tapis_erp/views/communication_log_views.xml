@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="view_tapis_communication_log_tree" model="ir.ui.view">
+            <field name="name">tapis.communication.log.tree</field>
+            <field name="model">tapis.communication.log</field>
+            <field name="arch" type="xml">
+                <tree string="Communication Logs"
+                    decoration-success="status == 'sent'"
+                    decoration-danger="status == 'failed'"
+                    decoration-warning="status == 'pending'"
+                    decoration-muted="status == 'skipped'"
+                    default_order="id desc">
+                    <field name="name"/>
+                    <field name="template_id"/>
+                    <field name="recipient_emails"/>
+                    <field name="subject"/>
+                    <field name="status" widget="badge"
+                        decoration-success="status == 'sent'"
+                        decoration-danger="status == 'failed'"
+                        decoration-warning="status == 'pending'"
+                        decoration-muted="status == 'skipped'"/>
+                    <field name="sent_date"/>
+                    <field name="error_message"/>
+                    <field name="user_id"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="view_tapis_communication_log_form" model="ir.ui.view">
+            <field name="name">tapis.communication.log.form</field>
+            <field name="model">tapis.communication.log</field>
+            <field name="arch" type="xml">
+                <form string="Communication Log">
+                    <sheet>
+                        <group>
+                            <field name="name"/>
+                            <field name="template_id"/>
+                            <field name="model_name"/>
+                            <field name="record_id"/>
+                            <field name="user_id"/>
+                        </group>
+                        <group>
+                            <field name="recipient_emails"/>
+                            <field name="subject"/>
+                            <field name="status" widget="badge"/>
+                            <field name="sent_date"/>
+                            <field name="error_message"/>
+                            <field name="mail_message_id"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="view_tapis_communication_log_search" model="ir.ui.view">
+            <field name="name">tapis.communication.log.search</field>
+            <field name="model">tapis.communication.log</field>
+            <field name="arch" type="xml">
+                <search string="Search Logs">
+                    <field name="name"/>
+                    <field name="template_id"/>
+                    <field name="recipient_emails"/>
+                    <field name="subject"/>
+                    <filter name="filter_sent" string="Sent" domain="[('status','=','sent')]"/>
+                    <filter name="filter_failed" string="Failed" domain="[('status','=','failed')]"/>
+                    <filter name="filter_pending" string="Pending" domain="[('status','=','pending')]"/>
+                    <separator/>
+                    <group expand="0" string="Group By">
+                        <filter name="group_by_status" string="Status" context="{'group_by':'status'}"/>
+                        <filter name="group_by_template" string="Template" context="{'group_by':'template_id'}"/>
+                        <filter name="group_by_date" string="Sent Date" context="{'group_by':'sent_date'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
+        <record id="action_tapis_communication_log" model="ir.actions.act_window">
+            <field name="name">Communication Logs</field>
+            <field name="res_model">tapis.communication.log</field>
+            <field name="view_mode">tree,form</field>
+            <field name="search_view_id" ref="view_tapis_communication_log_search"/>
+        </record>
+    </data>
+</odoo>

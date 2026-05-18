@@ -1,0 +1,1637 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* tapis_erp
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 15.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-05-11 12:00+0000\n"
+"PO-Revision-Date: 2026-05-11 12:00+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: fr_FR\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+
+#. module: tapis_erp
+#: model:ir.model,name:tapis_erp.model_tapis_product
+msgid "Tapis Product"
+msgstr "Produit Tapis"
+
+#. module: tapis_erp
+#: model:ir.model,name:tapis_erp.model_tapis_design
+msgid "Tapis Design"
+msgstr "Design Tapis"
+
+#. module: tapis_erp
+#: model:ir.model,name:tapis_erp.model_tapis_production
+msgid "Tapis Production"
+msgstr "Production Tapis"
+
+#. module: tapis_erp
+#: model:ir.model,name:tapis_erp.model_tapis_sale
+msgid "Tapis Sale"
+msgstr "Vente Tapis"
+
+#. module: tapis_erp
+#: model:ir.model,name:tapis_erp.model_tapis_purchase
+msgid "Purchase Order"
+msgstr "Bon de commande"
+
+#. module: tapis_erp
+#: model:ir.model,name:tapis_erp.model_tapis_stock_move
+msgid "Stock Movement"
+msgstr "Mouvement de stock"
+
+#. module: tapis_erp
+#: model:ir.model,name:tapis_erp.model_tapis_employee
+msgid "Tapis Employee"
+msgstr "Employé Tapis"
+
+#. module: tapis_erp
+#: model:ir.model,name:tapis_erp.model_tapis_supplier
+msgid "Supplier"
+msgstr "Fournisseur"
+
+#. module: tapis_erp
+#: model:ir.model,name:tapis_erp.model_tapis_dashboard
+msgid "Tapis Dashboard"
+msgstr "Tableau de bord Tapis"
+
+#. module: tapis_erp
+#: model:ir.model,name:tapis_erp.model_tapis_tag
+msgid "Tapis Tag"
+msgstr "Étiquette Tapis"
+
+#. module: tapis_erp
+#: model:ir.model.fields,field_description:tapis_erp.field_tapis_product__name
+msgid "Product Name"
+msgstr "Nom du produit"
+
+#. module: tapis_erp
+#: model:ir.model.fields,field_description:tapis_erp.field_tapis_product__code
+msgid "Product Code"
+msgstr "Code produit"
+
+#. module: tapis_erp
+#: model:ir.model.fields,field_description:tapis_erp.field_tapis_product__description
+msgid "Description"
+msgstr "Description"
+
+#. module: tapis_erp
+#: model:ir.model.fields,field_description:tapis_erp.field_tapis_product__category
+msgid "Category"
+msgstr "Catégorie"
+
+#. module: tapis_erp
+#: model:ir.model.fields,field_description:tapis_erp.field_tapis_product__designer_id
+msgid "Designer"
+msgstr "Designer"
+
+#. module: tapis_erp
+#: model:ir.model.fields,field_description:tapis_erp.field_tapis_product__price
+msgid "Price"
+msgstr "Prix"
+
+#. module: tapis_erp
+#: model:ir.model.fields,field_description:tapis_erp.field_tapis_product__cost
+msgid "Cost"
+msgstr "Coût"
+
+#. module: tapis_erp
+#: model:ir.model.fields,field_description:tapis_erp.field_tapis_product__stock_qty
+msgid "Stock Quantity"
+msgstr "Quantité en stock"
+
+#. module: tapis_erp
+#: model:ir.model.fields,field_description:tapis_erp.field_tapis_product__stock__qy
+msgid "Stock Quantity"
+msgstr "Quantité en stock"
+
+#. module: tapis_erp
+#: model:ir.model.fields,field_description:tapis_erp.field_tapis_product__margin
+msgid "Margin"
+msgstr "Marge"
+
+#. module: tapis_erp
+#: model:ir.model.fields,field_description:tapis_erp.field_tapis_product__state
+msgid "State"
+msgstr "État"
+
+#. module: tapis_erp
+#: model:ir.model.fields,field_description:tapis_erp.field_tapis_product__active
+msgid "Active"
+msgstr "Actif"
+
+#. module: tapis_erp
+#: model:ir.model.fields,field_description:tapis_erp.field_tapis_product__design_id
+msgid "Related Design"
+msgstr "Design associé"
+
+#. module: tapis_erp
+#: model:ir.model.fields,field_description:tapis_erp.field_tapis_product__image
+msgid "Product Image"
+msgstr "Image du produit"
+
+#. module: tapis_erp
+#: model:ir.model.fields,field_description:tapis_erp.field_tapis_product__tag_ids
+msgid "Tags"
+msgstr "Étiquettes"
+
+#. module: tapis_erp
+#: model:ir.model.fields,field_description:tapis_erp.field_tapis_product__production_ids
+msgid "Productions"
+msgstr "Productions"
+
+#. module: tapis_erp
+#: model:ir.model.fields,field_description:tapis_erp.field_tapis_product__sale_ids
+msgid "Sales"
+msgstr "Ventes"
+
+#. module: tapis_erp
+#: model:ir.model.fields,field_description:tapis_erp.field_tapis_product__purchase_ids
+msgid "Purchases"
+msgstr "Achats"
+
+#. module: tapis_erp
+#: model:ir.model.fields,field_description:tapis_erp.field_tapis_product__production_count
+msgid "Production Count"
+msgstr "Nombre de productions"
+
+#. module: tapis_erp
+#: model:ir.model.fields,field_description:tapis_erp.field_tapis_product__sale_count
+msgid "Sale Count"
+msgstr "Nombre de ventes"
+
+#. module: tapis_erp
+#: model:ir.model.fields,field_description:tapis_erp.field_tapis_product__purchase_count
+msgid "Purchase Count"
+msgstr "Nombre d'achats"
+
+#. module: tapis_erp
+#: model:ir.model.fields,field_description:tapis_erp.field_tapis_product__display_name
+msgid "Display Name"
+msgstr "Nom affiché"
+
+#. module: tapis_erp
+#: model:ir.model.fields,field_description:tapis_erp.field_tapis_product__id
+msgid "ID"
+msgstr "ID"
+
+#. module: tapis_erp
+#: model:ir.model.fields,field_description:tapis_erp.field_tapis_product__create_uid
+msgid "Created by"
+msgstr "Créé par"
+
+#. module: tapis_erp
+#: model:ir.model.fields,field_description:tapis_erp.field_tapis_product__create_date
+msgid "Created on"
+msgstr "Créé le"
+
+#. module: tapis_erp
+#: model:ir.model.fields,field_description:tapis_erp.field_tapis_product__write_uid
+msgid "Last Updated by"
+msgstr "Dernière mise à jour par"
+
+#. module: tapis_erp
+#: model:ir.model.fields,field_description:tapis_erp.field_tapis_product__write_date
+msgid "Last Updated on"
+msgstr "Dernière mise à jour le"
+
+#. module: tapis_erp
+#: model:ir.model.fields.selection,name:tapis_erp.selection__tapis_product__category__traditional
+msgid "Traditional"
+msgstr "Traditionnel"
+
+#. module: tapis_erp
+#: model:ir.model.fields.selection,name:tapis_erp.selection__tapis_product__category__modern
+msgid "Modern"
+msgstr "Moderne"
+
+#. module: tapis_erp
+#: model:ir.model.fields.selection,name:tapis_erp.selection__tapis_product__category__custom
+msgid "Custom design"
+msgstr "Design sur mesure"
+
+#. module: tapis_erp
+#: model:ir.model.fields.selection,name:tapis_erp.selection__tapis_product__state__draft
+msgid "Draft"
+msgstr "Brouillon"
+
+#. module: tapis_erp
+#: model:ir.model.fields.selection,name:tapis_erp.selection__tapis_product__state__available
+msgid "Available"
+msgstr "Disponible"
+
+#. module: tapis_erp
+#: model:ir.model.fields.selection,name:tapis_erp.selection__tapis_product__state__out_of_stock
+msgid "Out of Stock"
+msgstr "Rupture de stock"
+
+#. module: tapis_erp
+#: model:ir.model.fields,field_description:tapis_erp.field_tapis_design__name
+msgid "Design Name"
+msgstr "Nom du design"
+
+#. module: tapis_erp
+#: model:ir.model.fields,field_description:tapis_erp.field_tapis_design__designer_id
+msgid "Designer"
+msgstr "Designer"
+
+#. module: tapis_erp
+#: model:ir.model.fields,field_description:tapis_erp.field_tapis_design__image
+msgid "Design Image"
+msgstr "Image du design"
+
+#. module: tapis_erp
+#: model:ir.model.fields,field_description:tapis_erp.field_tapis_design__product_id
+msgid "Related Product"
+msgstr "Produit associé"
+
+#. module: tapis_erp
+#: model:ir.model.fields,field_description:tapis_erp.field_tapis_design__state
+msgid "Status"
+msgstr "Statut"
+
+#. module: tapis_erp
+#: model:ir.model.fields.selection,name:tapis_erp.selection__tapis_design__state__draft
+msgid "Draft"
+msgstr "Brouillon"
+
+#. module: tapis_erp
+#: model:ir.model.fields.selection,name:tapis_erp.selection__tapis_design__state__approved
+msgid "Approved"
+msgstr "Approuvé"
+
+#. module: tapis_erp
+#: model:ir.model.fields.selection,name:tapis_erp.selection__tapis_design__state__in_production
+msgid "In Production"
+msgstr "En production"
+
+#. module: tapis_erp
+#: model:ir.model.fields,field_description:tapis_erp.field_tapis_production__name
+msgid "Production Reference"
+msgstr "Référence de production"
+
+#. module: tapis_erp
+#: model:ir.model.fields,field_description:tapis_erp.field_tapis_production__product_id
+msgid "Product"
+msgstr "Produit"
+
+#. module: tapis_erp
+#: model:ir.model.fields,field_description:tapis_erp.field_tapis_production__design_id
+msgid "Design"
+msgstr "Design"
+
+#. module: tapis_erp
+#: model:ir.model.fields,field_description:tapis_erp.field_tapis_production__quantity
+msgid "Quantity"
+msgstr "Quantité"
+
+#. module: tapis_erp
+#: model:ir.model.fields,field_description:tapis_erp.field_tapis_production__note
+msgid "Notes"
+msgstr "Notes"
+
+#. module: tapis_erp
+#: model:ir.model.fields,field_description:tapis_erp.field_tapis_production__employee_ids
+msgid "Employees"
+msgstr "Employés"
+
+#. module: tapis_erp
+#: model:ir.model.fields,field_description:tapis_erp.field_tapis_production__message_follower_ids
+msgid "Followers"
+msgstr "Abonnés"
+
+#. module: tapis_erp
+#: model:ir.model.fields,field_description:tapis_erp.field_tapis_production__activity_ids
+msgid "Activities"
+msgstr "Activités"
+
+#. module: tapis_erp
+#: model:ir.model.fields,field_description:tapis_erp.field_tapis_production__message_ids
+msgid "Messages"
+msgstr "Messages"
+
+#. module: tapis_erp
+#: model:ir.model.fields.selection,name:tapis_erp.selection__tapis_production__state__planned
+msgid "Planned"
+msgstr "Planifié"
+
+#. module: tapis_erp
+#: model:ir.model.fields.selection,name:tapis_erp.selection__tapis_production__state__in_progress
+msgid "In Progress"
+msgstr "En cours"
+
+#. module: tapis_erp
+#: model:ir.model.fields.selection,name:tapis_erp.selection__tapis_production__state__done
+msgid "Done"
+msgstr "Terminé"
+
+#. module: tapis_erp
+#: model:ir.model.fields.selection,name:tapis_erp.selection__tapis_production__state__cancelled
+msgid "Cancelled"
+msgstr "Annulé"
+
+#. module: tapis_erp
+#: model:ir.model.fields,field_description:tapis_erp.field_tapis_sale__name
+msgid "Sale Reference"
+msgstr "Référence de vente"
+
+#. module: tapis_erp
+#: model:ir.model.fields,field_description:tapis_erp.field_tapis_sale__partner_id
+msgid "Customer"
+msgstr "Client"
+
+#. module: tapis_erp
+#: model:ir.model.fields,field_description:tapis_erp.field_tapis_sale__customer_name
+msgid "Customer"
+msgstr "Client"
+
+#. module: tapis_erp
+#: model:ir.model.fields,field_description:tapis_erp.field_tapis_sale__product_id
+msgid "Product"
+msgstr "Produit"
+
+#. module: tapis_erp
+#: model:ir.model.fields,field_description:tapis_erp.field_tapis_sale__quantity
+msgid "Quantity"
+msgstr "Quantité"
+
+#. module: tapis_erp
+#: model:ir.model.fields,field_description:tapis_erp.field_tapis_sale__order_date
+msgid "Order Date"
+msgstr "Date de commande"
+
+#. module: tapis_erp
+#: model:ir.model.fields,field_description:tapis_erp.field_tapis_sale__unit_price
+msgid "Unit Price"
+msgstr "Prix unitaire"
+
+#. module: tapis_erp
+#: model:ir.model.fields,field_description:tapis_erp.field_tapis_sale__total_price
+msgid "Total Price"
+msgstr "Prix total"
+
+#. module: tapis_erp
+#: model:ir.model.fields.selection,name:tapis_erp.selection__tapis_sale__state__draft
+msgid "Draft"
+msgstr "Brouillon"
+
+#. module: tapis_erp
+#: model:ir.model.fields.selection,name:tapis_erp.selection__tapis_sale__state__confirmed
+msgid "Confirmed"
+msgstr "Confirmé"
+
+#. module: tapis_erp
+#: model:ir.model.fields.selection,name:tapis_erp.selection__tapis_sale__state__delivered
+msgid "Delivered"
+msgstr "Livré"
+
+#. module: tapis_erp
+#: model:ir.model.fields.selection,name:tapis_erp.selection__tapis_sale__state__cancelled
+msgid "Cancelled"
+msgstr "Annulé"
+
+#. module: tapis_erp
+#: model:ir.model.fields,field_description:tapis_erp.field_tapis_purchase__name
+msgid "Purchase Reference"
+msgstr "Référence d'achat"
+
+#. module: tapis_erp
+#: model:ir.model.fields,field_description:tapis_erp.field_tapis_purchase__supplier_id
+msgid "Supplier"
+msgstr "Fournisseur"
+
+#. module: tapis_erp
+#: model:ir.model.fields,field_description:tapis_erp.field_tapis_purchase__product_id
+msgid "Product"
+msgstr "Produit"
+
+#. module: tapis_erp
+#: model:ir.model.fields,field_description:tapis_erp.field_tapis_purchase__quantity
+msgid "Quantity"
+msgstr "Quantité"
+
+#. module: tapis_erp
+#: model:ir.model.fields,field_description:tapis_erp.field_tapis_purchase__unit_price
+msgid "Unit Price"
+msgstr "Prix unitaire"
+
+#. module: tapis_erp
+#: model:ir.model.fields,field_description:tapis_erp.field_tapis_purchase__total_price
+msgid "Total Price"
+msgstr "Prix total"
+
+#. module: tapis_erp
+#: model:ir.model.fields,field_description:tapis_erp.field_tapis_purchase__expected_date
+msgid "Expected Date"
+msgstr "Date prévue"
+
+#. module: tapis_erp
+#: model:ir.model.fields,field_description:tapis_erp.field_tapis_purchase__received_date
+msgid "Received Date"
+msgstr "Date de réception"
+
+#. module: tapis_erp
+#: model:ir.model.fields,field_description:tapis_erp.field_tapis_purchase__note
+msgid "Note"
+msgstr "Note"
+
+#. module: tapis_erp
+#: model:ir.model.fields.selection,name:tapis_erp.selection__tapis_purchase__state__draft
+msgid "Draft"
+msgstr "Brouillon"
+
+#. module: tapis_erp
+#: model:ir.model.fields.selection,name:tapis_erp.selection__tapis_purchase__state__confirmed
+msgid "Confirmed"
+msgstr "Confirmé"
+
+#. module: tapis_erp
+#: model:ir.model.fields.selection,name:tapis_erp.selection__tapis_purchase__state__received
+msgid "Received"
+msgstr "Reçu"
+
+#. module: tapis_erp
+#: model:ir.model.fields.selection,name:tapis_erp.selection__tapis_purchase__state__cancelled
+msgid "Cancelled"
+msgstr "Annulé"
+
+#. module: tapis_erp
+#: model:ir.model.fields,field_description:tapis_erp.field_tapis_stock_move__name
+msgid "Reference"
+msgstr "Référence"
+
+#. module: tapis_erp
+#: model:ir.model.fields,field_description:tapis_erp.field_tapis_stock_move__product_id
+msgid "Product"
+msgstr "Produit"
+
+#. module: tapis_erp
+#: model:ir.model.fields,field_description:tapis_erp.field_tapis_stock_move__quantity
+msgid "Quantity"
+msgstr "Quantité"
+
+#. module: tapis_erp
+#: model:ir.model.fields,field_description:tapis_erp.field_tapis_stock_move__move_type
+msgid "Move Type"
+msgstr "Type de mouvement"
+
+#. module: tapis_erp
+#: model:ir.model.fields,field_description:tapis_erp.field_tapis_stock_move__date
+msgid "Date"
+msgstr "Date"
+
+#. module: tapis_erp
+#: model:ir.model.fields,field_description:tapis_erp.field_tapis_stock_move__note
+msgid "Notes"
+msgstr "Notes"
+
+#. module: tapis_erp
+#: model:ir.model.fields.selection,name:tapis_erp.selection__tapis_stock_move__move_type__in
+msgid "Stock In"
+msgstr "Entrée stock"
+
+#. module: tapis_erp
+#: model:ir.model.fields.selection,name:tapis_erp.selection__tapis_stock_move__move_type__out
+msgid "Stock Out"
+msgstr "Sortie stock"
+
+#. module: tapis_erp
+#: model:ir.model.fields.selection,name:tapis_erp.selection__tapis_stock_move__move_type__adjustment
+msgid "Adjustment"
+msgstr "Ajustement"
+
+#. module: tapis_erp
+#: model:ir.model.fields,field_description:tapis_erp.field_tapis_employee__name
+msgid "Employee Name"
+msgstr "Nom de l'employé"
+
+#. module: tapis_erp
+#: model:ir.model.fields,field_description:tapis_erp.field_tapis_employee__role
+msgid "Role"
+msgstr "Rôle"
+
+#. module: tapis_erp
+#: model:ir.model.fields,field_description:tapis_erp.field_tapis_employee__phone
+msgid "Phone"
+msgstr "Téléphone"
+
+#. module: tapis_erp
+#: model:ir.model.fields,field_description:tapis_erp.field_tapis_employee__email
+msgid "Email"
+msgstr "E-mail"
+
+#. module: tapis_erp
+#: model:ir.model.fields,field_description:tapis_erp.field_tapis_employee__salary
+msgid "Salary"
+msgstr "Salaire"
+
+#. module: tapis_erp
+#: model:ir.model.fields,field_description:tapis_erp.field_tapis_employee__image
+msgid "Employee Image"
+msgstr "Photo de l'employé"
+
+#. module: tapis_erp
+#: model:ir.model.fields,field_description:tapis_erp.field_tapis_employee__production_count
+msgid "Production Count"
+msgstr "Nombre de productions"
+
+#. module: tapis_erp
+#: model:ir.model.fields.selection,name:tapis_erp.selection__tapis_employee__role__designer
+msgid "Designer"
+msgstr "Designer"
+
+#. module: tapis_erp
+#: model:ir.model.fields.selection,name:tapis_erp.selection__tapis_employee__role__commercial
+msgid "Commercial"
+msgstr "Commercial"
+
+#. module: tapis_erp
+#: model:ir.model.fields.selection,name:tapis_erp.selection__tapis_employee__role__production
+msgid "Production"
+msgstr "Production"
+
+#. module: tapis_erp
+#: model:ir.model.fields.selection,name:tapis_erp.selection__tapis_employee__role__developer
+msgid "Developer"
+msgstr "Développeur"
+
+#. module: tapis_erp
+#: model:ir.model.fields.selection,name:tapis_erp.selection__tapis_employee__role__manager
+msgid "Manager"
+msgstr "Responsable"
+
+#. module: tapis_erp
+#: model:ir.model.fields,field_description:tapis_erp.field_tapis_supplier__name
+msgid "Supplier Name"
+msgstr "Nom du fournisseur"
+
+#. module: tapis_erp
+#: model:ir.model.fields,field_description:tapis_erp.field_tapis_supplier__contact_person
+msgid "Contact Person"
+msgstr "Personne à contacter"
+
+#. module: tapis_erp
+#: model:ir.model.fields,field_description:tapis_erp.field_tapis_supplier__phone
+msgid "Phone"
+msgstr "Téléphone"
+
+#. module: tapis_erp
+#: model:ir.model.fields,field_description:tapis_erp.field_tapis_supplier__email
+msgid "Email"
+msgstr "E-mail"
+
+#. module: tapis_erp
+#: model:ir.model.fields,field_description:tapis_erp.field_tapis_supplier__address
+msgid "Address"
+msgstr "Adresse"
+
+#. module: tapis_erp
+#: model:ir.model.fields,field_description:tapis_erp.field_tapis_supplier__note
+msgid "Note"
+msgstr "Note"
+
+#. module: tapis_erp
+#: model:ir.model.fields,field_description:tapis_erp.field_tapis_supplier__active
+msgid "Active"
+msgstr "Actif"
+
+#. module: tapis_erp
+#: model:ir.model.fields,field_description:tapis_erp.field_tapis_supplier__purchase_ids
+msgid "Purchase Orders"
+msgstr "Bons de commande"
+
+#. module: tapis_erp
+#: model:ir.model.fields,field_description:tapis_erp.field_tapis_supplier__purchase_count
+msgid "Purchase Count"
+msgstr "Nombre d'achats"
+
+#. module: tapis_erp
+#: model:ir.model.fields,field_description:tapis_erp.field_tapis_dashboard__name
+msgid "Name"
+msgstr "Nom"
+
+#. module: tapis_erp
+#: model:ir.model.fields,field_description:tapis_erp.field_tapis_dashboard__total_products
+msgid "Total Products"
+msgstr "Total produits"
+
+#. module: tapis_erp
+#: model:ir.model.fields,field_description:tapis_erp.field_tapis_dashboard__total_designs
+msgid "Total Designs"
+msgstr "Total designs"
+
+#. module: tapis_erp
+#: model:ir.model.fields,field_description:tapis_erp.field_tapis_dashboard__total_productions
+msgid "Total Productions"
+msgstr "Total productions"
+
+#. module: tapis_erp
+#: model:ir.model.fields,field_description:tapis_erp.field_tapis_dashboard__total_sales
+msgid "Total Sales"
+msgstr "Total ventes"
+
+#. module: tapis_erp
+#: model:ir.model.fields,field_description:tapis_erp.field_tapis_dashboard__total_purchases
+msgid "Total Purchases"
+msgstr "Total achats"
+
+#. module: tapis_erp
+#: model:ir.model.fields,field_description:tapis_erp.field_tapis_dashboard__total_suppliers
+msgid "Total Suppliers"
+msgstr "Total fournisseurs"
+
+#. module: tapis_erp
+#: model:ir.model.fields,field_description:tapis_erp.field_tapis_dashboard__total_employees
+msgid "Total Employees"
+msgstr "Total employés"
+
+#. module: tapis_erp
+#: model:ir.model.fields,field_description:tapis_erp.field_tapis_dashboard__total_stock
+msgid "Total Stock"
+msgstr "Stock total"
+
+#. module: tapis_erp
+#: model:ir.model.fields,field_description:tapis_erp.field_tapis_dashboard__inventory_value
+msgid "Inventory Value"
+msgstr "Valeur du stock"
+
+#. module: tapis_erp
+#: model:ir.model.fields,field_description:tapis_erp.field_tapis_dashboard__total_sales_revenue
+msgid "Total Sales Revenue"
+msgstr "Chiffre d'affaires"
+
+#. module: tapis_erp
+#: model:ir.model.fields,field_description:tapis_erp.field_tapis_dashboard__total_purchase_cost
+msgid "Total Purchase Cost"
+msgstr "Coût total des achats"
+
+#. module: tapis_erp
+#: model:ir.model.fields,field_description:tapis_erp.field_tapis_dashboard__low_stock_count
+msgid "Low Stock Count"
+msgstr "Nombre de ruptures"
+
+#. module: tapis_erp
+#: model:ir.model.fields,field_description:tapis_erp.field_tapis_dashboard__total_revenue
+msgid "Total Revenue"
+msgstr "Revenu total"
+
+#. module: tapis_erp
+#: model:ir.model.fields,field_description:tapis_erp.field_tapis_tag__name
+msgid "Tag Name"
+msgstr "Nom de l'étiquette"
+
+#. module: tapis_erp
+#: model:ir.model.fields,field_description:tapis_erp.field_tapis_tag__color
+msgid "Color"
+msgstr "Couleur"
+
+#. module: tapis_erp
+#: model:ir.ui.view,arch_db:tapis_erp.view_tapis_product_search
+msgid "Search Tapis Products"
+msgstr "Rechercher des produits"
+
+#. module: tapis_erp
+#: model:ir.ui.view,arch_db:tapis_erp.view_tapis_product_search
+msgid "Available"
+msgstr "Disponible"
+
+#. module: tapis_erp
+#: model:ir.ui.view,arch_db:tapis_erp.view_tapis_product_search
+msgid "Out of Stock"
+msgstr "Rupture de stock"
+
+#. module: tapis_erp
+#: model:ir.ui.view,arch_db:tapis_erp.view_tapis_product_search
+msgid "Low Stock"
+msgstr "Stock faible"
+
+#. module: tapis_erp
+#: model:ir.ui.view,arch_db:tapis_erp.view_tapis_product_search
+msgid "Active"
+msgstr "Actif"
+
+#. module: tapis_erp
+#: model:ir.ui.view,arch_db:tapis_erp.view_tapis_product_search
+msgid "Group By"
+msgstr "Grouper par"
+
+#. module: tapis_erp
+#: model:ir.ui.view,arch_db:tapis_erp.view_tapis_product_search
+msgid "Category"
+msgstr "Catégorie"
+
+#. module: tapis_erp
+#: model:ir.ui.view,arch_db:tapis_erp.view_tapis_product_search
+msgid "State"
+msgstr "État"
+
+#. module: tapis_erp
+#: model:ir.ui.view,arch_db:tapis_erp.view_tapis_product_search
+msgid "Designer"
+msgstr "Designer"
+
+#. module: tapis_erp
+#: model:ir.ui.view,arch_db:tapis_erp.view_tapis_product_search
+msgid "Tags"
+msgstr "Étiquettes"
+
+#. module: tapis_erp
+#: model:ir.ui.view,arch_db:tapis_erp.view_tapis_product_tree
+msgid "Tapis Product"
+msgstr "Produit"
+
+#. module: tapis_erp
+#: model:ir.ui.view,arch_db:tapis_erp.view_tapis_product_form
+msgid "Tapis Product"
+msgstr "Produit"
+
+#. module: tapis_erp
+#: model:ir.ui.view,arch_db:tapis_erp.view_tapis_product_form
+msgid "Productions"
+msgstr "Productions"
+
+#. module: tapis_erp
+#: model:ir.ui.view,arch_db:tapis_erp.view_tapis_product_form
+msgid "Sales"
+msgstr "Ventes"
+
+#. module: tapis_erp
+#: model:ir.ui.view,arch_db:tapis_erp.view_tapis_product_form
+msgid "Purchases"
+msgstr "Achats"
+
+#. module: tapis_erp
+#: model:ir.ui.view,arch_db:tapis_erp.view_tapis_product_form
+msgid "General Information"
+msgstr "Informations générales"
+
+#. module: tapis_erp
+#: model:ir.ui.view,arch_db:tapis_erp.view_tapis_product_form
+msgid "Inventory"
+msgstr "Stock"
+
+#. module: tapis_erp
+#: model:ir.ui.view,arch_db:tapis_erp.view_tapis_product_form
+msgid "Productions"
+msgstr "Productions"
+
+#. module: tapis_erp
+#: model:ir.ui.view,arch_db:tapis_erp.view_tapis_product_form
+msgid "Sales History"
+msgstr "Historique des ventes"
+
+#. module: tapis_erp
+#: model:ir.ui.view,arch_db:tapis_erp.view_tapis_product_form
+msgid "Purchases"
+msgstr "Achats"
+
+#. module: tapis_erp
+#: model:ir.ui.view,arch_db:tapis_erp.view_tapis_kanban
+msgid "Price:"
+msgstr "Prix :"
+
+#. module: tapis_erp
+#: model:ir.ui.view,arch_db:tapis_erp.view_tapis_kanban
+msgid "Stock:"
+msgstr "Stock :"
+
+#. module: tapis_erp
+#: model:ir.ui.view,arch_db:tapis_erp.view_tapis_kanban
+msgid "Status:"
+msgstr "Statut :"
+
+#. module: tapis_erp
+#: model:ir.actions.act_window,name:tapis_erp.action_tapis_product
+msgid "Tapis Products"
+msgstr "Produits"
+
+#. module: tapis_erp
+#: model:ir.ui.menu,name:tapis_erp.menu_tapis_root
+msgid "Tapis ERP"
+msgstr "Tapis ERP"
+
+#. module: tapis_erp
+#: model:ir.ui.menu,name:tapis_erp.menu_tapis_product
+msgid "Products"
+msgstr "Produits"
+
+#. module: tapis_erp
+#: model:ir.ui.view,arch_db:tapis_erp.view_design_tree
+msgid "Designs"
+msgstr "Designs"
+
+#. module: tapis_erp
+#: model:ir.ui.view,arch_db:tapis_erp.view_design_form
+msgid "Design"
+msgstr "Design"
+
+#. module: tapis_erp
+#: model:ir.actions.act_window,name:tapis_erp.action_design
+msgid "Designs"
+msgstr "Designs"
+
+#. module: tapis_erp
+#: model:ir.ui.menu,name:tapis_erp.menu_design
+msgid "Designs"
+msgstr "Designs"
+
+#. module: tapis_erp
+#: model:ir.ui.view,arch_db:tapis_erp.view_tapis_production_tree
+msgid "Production"
+msgstr "Production"
+
+#. module: tapis_erp
+#: model:ir.ui.view,arch_db:tapis_erp.view_tapis_production_form
+msgid "Production"
+msgstr "Production"
+
+#. module: tapis_erp
+#: model:ir.ui.view,arch_db:tapis_erp.view_tapis_production_form
+msgid "Start"
+msgstr "Démarrer"
+
+#. module: tapis_erp
+#: model:ir.ui.view,arch_db:tapis_erp.view_tapis_production_form
+msgid "Done"
+msgstr "Terminer"
+
+#. module: tapis_erp
+#: model:ir.ui.view,arch_db:tapis_erp.view_tapis_production_form
+msgid "Cancel"
+msgstr "Annuler"
+
+#. module: tapis_erp
+#: model:ir.ui.view,arch_db:tapis_erp.view_tapis_production_form
+msgid "Print Report"
+msgstr "Imprimer le rapport"
+
+#. module: tapis_erp
+#: model:ir.ui.view,arch_db:tapis_erp.view_tapis_production_search
+msgid "Search Productions"
+msgstr "Rechercher des productions"
+
+#. module: tapis_erp
+#: model:ir.ui.view,arch_db:tapis_erp.view_tapis_production_search
+msgid "Planned"
+msgstr "Planifié"
+
+#. module: tapis_erp
+#: model:ir.ui.view,arch_db:tapis_erp.view_tapis_production_search
+msgid "In Progress"
+msgstr "En cours"
+
+#. module: tapis_erp
+#: model:ir.ui.view,arch_db:tapis_erp.view_tapis_production_search
+msgid "Done"
+msgstr "Terminé"
+
+#. module: tapis_erp
+#: model:ir.ui.view,arch_db:tapis_erp.view_tapis_production_search
+msgid "Cancelled"
+msgstr "Annulé"
+
+#. module: tapis_erp
+#: model:ir.ui.view,arch_db:tapis_erp.view_tapis_production_search
+msgid "Group By"
+msgstr "Grouper par"
+
+#. module: tapis_erp
+#: model:ir.ui.view,arch_db:tapis_erp.view_tapis_production_search
+msgid "Product"
+msgstr "Produit"
+
+#. module: tapis_erp
+#: model:ir.ui.view,arch_db:tapis_erp.view_tapis_production_search
+msgid "State"
+msgstr "État"
+
+#. module: tapis_erp
+#: model:ir.ui.view,arch_db:tapis_erp.view_tapis_production_search
+msgid "Design"
+msgstr "Design"
+
+#. module: tapis_erp
+#: model:ir.actions.act_window,name:tapis_erp.action_tapis_production
+msgid "Productions"
+msgstr "Productions"
+
+#. module: tapis_erp
+#: model:ir.ui.menu,name:tapis_erp.menu_production
+msgid "Productions"
+msgstr "Productions"
+
+#. module: tapis_erp
+#: model:ir.ui.view,arch_db:tapis_erp.view_sale_tree
+msgid "Sales"
+msgstr "Ventes"
+
+#. module: tapis_erp
+#: model:ir.ui.view,arch_db:tapis_erp.view_sale_tree
+msgid "Total Revenue"
+msgstr "Revenu total"
+
+#. module: tapis_erp
+#: model:ir.ui.view,arch_db:tapis_erp.view_sale_form
+msgid "Sale Order"
+msgstr "Bon de vente"
+
+#. module: tapis_erp
+#: model:ir.ui.view,arch_db:tapis_erp.view_sale_form
+msgid "Confirm"
+msgstr "Confirmer"
+
+#. module: tapis_erp
+#: model:ir.ui.view,arch_db:tapis_erp.view_sale_form
+msgid "Deliver"
+msgstr "Livrer"
+
+#. module: tapis_erp
+#: model:ir.ui.view,arch_db:tapis_erp.view_sale_form
+msgid "Print Invoice"
+msgstr "Imprimer la facture"
+
+#. module: tapis_erp
+#: model:ir.ui.view,arch_db:tapis_erp.view_sale_search
+msgid "Sales"
+msgstr "Ventes"
+
+#. module: tapis_erp
+#: model:ir.ui.view,arch_db:tapis_erp.view_sale_search
+msgid "Draft"
+msgstr "Brouillon"
+
+#. module: tapis_erp
+#: model:ir.ui.view,arch_db:tapis_erp.view_sale_search
+msgid "Confirmed"
+msgstr "Confirmé"
+
+#. module: tapis_erp
+#: model:ir.ui.view,arch_db:tapis_erp.view_sale_search
+msgid "Delivered"
+msgstr "Livré"
+
+#. module: tapis_erp
+#: model:ir.ui.view,arch_db:tapis_erp.view_sale_search
+msgid "Cancelled"
+msgstr "Annulé"
+
+#. module: tapis_erp
+#: model:ir.ui.view,arch_db:tapis_erp.view_sale_search
+msgid "Group By"
+msgstr "Grouper par"
+
+#. module: tapis_erp
+#: model:ir.ui.view,arch_db:tapis_erp.view_sale_search
+msgid "Customer"
+msgstr "Client"
+
+#. module: tapis_erp
+#: model:ir.ui.view,arch_db:tapis_erp.view_sale_search
+msgid "Product"
+msgstr "Produit"
+
+#. module: tapis_erp
+#: model:ir.ui.view,arch_db:tapis_erp.view_sale_search
+msgid "State"
+msgstr "État"
+
+#. module: tapis_erp
+#: model:ir.actions.act_window,name:tapis_erp.action_sale
+msgid "Sales"
+msgstr "Ventes"
+
+#. module: tapis_erp
+#: model:ir.ui.menu,name:tapis_erp.menu_sale
+msgid "Sales"
+msgstr "Ventes"
+
+#. module: tapis_erp
+#: model:ir.ui.view,arch_db:tapis_erp.view_purchase_tree
+msgid "Purchase Orders"
+msgstr "Bons de commande"
+
+#. module: tapis_erp
+#: model:ir.ui.view,arch_db:tapis_erp.view_purchase_tree
+msgid "Total Purchases"
+msgstr "Total achats"
+
+#. module: tapis_erp
+#: model:ir.ui.view,arch_db:tapis_erp.view_purchase_form
+msgid "Purchase Order"
+msgstr "Bon de commande"
+
+#. module: tapis_erp
+#: model:ir.ui.view,arch_db:tapis_erp.view_purchase_form
+msgid "Confirm"
+msgstr "Confirmer"
+
+#. module: tapis_erp
+#: model:ir.ui.view,arch_db:tapis_erp.view_purchase_form
+msgid "Receive"
+msgstr "Réceptionner"
+
+#. module: tapis_erp
+#: model:ir.ui.view,arch_db:tapis_erp.view_purchase_form
+msgid "Cancel"
+msgstr "Annuler"
+
+#. module: tapis_erp
+#: model:ir.ui.view,arch_db:tapis_erp.view_purchase_form
+msgid "Print Purchase Report"
+msgstr "Imprimer le rapport d'achat"
+
+#. module: tapis_erp
+#: model:ir.ui.view,arch_db:tapis_erp.view_purchase_form
+msgid "General Information"
+msgstr "Informations générales"
+
+#. module: tapis_erp
+#: model:ir.ui.view,arch_db:tapis_erp.view_purchase_form
+msgid "Notes"
+msgstr "Notes"
+
+#. module: tapis_erp
+#: model:ir.ui.view,arch_db:tapis_erp.view_purchase_search
+msgid "Search Purchase Orders"
+msgstr "Rechercher des bons de commande"
+
+#. module: tapis_erp
+#: model:ir.ui.view,arch_db:tapis_erp.view_purchase_search
+msgid "Draft"
+msgstr "Brouillon"
+
+#. module: tapis_erp
+#: model:ir.ui.view,arch_db:tapis_erp.view_purchase_search
+msgid "Confirmed"
+msgstr "Confirmé"
+
+#. module: tapis_erp
+#: model:ir.ui.view,arch_db:tapis_erp.view_purchase_search
+msgid "Received"
+msgstr "Reçu"
+
+#. module: tapis_erp
+#: model:ir.ui.view,arch_db:tapis_erp.view_purchase_search
+msgid "Cancelled"
+msgstr "Annulé"
+
+#. module: tapis_erp
+#: model:ir.ui.view,arch_db:tapis_erp.view_purchase_search
+msgid "Group By"
+msgstr "Grouper par"
+
+#. module: tapis_erp
+#: model:ir.ui.view,arch_db:tapis_erp.view_purchase_search
+msgid "Supplier"
+msgstr "Fournisseur"
+
+#. module: tapis_erp
+#: model:ir.ui.view,arch_db:tapis_erp.view_purchase_search
+msgid "State"
+msgstr "État"
+
+#. module: tapis_erp
+#: model:ir.ui.view,arch_db:tapis_erp.view_purchase_search
+msgid "Product"
+msgstr "Produit"
+
+#. module: tapis_erp
+#: model:ir.actions.act_window,name:tapis_erp.action_purchase
+msgid "Purchases"
+msgstr "Achats"
+
+#. module: tapis_erp
+#: model:ir.ui.menu,name:tapis_erp.menu_purchase
+msgid "Purchases"
+msgstr "Achats"
+
+#. module: tapis_erp
+#: model:ir.ui.view,arch_db:tapis_erp.view_stock_tree
+msgid "Stock Moves"
+msgstr "Mouvements de stock"
+
+#. module: tapis_erp
+#: model:ir.actions.act_window,name:tapis_erp.action_stock_move
+msgid "Stock Moves"
+msgstr "Mouvements de stock"
+
+#. module: tapis_erp
+#: model:ir.ui.menu,name:tapis_erp.menu_stock_move
+msgid "Stock Moves"
+msgstr "Mouvements de stock"
+
+#. module: tapis_erp
+#: model:ir.ui.view,arch_db:tapis_erp.view_employee_tree
+msgid "Employees"
+msgstr "Employés"
+
+#. module: tapis_erp
+#: model:ir.ui.view,arch_db:tapis_erp.view_employee_form
+msgid "Employee"
+msgstr "Employé"
+
+#. module: tapis_erp
+#: model:ir.ui.view,arch_db:tapis_erp.view_employee_form
+msgid "Productions"
+msgstr "Productions"
+
+#. module: tapis_erp
+#: model:ir.actions.act_window,name:tapis_erp.action_employee
+msgid "Employees"
+msgstr "Employés"
+
+#. module: tapis_erp
+#: model:ir.ui.menu,name:tapis_erp.menu_hr
+msgid "Employees"
+msgstr "Employés"
+
+#. module: tapis_erp
+#: model:ir.ui.view,arch_db:tapis_erp.view_supplier_tree
+msgid "Suppliers"
+msgstr "Fournisseurs"
+
+#. module: tapis_erp
+#: model:ir.ui.view,arch_db:tapis_erp.view_supplier_form
+msgid "Supplier"
+msgstr "Fournisseur"
+
+#. module: tapis_erp
+#: model:ir.ui.view,arch_db:tapis_erp.view_supplier_form
+msgid "Purchases"
+msgstr "Achats"
+
+#. module: tapis_erp
+#: model:ir.ui.view,arch_db:tapis_erp.view_supplier_form
+msgid "General Information"
+msgstr "Informations générales"
+
+#. module: tapis_erp
+#: model:ir.ui.view,arch_db:tapis_erp.view_supplier_form
+msgid "Purchase Orders"
+msgstr "Bons de commande"
+
+#. module: tapis_erp
+#: model:ir.ui.view,arch_db:tapis_erp.view_supplier_form
+msgid "Notes"
+msgstr "Notes"
+
+#. module: tapis_erp
+#: model:ir.ui.view,arch_db:tapis_erp.view_supplier_search
+msgid "Search Suppliers"
+msgstr "Rechercher des fournisseurs"
+
+#. module: tapis_erp
+#: model:ir.ui.view,arch_db:tapis_erp.view_supplier_search
+msgid "Active"
+msgstr "Actif"
+
+#. module: tapis_erp
+#: model:ir.actions.act_window,name:tapis_erp.action_supplier
+msgid "Suppliers"
+msgstr "Fournisseurs"
+
+#. module: tapis_erp
+#: model:ir.ui.menu,name:tapis_erp.menu_supplier
+msgid "Suppliers"
+msgstr "Fournisseurs"
+
+#. module: tapis_erp
+#: model:ir.ui.view,arch_db:tapis_erp.view_dashboard_form
+msgid "ERP Dashboard"
+msgstr "Tableau de bord ERP"
+
+#. module: tapis_erp
+#: model:ir.ui.view,arch_db:tapis_erp.view_dashboard_form
+msgid "Refresh Dashboard"
+msgstr "Actualiser le tableau de bord"
+
+#. module: tapis_erp
+#: model:ir.ui.view,arch_db:tapis_erp.view_dashboard_form
+msgid "Products"
+msgstr "Produits"
+
+#. module: tapis_erp
+#: model:ir.ui.view,arch_db:tapis_erp.view_dashboard_form
+msgid "Designs"
+msgstr "Designs"
+
+#. module: tapis_erp
+#: model:ir.ui.view,arch_db:tapis_erp.view_dashboard_form
+msgid "Productions"
+msgstr "Productions"
+
+#. module: tapis_erp
+#: model:ir.ui.view,arch_db:tapis_erp.view_dashboard_form
+msgid "Sales"
+msgstr "Ventes"
+
+#. module: tapis_erp
+#: model:ir.ui.view,arch_db:tapis_erp.view_dashboard_form
+msgid "Purchases"
+msgstr "Achats"
+
+#. module: tapis_erp
+#: model:ir.ui.view,arch_db:tapis_erp.view_dashboard_form
+msgid "Suppliers"
+msgstr "Fournisseurs"
+
+#. module: tapis_erp
+#: model:ir.ui.view,arch_db:tapis_erp.view_dashboard_form
+msgid "Employees"
+msgstr "Employés"
+
+#. module: tapis_erp
+#: model:ir.ui.view,arch_db:tapis_erp.view_dashboard_form
+msgid "Finance"
+msgstr "Finances"
+
+#. module: tapis_erp
+#: model:ir.ui.view,arch_db:tapis_erp.view_dashboard_form
+msgid "Inventory Value (MAD)"
+msgstr "Valeur du stock (MAD)"
+
+#. module: tapis_erp
+#: model:ir.ui.view,arch_db:tapis_erp.view_dashboard_form
+msgid "Sales Revenue (MAD)"
+msgstr "Revenu des ventes (MAD)"
+
+#. module: tapis_erp
+#: model:ir.ui.view,arch_db:tapis_erp.view_dashboard_form
+msgid "Purchase Cost (MAD)"
+msgstr "Coût des achats (MAD)"
+
+#. module: tapis_erp
+#: model:ir.ui.view,arch_db:tapis_erp.view_dashboard_form
+msgid "Stock"
+msgstr "Stock"
+
+#. module: tapis_erp
+#: model:ir.ui.view,arch_db:tapis_erp.view_dashboard_form
+msgid "Total Stock Qty"
+msgstr "Quantité totale en stock"
+
+#. module: tapis_erp
+#: model:ir.ui.view,arch_db:tapis_erp.view_dashboard_form
+msgid "Low Stock Alerts"
+msgstr "Alertes de stock faible"
+
+#. module: tapis_erp
+#: model:ir.ui.view,arch_db:tapis_erp.view_dashboard_form
+msgid "Alerts"
+msgstr "Alertes"
+
+#. module: tapis_erp
+#: model:ir.ui.view,arch_db:tapis_erp.view_dashboard_form
+msgid "View Low Stock Products"
+msgstr "Voir les produits en stock faible"
+
+#. module: tapis_erp
+#: model:ir.actions.act_window,name:tapis_erp.action_dashboard
+msgid "Dashboard"
+msgstr "Tableau de bord"
+
+#. module: tapis_erp
+#: model:ir.ui.menu,name:tapis_erp.menu_dashboard
+msgid "Dashboard"
+msgstr "Tableau de bord"
+
+#. module: tapis_erp
+#: model:ir.ui.view,arch_db:tapis_erp.view_tag_tree
+msgid "Tags"
+msgstr "Étiquettes"
+
+#. module: tapis_erp
+#: model:ir.ui.view,arch_db:tapis_erp.view_tag_form
+msgid "Tag"
+msgstr "Étiquette"
+
+#. module: tapis_erp
+#: model:ir.ui.view,arch_db:tapis_erp.view_tag_search
+msgid "Search Tags"
+msgstr "Rechercher des étiquettes"
+
+#. module: tapis_erp
+#: model:ir.actions.act_window,name:tapis_erp.action_tag
+msgid "Tags"
+msgstr "Étiquettes"
+
+#. module: tapis_erp
+#: model:ir.ui.menu,name:tapis_erp.menu_tag
+msgid "Tags"
+msgstr "Étiquettes"
+
+#. module: tapis_erp
+#: model:ir.actions.report,name:tapis_erp.action_report_sale
+msgid "Sale Invoice"
+msgstr "Facture de vente"
+
+#. module: tapis_erp
+#: model:ir.actions.report,name:tapis_erp.action_report_production
+msgid "Production Report"
+msgstr "Rapport de production"
+
+#. module: tapis_erp
+#: model:ir.actions.report,name:tapis_erp.action_report_purchase
+msgid "Purchase Report"
+msgstr "Rapport d'achat"
+
+#. module: tapis_erp
+#: model:ir.ui.view,arch_db:tapis_erp.report_sale_document
+msgid "INVOICE"
+msgstr "FACTURE"
+
+#. module: tapis_erp
+#: model:ir.ui.view,arch_db:tapis_erp.report_sale_document
+msgid "Reference: "
+msgstr "Référence : "
+
+#. module: tapis_erp
+#: model:ir.ui.view,arch_db:tapis_erp.report_sale_document
+msgid "Date: "
+msgstr "Date : "
+
+#. module: tapis_erp
+#: model:ir.ui.view,arch_db:tapis_erp.report_sale_document
+msgid "Tapis Morocco"
+msgstr "Tapis Maroc"
+
+#. module: tapis_erp
+#: model:ir.ui.view,arch_db:tapis_erp.report_sale_document
+msgid "Marrakech, Morocco"
+msgstr "Marrakech, Maroc"
+
+#. module: tapis_erp
+#: model:ir.ui.view,arch_db:tapis_erp.report_sale_document
+msgid "Bill To:"
+msgstr "Facturé à :"
+
+#. module: tapis_erp
+#: model:ir.ui.view,arch_db:tapis_erp.report_sale_document
+msgid "Product"
+msgstr "Produit"
+
+#. module: tapis_erp
+#: model:ir.ui.view,arch_db:tapis_erp.report_sale_document
+msgid "Quantity"
+msgstr "Quantité"
+
+#. module: tapis_erp
+#: model:ir.ui.view,arch_db:tapis_erp.report_sale_document
+msgid "Unit Price (MAD)"
+msgstr "Prix unitaire (MAD)"
+
+#. module: tapis_erp
+#: model:ir.ui.view,arch_db:tapis_erp.report_sale_document
+msgid "Total (MAD)"
+msgstr "Total (MAD)"
+
+#. module: tapis_erp
+#: model:ir.ui.view,arch_db:tapis_erp.report_sale_document
+msgid "Total Amount"
+msgstr "Montant total"
+
+#. module: tapis_erp
+#: model:ir.ui.view,arch_db:tapis_erp.report_sale_document
+msgid "Thank you for your trust"
+msgstr "Merci pour votre confiance"
+
+#. module: tapis_erp
+#: model:ir.ui.view,arch_db:tapis_erp.report_production_document
+msgid "WORK ORDER"
+msgstr "ORDRE DE FABRICATION"
+
+#. module: tapis_erp
+#: model:ir.ui.view,arch_db:tapis_erp.report_production_document
+msgid "Reference: "
+msgstr "Référence : "
+
+#. module: tapis_erp
+#: model:ir.ui.view,arch_db:tapis_erp.report_production_document
+msgid "Tapis Morocco"
+msgstr "Tapis Maroc"
+
+#. module: tapis_erp
+#: model:ir.ui.view,arch_db:tapis_erp.report_production_document
+msgid "Marrakech, Morocco"
+msgstr "Marrakech, Maroc"
+
+#. module: tapis_erp
+#: model:ir.ui.view,arch_db:tapis_erp.report_production_document
+msgid "Product"
+msgstr "Produit"
+
+#. module: tapis_erp
+#: model:ir.ui.view,arch_db:tapis_erp.report_production_document
+msgid "Design"
+msgstr "Design"
+
+#. module: tapis_erp
+#: model:ir.ui.view,arch_db:tapis_erp.report_production_document
+msgid "Quantity"
+msgstr "Quantité"
+
+#. module: tapis_erp
+#: model:ir.ui.view,arch_db:tapis_erp.report_production_document
+msgid "Status"
+msgstr "Statut"
+
+#. module: tapis_erp
+#: model:ir.ui.view,arch_db:tapis_erp.report_production_document
+msgid "Notes:"
+msgstr "Notes :"
+
+#. module: tapis_erp
+#: model:ir.ui.view,arch_db:tapis_erp.report_production_document
+msgid "Tapis ERP - Production Department"
+msgstr "Tapis ERP - Service production"
+
+#. module: tapis_erp
+#: model:ir.ui.view,arch_db:tapis_erp.report_purchase_document
+msgid "PURCHASE ORDER"
+msgstr "BON DE COMMANDE"
+
+#. module: tapis_erp
+#: model:ir.ui.view,arch_db:tapis_erp.report_purchase_document
+msgid "Reference: "
+msgstr "Référence : "
+
+#. module: tapis_erp
+#: model:ir.ui.view,arch_db:tapis_erp.report_purchase_document
+msgid "Tapis Morocco"
+msgstr "Tapis Maroc"
+
+#. module: tapis_erp
+#: model:ir.ui.view,arch_db:tapis_erp.report_purchase_document
+msgid "Marrakech, Morocco"
+msgstr "Marrakech, Maroc"
+
+#. module: tapis_erp
+#: model:ir.ui.view,arch_db:tapis_erp.report_purchase_document
+msgid "Supplier"
+msgstr "Fournisseur"
+
+#. module: tapis_erp
+#: model:ir.ui.view,arch_db:tapis_erp.report_purchase_document
+msgid "Product"
+msgstr "Produit"
+
+#. module: tapis_erp
+#: model:ir.ui.view,arch_db:tapis_erp.report_purchase_document
+msgid "Quantity"
+msgstr "Quantité"
+
+#. module: tapis_erp
+#: model:ir.ui.view,arch_db:tapis_erp.report_purchase_document
+msgid "Unit Price (MAD)"
+msgstr "Prix unitaire (MAD)"
+
+#. module: tapis_erp
+#: model:ir.ui.view,arch_db:tapis_erp.report_purchase_document
+msgid "Total (MAD)"
+msgstr "Total (MAD)"
+
+#. module: tapis_erp
+#: model:ir.ui.view,arch_db:tapis_erp.report_purchase_document
+msgid "Expected Date"
+msgstr "Date prévue"
+
+#. module: tapis_erp
+#: model:ir.ui.view,arch_db:tapis_erp.report_purchase_document
+msgid "Received Date"
+msgstr "Date de réception"
+
+#. module: tapis_erp
+#: model:ir.ui.view,arch_db:tapis_erp.report_purchase_document
+msgid "Status"
+msgstr "Statut"
+
+#. module: tapis_erp
+#: model:ir.ui.view,arch_db:tapis_erp.report_purchase_document
+msgid "Notes:"
+msgstr "Notes :"
+
+#. module: tapis_erp
+#: model:ir.ui.view,arch_db:tapis_erp.report_purchase_document
+msgid "Tapis ERP - Procurement Department"
+msgstr "Tapis ERP - Service approvisionnement"
+
+#. module: tapis_erp
+#: model:res.groups,name:tapis_erp.group_tapis_user
+msgid "Tapis User"
+msgstr "Utilisateur Tapis"
+
+#. module: tapis_erp
+#: model:res.groups,name:tapis_erp.group_tapis_manager
+msgid "Tapis Manager"
+msgstr "Responsable Tapis"
+
+#. module: tapis_erp
+#: code:addons/tapis_erp/models/production.py:0
+msgid "Production started."
+msgstr "Production démarrée."
+
+#. module: tapis_erp
+#: code:addons/tapis_erp/models/production.py:0
+msgid "Production completed successfully."
+msgstr "Production terminée avec succès."
+
+#. module: tapis_erp
+#: code:addons/tapis_erp/models/production.py:0
+msgid "Production cancelled."
+msgstr "Production annulée."
+
+#. module: tapis_erp
+#: code:addons/tapis_erp/models/production.py:0
+msgid "Production Finished"
+msgstr "Production terminée"
+
+#. module: tapis_erp
+#: code:addons/tapis_erp/models/production.py:0
+msgid "Production order has been completed."
+msgstr "L'ordre de fabrication a été achevé."
+
+#. module: tapis_erp
+#: code:addons/tapis_erp/models/sale.py:0
+msgid "Not enough stock!"
+msgstr "Stock insuffisant !"
+
+#. module: tapis_erp
+#: code:addons/tapis_erp/models/sale.py:0
+msgid "Sale confirmed."
+msgstr "Vente confirmée."
+
+#. module: tapis_erp
+#: code:addons/tapis_erp/models/sale.py:0
+msgid "Product delivered successfully."
+msgstr "Produit livré avec succès."
+
+#. module: tapis_erp
+#: code:addons/tapis_erp/models/sale.py:0
+msgid "Delivery Completed"
+msgstr "Livraison terminée"
+
+#. module: tapis_erp
+#: code:addons/tapis_erp/models/sale.py:0
+msgid "Customer delivery completed."
+msgstr "Livraison client effectuée."
+
+#. module: tapis_erp
+#: code:addons/tapis_erp/models/purchase.py:0
+msgid "Only draft purchase orders can be confirmed."
+msgstr "Seuls les bons de commande en brouillon peuvent être confirmés."
+
+#. module: tapis_erp
+#: code:addons/tapis_erp/models/purchase.py:0
+msgid "Purchase order confirmed."
+msgstr "Bon de commande confirmé."
+
+#. module: tapis_erp
+#: code:addons/tapis_erp/models/purchase.py:0
+msgid "Only confirmed purchase orders can be received."
+msgstr "Seuls les bons de commande confirmés peuvent être réceptionnés."
+
+#. module: tapis_erp
+#: code:addons/tapis_erp/models/purchase.py:0
+msgid "Purchase order received successfully."
+msgstr "Bon de commande réceptionné avec succès."
+
+#. module: tapis_erp
+#: code:addons/tapis_erp/models/purchase.py:0
+msgid "Purchase Received"
+msgstr "Achat réceptionné"
+
+#. module: tapis_erp
+#: code:addons/tapis_erp/models/purchase.py:0
+msgid "Purchase order has been received."
+msgstr "Le bon de commande a été réceptionné."
+
+#. module: tapis_erp
+#: code:addons/tapis_erp/models/purchase.py:0
+msgid "Only draft or confirmed purchase orders can be cancelled."
+msgstr "Seuls les bons de commande en brouillon ou confirmés peuvent être annulés."
+
+#. module: tapis_erp
+#: code:addons/tapis_erp/models/purchase.py:0
+msgid "Purchase order cancelled."
+msgstr "Bon de commande annulé."
+
+#. module: tapis_erp
+#: code:addons/tapis_erp/models/production.py:0
+msgid "Production completed"
+msgstr "Production terminée"
+
+#. module: tapis_erp
+#: code:addons/tapis_erp/models/sale.py:0
+msgid "Product delivered to customer"
+msgstr "Produit livré au client"
+
+#. module: tapis_erp
+#: code:addons/tapis_erp/models/purchase.py:0
+msgid "Purchase received"
+msgstr "Achat réceptionné"

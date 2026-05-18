@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="action_report_design_wool" model="ir.actions.report">
+        <field name="name">Wool Consumption Sheet</field>
+        <field name="model">tapis.design</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">tapis_erp.report_design_wool_document</field>
+        <field name="report_file">tapis_erp.report_design_wool_document</field>
+        <field name="binding_model_id" ref="model_tapis_design"/>
+        <field name="binding_type">report</field>
+        <field name="print_report_name">'Wool-Consumption-%s' % (object.name)</field>
+    </record>
+</odoo>

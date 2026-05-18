@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <template id="report_task_template">
+            <t t-call="web.html_container">
+                <t t-foreach="docs" t-as="doc">
+                    <t t-call="web.internal_layout">
+                        <div class="page">
+                            <h2>Task Report</h2>
+                            <table class="table table-bordered">
+                                <tr><td><strong>Task:</strong></td><td t-esc="doc.name"/></tr>
+                                <tr><td><strong>Code:</strong></td><td t-esc="doc.code"/></tr>
+                                <tr><td><strong>Project:</strong></td><td t-esc="doc.project_id.name or ''"/></tr>
+                                <tr><td><strong>Assigned To:</strong></td><td t-esc="doc.assigned_employee_id.name or ''"/></tr>
+                                <tr><td><strong>Status:</strong></td><td t-esc="doc.state"/></tr>
+                                <tr><td><strong>Priority:</strong></td><td t-esc="doc.priority"/></tr>
+                                <tr><td><strong>Start Date:</strong></td><td t-esc="doc.start_date"/></tr>
+                                <tr><td><strong>Deadline:</strong></td><td t-esc="doc.deadline"/></tr>
+                                <tr><td><strong>Progress:</strong></td><td><t t-esc="doc.progress_percent"/>%</td></tr>
+                                <tr><td><strong>Planned Hours:</strong></td><td t-esc="doc.planned_hours"/></tr>
+                                <tr><td><strong>Actual Hours:</strong></td><td t-esc="doc.actual_hours"/></tr>
+                            </table>
+                            <h3>Timesheets</h3>
+                            <table class="table table-striped">
+                                <thead><tr><th>Date</th><th>Employee</th><th>Hours</th><th>Description</th></tr></thead>
+                                <tbody>
+                                    <tr t-foreach="doc.timesheet_ids" t-as="ts">
+                                        <td t-esc="ts.date"/>
+                                        <td t-esc="ts.employee_id.name or ''"/>
+                                        <td t-esc="ts.hours"/>
+                                        <td t-esc="ts.description"/>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <p t-if="doc.note"><strong>Notes:</strong> <t t-esc="doc.note"/></p>
+                        </div>
+                    </t>
+                </t>
+            </t>
+        </template>
+    </data>
+</odoo>

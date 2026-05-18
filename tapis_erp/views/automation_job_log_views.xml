@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- TREE VIEW -->
+        <record id="view_tapis_automation_job_log_tree" model="ir.ui.view">
+            <field name="name">tapis.automation.job.log.tree</field>
+            <field name="model">tapis.automation.job.log</field>
+            <field name="arch" type="xml">
+                <tree decoration-success="status == 'success'" decoration-danger="status == 'failed'" decoration-info="status == 'running'" decoration-warning="status == 'timeout'">
+                    <field name="job_id"/>
+                    <field name="start_datetime"/>
+                    <field name="end_datetime"/>
+                    <field name="duration_seconds" string="Duration (s)"/>
+                    <field name="status" widget="badge"/>
+                    <field name="records_processed"/>
+                    <field name="triggered_by"/>
+                    <field name="message"/>
+                </tree>
+            </field>
+        </record>
+
+        <!-- FORM VIEW -->
+        <record id="view_tapis_automation_job_log_form" model="ir.ui.view">
+            <field name="name">tapis.automation.job.log.form</field>
+            <field name="model">tapis.automation.job.log</field>
+            <field name="arch" type="xml">
+                <form string="Execution Log">
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="job_id"/>
+                                <field name="start_datetime"/>
+                                <field name="end_datetime"/>
+                                <field name="duration_seconds" string="Duration (s)"/>
+                            </group>
+                            <group>
+                                <field name="status" widget="badge"/>
+                                <field name="records_processed"/>
+                                <field name="triggered_by"/>
+                                <field name="user_id"/>
+                            </group>
+                        </group>
+                        <group string="Details">
+                            <field name="message" nolabel="1"/>
+                        </group>
+                        <group string="Traceback" attrs="{'invisible': [('traceback', '=', False)]}">
+                            <field name="traceback" nolabel="1"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <!-- SEARCH VIEW -->
+        <record id="view_tapis_automation_job_log_search" model="ir.ui.view">
+            <field name="name">tapis.automation.job.log.search</field>
+            <field name="model">tapis.automation.job.log</field>
+            <field name="arch" type="xml">
+                <search>
+                    <field name="job_id"/>
+                    <filter name="success" string="Success" domain="[('status', '=', 'success')]"/>
+                    <filter name="failed" string="Failed" domain="[('status', '=', 'failed')]"/>
+                    <filter name="running" string="Running" domain="[('status', '=', 'running')]"/>
+                    <filter name="timeout" string="Timeout" domain="[('status', '=', 'timeout')]"/>
+                    <separator/>
+                    <filter name="scheduled" string="Scheduled" domain="[('triggered_by', '=', 'scheduled')]"/>
+                    <filter name="manual" string="Manual" domain="[('triggered_by', '=', 'manual')]"/>
+                    <separator/>
+                    <filter name="group_job" string="Job" context="{'group_by': 'job_id'}"/>
+                    <filter name="group_status" string="Status" context="{'group_by': 'status'}"/>
+                    <filter name="group_date" string="Start Date" context="{'group_by': 'start_datetime:date'}"/>
+                </search>
+            </field>
+        </record>
+
+        <!-- ACTION -->
+        <record id="action_tapis_automation_job_log" model="ir.actions.act_window">
+            <field name="name">Automation Logs</field>
+            <field name="res_model">tapis.automation.job.log</field>
+            <field name="view_mode">tree,form</field>
+            <field name="search_view_id" ref="view_tapis_automation_job_log_search"/>
+            <field name="help" type="html">
+                <p>View execution history of all automation jobs.</p>
+            </field>
+        </record>
+    </data>
+</odoo>

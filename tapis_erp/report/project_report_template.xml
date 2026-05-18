@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <template id="report_project_template">
+            <t t-call="web.html_container">
+                <t t-foreach="docs" t-as="doc">
+                    <t t-call="web.internal_layout">
+                        <div class="page">
+                            <h2>Project Summary</h2>
+                            <table class="table table-bordered">
+                                <tr><td><strong>Name:</strong></td><td t-esc="doc.name"/></tr>
+                                <tr><td><strong>Code:</strong></td><td t-esc="doc.code"/></tr>
+                                <tr><td><strong>Manager:</strong></td><td t-esc="doc.manager_id.name or ''"/></tr>
+                                <tr><td><strong>Status:</strong></td><td t-esc="doc.state"/></tr>
+                                <tr><td><strong>Priority:</strong></td><td t-esc="doc.priority"/></tr>
+                                <tr><td><strong>Start Date:</strong></td><td t-esc="doc.start_date"/></tr>
+                                <tr><td><strong>End Date:</strong></td><td t-esc="doc.end_date"/></tr>
+                                <tr><td><strong>Progress:</strong></td><td><t t-esc="doc.progress_percent"/>%</td></tr>
+                                <tr><td><strong>Planned Hours:</strong></td><td t-esc="doc.planned_hours"/></tr>
+                                <tr><td><strong>Actual Hours:</strong></td><td t-esc="doc.actual_hours"/></tr>
+                                <tr><td><strong>Budget:</strong></td><td><t t-esc="doc.budget_amount"/> MAD</td></tr>
+                                <tr><td><strong>Actual Cost:</strong></td><td><t t-esc="doc.actual_cost"/> MAD</td></tr>
+                            </table>
+                            <h3>Tasks</h3>
+                            <table class="table table-striped">
+                                <thead><tr><th>Task</th><th>Assigned To</th><th>Status</th><th>Progress</th><th>Hours</th></tr></thead>
+                                <tbody>
+                                    <tr t-foreach="doc.task_ids" t-as="task">
+                                        <td t-esc="task.name"/>
+                                        <td t-esc="task.assigned_employee_id.name or ''"/>
+                                        <td t-esc="task.state"/>
+                                        <td><t t-esc="task.progress_percent"/>%</td>
+                                        <td t-esc="task.actual_hours"/>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <p t-if="doc.note"><strong>Notes:</strong> <t t-esc="doc.note"/></p>
+                        </div>
+                    </t>
+                </t>
+            </t>
+        </template>
+    </data>
+</odoo>

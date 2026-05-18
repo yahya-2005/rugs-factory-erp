@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- TREE VIEW -->
+        <record id="view_supplier_pricelist_tree" model="ir.ui.view">
+            <field name="name">tapis.supplier.pricelist.tree</field>
+            <field name="model">tapis.supplier.pricelist</field>
+            <field name="arch" type="xml">
+                <tree string="Supplier Pricelists" editable="top">
+                    <field name="supplier_id"/>
+                    <field name="product_id"/>
+                    <field name="raw_material_id"/>
+                    <field name="price" sum="Total"/>
+                    <field name="currency"/>
+                    <field name="min_quantity"/>
+                    <field name="lead_time_days"/>
+                    <field name="active"/>
+                </tree>
+            </field>
+        </record>
+
+        <!-- FORM VIEW -->
+        <record id="view_supplier_pricelist_form" model="ir.ui.view">
+            <field name="name">tapis.supplier.pricelist.form</field>
+            <field name="model">tapis.supplier.pricelist</field>
+            <field name="arch" type="xml">
+                <form string="Supplier Pricelist">
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="supplier_id"/>
+                                <field name="product_id"
+                                       attrs="{'invisible': [('raw_material_id', '!=', False)]}"/>
+                                <field name="raw_material_id"
+                                       attrs="{'invisible': [('product_id', '!=', False)]}"/>
+                            </group>
+                            <group>
+                                <field name="price"/>
+                                <field name="currency"/>
+                                <field name="min_quantity"/>
+                                <field name="lead_time_days"/>
+                                <field name="active"/>
+                            </group>
+                        </group>
+                        <notebook>
+                            <page string="Notes">
+                                <field name="notes"/>
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <!-- SEARCH VIEW -->
+        <record id="view_supplier_pricelist_search" model="ir.ui.view">
+            <field name="name">tapis.supplier.pricelist.search</field>
+            <field name="model">tapis.supplier.pricelist</field>
+            <field name="arch" type="xml">
+                <search string="Search Pricelists">
+                    <field name="supplier_id"/>
+                    <field name="product_id"/>
+                    <field name="raw_material_id"/>
+                    <filter name="active" string="Active" domain="[('active','=',True)]"/>
+                    <group expand="0" string="Group By">
+                        <filter name="group_by_supplier" string="Supplier" context="{'group_by':'supplier_id'}"/>
+                        <filter name="group_by_product" string="Product" context="{'group_by':'product_id'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
+        <!-- ACTION -->
+        <record id="action_supplier_pricelist" model="ir.actions.act_window">
+            <field name="name">Supplier Pricelists</field>
+            <field name="res_model">tapis.supplier.pricelist</field>
+            <field name="view_mode">tree,form</field>
+            <field name="search_view_id" ref="view_supplier_pricelist_search"/>
+            <field name="context">{'search_default_active': 1}</field>
+        </record>
+    </data>
+</odoo>

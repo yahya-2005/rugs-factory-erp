@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="report_profitability_document">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="o">
+                <t t-call="web.external_layout">
+                    <div class="page">
+                        <div class="row">
+                            <div class="col-xs-6">
+                                <strong>PROFITABILITY REPORT</strong>
+                                <br/>
+                                <span>Reference: </span><span t-field="o.name"/>
+                                <br/>
+                                <span>Date: </span><span t-field="o.order_date"/>
+                            </div>
+                            <div class="col-xs-6 text-right">
+                                <strong>Tapis Morocco</strong>
+                                <br/>
+                                <span>Marrakech, Morocco</span>
+                            </div>
+                        </div>
+                        <hr/>
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <strong>Customer:</strong>
+                                <span t-field="o.customer_id.name"/>
+                            </div>
+                        </div>
+                        <br/>
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>Product</th>
+                                    <th class="text-right">Quantity</th>
+                                    <th class="text-right">Revenue (MAD)</th>
+                                    <th class="text-right">Cost (MAD)</th>
+                                    <th class="text-right">Profit (MAD)</th>
+                                    <th class="text-right">Margin %</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><span t-field="o.product_id.name"/></td>
+                                    <td class="text-right"><span t-field="o.quantity"/></td>
+                                    <td class="text-right">
+                                        <span t-esc="'{:,.2f}'.format(o.total_price)"/>
+                                    </td>
+                                    <td class="text-right">
+                                        <span t-esc="'{:,.2f}'.format(o.cost_amount)"/>
+                                    </td>
+                                    <td class="text-right">
+                                        <span t-esc="'{:,.2f}'.format(o.profit_amount)"/>
+                                    </td>
+                                    <td class="text-right">
+                                        <span t-esc="'{:,.2f}'.format(o.margin_percent)"/>%
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <br/>
+                        <div class="row">
+                            <div class="col-xs-6">
+                                <p><strong>Payment Status:</strong>
+                                    <span t-field="o.payment_status"/>
+                                </p>
+                                <p><strong>Amount Paid:</strong>
+                                    <span t-esc="'{:,.2f}'.format(o.amount_paid)"/> MAD
+                                </p>
+                                <p><strong>Balance Due:</strong>
+                                    <span t-esc="'{:,.2f}'.format(o.balance_due)"/> MAD
+                                </p>
+                            </div>
+                            <div class="col-xs-6 text-right">
+                                <table class="table table-bordered">
+                                    <tr>
+                                        <td><strong>Revenue</strong></td>
+                                        <td class="text-right">
+                                            <span t-esc="'{:,.2f}'.format(o.total_price)"/> MAD
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Cost</strong></td>
+                                        <td class="text-right">
+                                            <span t-esc="'{:,.2f}'.format(o.cost_amount)"/> MAD
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Profit</strong></td>
+                                        <td class="text-right">
+                                            <strong>
+                                                <span t-esc="'{:,.2f}'.format(o.profit_amount)"/> MAD
+                                            </strong>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Margin</strong></td>
+                                        <td class="text-right">
+                                            <strong>
+                                                <span t-esc="'{:,.2f}'.format(o.margin_percent)"/>%
+                                            </strong>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                        <hr/>
+                        <p class="text-center">Thank you for your trust</p>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+</odoo>

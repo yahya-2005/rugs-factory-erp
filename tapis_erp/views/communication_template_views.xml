@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="view_tapis_communication_template_tree" model="ir.ui.view">
+            <field name="name">tapis.communication.template.tree</field>
+            <field name="model">tapis.communication.template</field>
+            <field name="arch" type="xml">
+                <tree string="Communication Templates" decoration-info="active == True" decoration-muted="active == False">
+                    <field name="code"/>
+                    <field name="name"/>
+                    <field name="model_name"/>
+                    <field name="trigger_event"/>
+                    <field name="recipient_type"/>
+                    <field name="active"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="view_tapis_communication_template_form" model="ir.ui.view">
+            <field name="name">tapis.communication.template.form</field>
+            <field name="model">tapis.communication.template</field>
+            <field name="arch" type="xml">
+                <form string="Communication Template">
+                    <sheet>
+                        <group string="General Settings">
+                            <field name="name"/>
+                            <field name="code"/>
+                            <field name="active"/>
+                            <field name="model_name"/>
+                            <field name="trigger_event"/>
+                            <field name="description"/>
+                        </group>
+                        <group string="Recipient Configuration">
+                            <field name="recipient_type"/>
+                            <field name="user_ids" widget="many2many_tags" attrs="{'invisible':[('recipient_type','!=','specific_users')],'required':[('recipient_type','=','specific_users')]}"/>
+                        </group>
+                        <group string="Email Content">
+                            <field name="email_subject"/>
+                            <field name="email_body" colspan="4" nolabel="1"/>
+                        </group>
+                        <group string="Trigger Settings">
+                            <field name="condition_domain"/>
+                            <field name="send_email"/>
+                            <field name="create_activity"/>
+                            <field name="activity_type_id" attrs="{'invisible':[('create_activity','=',False)],'required':[('create_activity','=',True)]}"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="view_tapis_communication_template_search" model="ir.ui.view">
+            <field name="name">tapis.communication.template.search</field>
+            <field name="model">tapis.communication.template</field>
+            <field name="arch" type="xml">
+                <search string="Search Templates">
+                    <field name="name"/>
+                    <field name="code"/>
+                    <field name="model_name"/>
+                    <filter name="active_templates" string="Active" domain="[('active','=',True)]"/>
+                </search>
+            </field>
+        </record>
+
+        <record id="action_tapis_communication_template" model="ir.actions.act_window">
+            <field name="name">Communication Templates</field>
+            <field name="res_model">tapis.communication.template</field>
+            <field name="view_mode">tree,form</field>
+            <field name="search_view_id" ref="view_tapis_communication_template_search"/>
+        </record>
+    </data>
+</odoo>

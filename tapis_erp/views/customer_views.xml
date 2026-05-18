@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="view_customer_tree" model="ir.ui.view">
+            <field name="name">tapis.customer.tree</field>
+            <field name="model">tapis.customer</field>
+            <field name="arch" type="xml">
+                <tree string="Customers">
+                    <field name="name"/>
+                    <field name="phone"/>
+                    <field name="email"/>
+                    <field name="total_sales_amount" sum="Total Sales"/>
+                    <field name="current_balance" sum="Total Balance"/>
+                    <field name="active"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="view_customer_form" model="ir.ui.view">
+            <field name="name">tapis.customer.form</field>
+            <field name="model">tapis.customer</field>
+            <field name="arch" type="xml">
+                <form string="Customer">
+                    <header>
+                        <button name="action_view_sales" type="object" class="oe_stat_button" icon="fa-shopping-cart">
+                            <div class="o_stat_info">
+                                <field name="total_sales_amount" widget="statinfo"/>
+                                <span class="o_stat_text">Sales</span>
+                            </div>
+                        </button>
+                        <button name="action_view_invoices" type="object" class="oe_stat_button" icon="fa-file-text-o">
+                            <div class="o_stat_info">
+                                <field name="invoice_count" widget="statinfo"/>
+                                <span class="o_stat_text">Invoices</span>
+                            </div>
+                        </button>
+                        <button name="%(action_customer_payment)d" type="action" class="oe_stat_button" icon="fa-credit-card" context="{'search_default_customer_id': active_id}">
+                            <div class="o_stat_info">
+                                <field name="current_balance" widget="statinfo"/>
+                                <span class="o_stat_text">Balance</span>
+                            </div>
+                        </button>
+                            <button name="action_print_statement" type="object" class="oe_stat_button" icon="fa-print">
+                                <span>Print Statement</span>
+                            </button>
+                            <button name="action_view_documents" type="object" class="oe_stat_button" icon="fa-file">
+                                <div class="o_stat_info">
+                                    <field name="document_count" widget="statinfo"/>
+                                    <span class="o_stat_text">Documents</span>
+                                </div>
+                            </button>
+                    </header>
+                    <sheet>
+                        <notebook>
+                            <page string="General Information">
+                                <group>
+                                    <field name="name"/>
+                                    <field name="contact_person"/>
+                                    <field name="phone"/>
+                                    <field name="email"/>
+                                    <field name="address"/>
+                                </group>
+                                <group>
+                                    <field name="credit_limit"/>
+                                    <field name="current_balance"/>
+                                    <field name="total_sales_amount"/>
+                                    <field name="total_paid_amount"/>
+                                    <field name="active"/>
+                                </group>
+                            </page>
+                            <page string="Sales History">
+                                <field name="sale_ids">
+                                    <tree>
+                                        <field name="name"/>
+                                        <field name="order_date"/>
+                                        <field name="product_id"/>
+                                        <field name="quantity"/>
+                                        <field name="total_price"/>
+                                        <field name="payment_status"/>
+                                        <field name="state"/>
+                                    </tree>
+                                </field>
+                            </page>
+                            <page string="Invoices">
+                                <field name="invoice_ids">
+                                    <tree>
+                                        <field name="name"/>
+                                        <field name="invoice_date"/>
+                                        <field name="due_date"/>
+                                        <field name="amount_total"/>
+                                        <field name="amount_due"/>
+                                        <field name="payment_status"/>
+                                        <field name="state"/>
+                                    </tree>
+                                </field>
+                            </page>
+                            <page string="Notes">
+                                <field name="note"/>
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="view_customer_search" model="ir.ui.view">
+            <field name="name">tapis.customer.search</field>
+            <field name="model">tapis.customer</field>
+            <field name="arch" type="xml">
+                <search string="Search Customers">
+                    <field name="name"/>
+                    <field name="phone"/>
+                    <field name="email"/>
+                    <filter name="filter_active" string="Active" domain="[('active','=',True)]"/>
+                </search>
+            </field>
+        </record>
+
+        <record id="action_customer" model="ir.actions.act_window">
+            <field name="name">Customers</field>
+            <field name="res_model">tapis.customer</field>
+            <field name="view_mode">tree,form</field>
+            <field name="search_view_id" ref="view_customer_search"/>
+        </record>
+    </data>
+</odoo>

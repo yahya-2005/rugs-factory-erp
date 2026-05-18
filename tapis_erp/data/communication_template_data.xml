@@ -1,0 +1,219 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+        <!-- CRM New Lead -->
+        <record id="tapis_comm_crm_new_lead" model="tapis.communication.template">
+            <field name="name">New CRM Lead</field>
+            <field name="code">CRM_NEW_LEAD</field>
+            <field name="active">True</field>
+            <field name="model_name">tapis.crm.lead</field>
+            <field name="trigger_event">create</field>
+            <field name="email_subject">New Lead: {{name}}</field>
+            <field name="email_body"><![CDATA[
+<h3>New CRM Lead Created</h3>
+<p><strong>Lead:</strong> {{name}}</p>
+<p><strong>Contact:</strong> {{contact_name}} &lt;{{email}}&gt;</p>
+<p><strong>Company:</strong> {{company_name}}</p>
+<p><strong>Expected Revenue:</strong> {{expected_revenue}}</p>
+<p><strong>Date:</strong> {{datetime}}</p>
+]]></field>
+            <field name="recipient_type">record_owner</field>
+            <field name="send_email">True</field>
+            <field name="create_activity">False</field>
+        </record>
+
+        <!-- CRM Won Opportunity -->
+        <record id="tapis_comm_crm_won" model="tapis.communication.template">
+            <field name="name">CRM Opportunity Won</field>
+            <field name="code">CRM_WON_OPPORTUNITY</field>
+            <field name="active">True</field>
+            <field name="model_name">tapis.crm.lead</field>
+            <field name="trigger_event">state_change</field>
+            <field name="email_subject">Opportunity Won: {{name}} ({{expected_revenue}} MAD)</field>
+            <field name="email_body"><![CDATA[
+<h3>Opportunity Won!</h3>
+<p><strong>Opportunity:</strong> {{name}}</p>
+<p><strong>Revenue:</strong> {{expected_revenue}} MAD</p>
+<p><strong>Contact:</strong> {{contact_name}}</p>
+<p><strong>Date:</strong> {{datetime}}</p>
+]]></field>
+            <field name="recipient_type">record_owner</field>
+            <field name="send_email">True</field>
+            <field name="create_activity">False</field>
+            <field name="condition_domain">[("state","=","won")]</field>
+        </record>
+
+        <!-- Sale Confirmed -->
+        <record id="tapis_comm_sale_confirmed" model="tapis.communication.template">
+            <field name="name">Sale Order Confirmed</field>
+            <field name="code">SALE_CONFIRMED</field>
+            <field name="active">True</field>
+            <field name="model_name">tapis.sale</field>
+            <field name="trigger_event">state_change</field>
+            <field name="email_subject">Sale Confirmed: {{name}} ({{total_price}} MAD)</field>
+            <field name="email_body"><![CDATA[
+<h3>Sale Order Confirmed</h3>
+<p><strong>Reference:</strong> {{name}}</p>
+<p><strong>Total:</strong> {{total_price}} MAD</p>
+<p><strong>Date:</strong> {{datetime}}</p>
+]]></field>
+            <field name="recipient_type">customer</field>
+            <field name="send_email">True</field>
+            <field name="create_activity">False</field>
+            <field name="condition_domain">[("state","=","confirmed")]</field>
+        </record>
+
+        <!-- Purchase Pending Approval -->
+        <record id="tapis_comm_purchase_pending" model="tapis.communication.template">
+            <field name="name">Purchase Pending Approval</field>
+            <field name="code">PURCHASE_PENDING_APPROVAL</field>
+            <field name="active">True</field>
+            <field name="model_name">tapis.purchase</field>
+            <field name="trigger_event">state_change</field>
+            <field name="email_subject">Purchase Order Pending Approval: {{name}}</field>
+            <field name="email_body"><![CDATA[
+<h3>Purchase Order Requires Approval</h3>
+<p><strong>Reference:</strong> {{name}}</p>
+<p><strong>Total:</strong> {{total_price}} MAD</p>
+<p><strong>Date:</strong> {{datetime}}</p>
+]]></field>
+            <field name="recipient_type">manager</field>
+            <field name="send_email">True</field>
+            <field name="create_activity">True</field>
+            <field name="activity_type_id" ref="mail.mail_activity_data_todo"/>
+            <field name="condition_domain">[("state","=","pending_approval")]</field>
+        </record>
+
+        <!-- Purchase Approved -->
+        <record id="tapis_comm_purchase_approved" model="tapis.communication.template">
+            <field name="name">Purchase Order Approved</field>
+            <field name="code">PURCHASE_APPROVED</field>
+            <field name="active">True</field>
+            <field name="model_name">tapis.purchase</field>
+            <field name="trigger_event">state_change</field>
+            <field name="email_subject">Purchase Order Approved: {{name}}</field>
+            <field name="email_body"><![CDATA[
+<h3>Purchase Order Approved</h3>
+<p><strong>Reference:</strong> {{name}}</p>
+<p><strong>Total:</strong> {{total_price}} MAD</p>
+<p><strong>Date:</strong> {{datetime}}</p>
+]]></field>
+            <field name="recipient_type">record_owner</field>
+            <field name="send_email">True</field>
+            <field name="condition_domain">[("state","=","approved")]</field>
+        </record>
+
+        <!-- Invoice Overdue -->
+        <record id="tapis_comm_invoice_overdue" model="tapis.communication.template">
+            <field name="name">Invoice Overdue</field>
+            <field name="code">INVOICE_OVERDUE</field>
+            <field name="active">True</field>
+            <field name="model_name">tapis.invoice</field>
+            <field name="trigger_event">scheduled</field>
+            <field name="email_subject">Invoice Overdue: {{name}} ({{amount_due}} MAD)</field>
+            <field name="email_body"><![CDATA[
+<h3>Invoice Overdue</h3>
+<p><strong>Invoice:</strong> {{name}}</p>
+<p><strong>Amount Due:</strong> {{amount_due}} MAD</p>
+<p><strong>Due Date:</strong> {{due_date}}</p>
+]]></field>
+            <field name="recipient_type">customer</field>
+            <field name="send_email">True</field>
+            <field name="create_activity">True</field>
+            <field name="activity_type_id" ref="mail.mail_activity_data_todo"/>
+        </record>
+
+        <!-- Low Stock Alert -->
+        <record id="tapis_comm_low_stock" model="tapis.communication.template">
+            <field name="name">Low Stock Alert</field>
+            <field name="code">LOW_STOCK_ALERT</field>
+            <field name="active">True</field>
+            <field name="model_name">tapis.product</field>
+            <field name="trigger_event">scheduled</field>
+            <field name="email_subject">Low Stock Alert: {{name}} ({{stock_qty}} remaining)</field>
+            <field name="email_body"><![CDATA[
+<h3>Low Stock Alert</h3>
+<p><strong>Product:</strong> {{name}}</p>
+<p><strong>Current Stock:</strong> {{stock_qty}}</p>
+]]></field>
+            <field name="recipient_type">manager</field>
+            <field name="send_email">True</field>
+            <field name="create_activity">True</field>
+            <field name="activity_type_id" ref="mail.mail_activity_data_todo"/>
+        </record>
+
+        <!-- Maintenance Due -->
+        <record id="tapis_comm_maintenance_due" model="tapis.communication.template">
+            <field name="name">Maintenance Due Reminder</field>
+            <field name="code">MAINTENANCE_DUE</field>
+            <field name="active">True</field>
+            <field name="model_name">tapis.maintenance.order</field>
+            <field name="trigger_event">scheduled</field>
+            <field name="email_subject">Maintenance Due: {{name}}</field>
+            <field name="email_body"><![CDATA[
+<h3>Maintenance Due</h3>
+<p><strong>Order:</strong> {{name}}</p>
+<p><strong>Scheduled:</strong> {{scheduled_date}}</p>
+]]></field>
+            <field name="recipient_type">record_owner</field>
+            <field name="send_email">True</field>
+            <field name="create_activity">True</field>
+            <field name="activity_type_id" ref="mail.mail_activity_data_todo"/>
+        </record>
+
+        <!-- Task Deadline -->
+        <record id="tapis_comm_task_deadline" model="tapis.communication.template">
+            <field name="name">Task Deadline Reminder</field>
+            <field name="code">TASK_DEADLINE</field>
+            <field name="active">True</field>
+            <field name="model_name">tapis.task</field>
+            <field name="trigger_event">scheduled</field>
+            <field name="email_subject">Task Deadline Approaching: {{name}}</field>
+            <field name="email_body"><![CDATA[
+<h3>Task Deadline Reminder</h3>
+<p><strong>Task:</strong> {{name}}</p>
+<p><strong>Deadline:</strong> {{deadline}}</p>
+]]></field>
+            <field name="recipient_type">manager</field>
+            <field name="send_email">True</field>
+            <field name="create_activity">True</field>
+            <field name="activity_type_id" ref="mail.mail_activity_data_todo"/>
+        </record>
+
+        <!-- Budget Over Limit -->
+        <record id="tapis_comm_budget_over" model="tapis.communication.template">
+            <field name="name">Budget Over Limit Alert</field>
+            <field name="code">BUDGET_OVER_LIMIT</field>
+            <field name="active">True</field>
+            <field name="model_name">tapis.budget</field>
+            <field name="trigger_event">scheduled</field>
+            <field name="email_subject">Budget Over Limit: {{name}} ({{total_variance}} MAD variance)</field>
+            <field name="email_body"><![CDATA[
+<h3>Budget Over Limit</h3>
+<p><strong>Budget:</strong> {{name}}</p>
+]]></field>
+            <field name="recipient_type">manager</field>
+            <field name="send_email">True</field>
+            <field name="create_activity">True</field>
+            <field name="activity_type_id" ref="mail.mail_activity_data_todo"/>
+        </record>
+
+        <!-- Document Expiring -->
+        <record id="tapis_comm_document_expiring" model="tapis.communication.template">
+            <field name="name">Document Expiring Reminder</field>
+            <field name="code">DOCUMENT_EXPIRING</field>
+            <field name="active">True</field>
+            <field name="model_name">tapis.document</field>
+            <field name="trigger_event">scheduled</field>
+            <field name="email_subject">Document Expiring: {{name}}</field>
+            <field name="email_body"><![CDATA[
+<h3>Document Expiration Reminder</h3>
+<p><strong>Document:</strong> {{name}}</p>
+]]></field>
+            <field name="recipient_type">record_owner</field>
+            <field name="send_email">True</field>
+            <field name="create_activity">True</field>
+            <field name="activity_type_id" ref="mail.mail_activity_data_todo"/>
+        </record>
+    </data>
+</odoo>

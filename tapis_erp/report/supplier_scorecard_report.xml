@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="action_report_supplier_scorecard" model="ir.actions.report">
+        <field name="name">Supplier Scorecard</field>
+        <field name="model">tapis.supplier</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">tapis_erp.report_supplier_scorecard_document</field>
+        <field name="report_file">tapis_erp.report_supplier_scorecard_document</field>
+        <field name="print_report_name">
+            'Scorecard - ' + object.name
+        </field>
+        <field name="binding_model_id" ref="model_tapis_supplier"/>
+        <field name="binding_type">report</field>
+    </record>
+</odoo>

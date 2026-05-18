@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- TREE VIEW -->
+        <record id="view_tapis_signature_template_tree" model="ir.ui.view">
+            <field name="name">tapis.signature.template.tree</field>
+            <field name="model">tapis.signature.template</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="name"/>
+                    <field name="code"/>
+                    <field name="model_name"/>
+                    <field name="active"/>
+                </tree>
+            </field>
+        </record>
+
+        <!-- FORM VIEW -->
+        <record id="view_tapis_signature_template_form" model="ir.ui.view">
+            <field name="name">tapis.signature.template.form</field>
+            <field name="model">tapis.signature.template</field>
+            <field name="arch" type="xml">
+                <form string="Signature Template">
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="name"/>
+                                <field name="code"/>
+                                <field name="active"/>
+                            </group>
+                            <group>
+                                <field name="model_name"/>
+                                <field name="description"/>
+                            </group>
+                        </group>
+                        <group>
+                            <group>
+                                <field name="require_all_signers"/>
+                                <field name="allow_reject"/>
+                            </group>
+                            <group>
+                                <field name="auto_complete_record"/>
+                            </group>
+                        </group>
+                        <notebook>
+                            <page name="roles" string="Signer Roles">
+                                <field name="signer_role_ids" nolabel="1">
+                                    <tree editable="bottom">
+                                        <field name="sequence" widget="handle"/>
+                                        <field name="name"/>
+                                        <field name="required"/>
+                                        <field name="can_reject"/>
+                                        <field name="user_ids" widget="many2many_tags"/>
+                                    </tree>
+                                </field>
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <!-- ACTION -->
+        <record id="action_tapis_signature_template" model="ir.actions.act_window">
+            <field name="name">Signature Templates</field>
+            <field name="res_model">tapis.signature.template</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+    </data>
+</odoo>

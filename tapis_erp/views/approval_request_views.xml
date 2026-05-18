@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="view_tapis_approval_request_tree" model="ir.ui.view">
+            <field name="name">tapis.approval.request.tree</field>
+            <field name="model">tapis.approval.request</field>
+            <field name="arch" type="xml">
+                <tree string="Approval Requests"
+                    decoration-warning="state == 'pending'"
+                    decoration-success="state == 'approved'"
+                    decoration-danger="state == 'rejected'"
+                    decoration-muted="state in ('draft', 'cancelled')"
+                    default_order="id desc">
+                    <field name="name"/>
+                    <field name="category_id"/>
+                    <field name="reference_display" string="Reference"/>
+                    <field name="requested_by"/>
+                    <field name="request_date"/>
+                    <field name="amount"/>
+                    <field name="state" widget="badge"
+                        decoration-warning="state == 'pending'"
+                        decoration-success="state == 'approved'"
+                        decoration-danger="state == 'rejected'"
+                        decoration-muted="state in ('draft', 'cancelled')"/>
+                    <field name="progress_percent" widget="progressbar"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="view_tapis_approval_request_form" model="ir.ui.view">
+            <field name="name">tapis.approval.request.form</field>
+            <field name="model">tapis.approval.request</field>
+            <field name="arch" type="xml">
+                <form string="Approval Request">
+                    <header>
+                        <button name="action_submit" type="object" string="Submit" states="draft" class="btn-primary"/>
+                        <button name="action_approve" type="object" string="Approve" states="pending" class="btn-success"/>
+                        <button name="action_reject" type="object" string="Reject" states="pending" class="btn-warning"/>
+                        <button name="action_cancel" type="object" string="Cancel" states="draft,pending" class="btn-danger"/>
+                        <button name="action_open_reference" type="object" string="Open Reference" class="btn-secondary"/>
+                        <button name="%(action_report_approval_request)d"
+                                type="action"
+                                string="Print"
+                                class="btn-secondary"/>
+                        <field name="state" widget="statusbar" statusbar_visible="draft,pending,approved,rejected,cancelled"/>
+                    </header>
+                    <sheet>
+                        <group>
+                            <field name="name"/>
+                            <field name="category_id"/>
+                            <field name="reference_display" string="Reference"/>
+                            <field name="requested_by"/>
+                            <field name="request_date"/>
+                        </group>
+                        <group>
+                            <field name="amount"/>
+                            <field name="cost_center_id"/>
+                            <field name="progress_percent" widget="progressbar"/>
+                        </group>
+                        <notebook>
+                            <page string="Approval Lines">
+                                <field name="line_ids">
+                                    <tree>
+                                        <field name="sequence"/>
+                                        <field name="approver_id"/>
+                                        <field name="rule_id"/>
+                                        <field name="state" widget="badge"
+                                            decoration-success="state == 'approved'"
+                                            decoration-danger="state == 'rejected'"
+                                            decoration-info="state == 'pending'"/>
+                                        <field name="decision_date"/>
+                                        <field name="comment"/>
+                                    </tree>
+                                </field>
+                            </page>
+                        </notebook>
+                    </sheet>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids"/>
+                        <field name="activity_ids"/>
+                        <field name="message_ids"/>
+                    </div>
+                </form>
+            </field>
+        </record>
+
+        <record id="view_tapis_approval_request_search" model="ir.ui.view">
+            <field name="name">tapis.approval.request.search</field>
+            <field name="model">tapis.approval.request</field>
+            <field name="arch" type="xml">
+                <search string="Search Approval Requests">
+                    <field name="name"/>
+                    <field name="category_id"/>
+                    <field name="requested_by"/>
+                    <field name="reference_display"/>
+                    <filter name="filter_draft" string="Draft" domain="[('state','=','draft')]"/>
+                    <filter name="filter_pending" string="Pending" domain="[('state','=','pending')]"/>
+                    <filter name="filter_approved" string="Approved" domain="[('state','=','approved')]"/>
+                    <filter name="filter_rejected" string="Rejected" domain="[('state','=','rejected')]"/>
+                    <filter name="filter_cancelled" string="Cancelled" domain="[('state','=','cancelled')]"/>
+                    <filter name="filter_my_requests" string="My Requests" domain="[('requested_by','=',uid)]"/>
+                    <separator/>
+                    <group expand="0" string="Group By">
+                        <filter name="group_by_state" string="Status" context="{'group_by':'state'}"/>
+                        <filter name="group_by_category" string="Category" context="{'group_by':'category_id'}"/>
+                        <filter name="group_by_requested_by" string="Requested By" context="{'group_by':'requested_by'}"/>
+                        <filter name="group_by_date" string="Request Date" context="{'group_by':'request_date'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
+        <record id="action_tapis_approval_request" model="ir.actions.act_window">
+            <field name="name">Approval Requests</field>
+            <field name="res_model">tapis.approval.request</field>
+            <field name="view_mode">tree,form</field>
+            <field name="search_view_id" ref="view_tapis_approval_request_search"/>
+        </record>
+
+        <record id="action_tapis_my_approvals" model="ir.actions.act_window">
+            <field name="name">My Approvals</field>
+            <field name="res_model">tapis.approval.request</field>
+            <field name="view_mode">tree,form</field>
+            <field name="domain">[('line_ids.approver_id','=',uid),('state','=','pending')]</field>
+            <field name="search_view_id" ref="view_tapis_approval_request_search"/>
+        </record>
+    </data>
+</odoo>

@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="view_warehouse_tree" model="ir.ui.view">
+            <field name="name">tapis.warehouse.tree</field>
+            <field name="model">tapis.warehouse</field>
+            <field name="arch" type="xml">
+                <tree string="Warehouses">
+                    <field name="name"/>
+                    <field name="code"/>
+                    <field name="manager_id"/>
+                    <field name="product_count"/>
+                    <field name="total_stock_value" sum="Total Value"/>
+                    <field name="active"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="view_warehouse_form" model="ir.ui.view">
+            <field name="name">tapis.warehouse.form</field>
+            <field name="model">tapis.warehouse</field>
+            <field name="arch" type="xml">
+                <form string="Warehouse">
+                    <header>
+                        <button name="action_view_quants" type="object" class="oe_stat_button" icon="fa-cubes">
+                            <div class="o_stat_info">
+                                <field name="product_count" widget="statinfo"/>
+                                <span class="o_stat_text">Products</span>
+                            </div>
+                        </button>
+                    </header>
+                    <sheet>
+                        <group>
+                            <field name="name"/>
+                            <field name="code"/>
+                            <field name="manager_id"/>
+                            <field name="address"/>
+                        </group>
+                        <group>
+                            <field name="active"/>
+                            <field name="note"/>
+                            <field name="total_stock_value" string="Total Stock Value (MAD)"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="view_warehouse_search" model="ir.ui.view">
+            <field name="name">tapis.warehouse.search</field>
+            <field name="model">tapis.warehouse</field>
+            <field name="arch" type="xml">
+                <search string="Search Warehouses">
+                    <field name="name"/>
+                    <field name="code"/>
+                    <field name="manager_id"/>
+                    <filter name="filter_active" string="Active" domain="[('active','=',True)]"/>
+                </search>
+            </field>
+        </record>
+
+        <record id="action_warehouse" model="ir.actions.act_window">
+            <field name="name">Warehouses</field>
+            <field name="res_model">tapis.warehouse</field>
+            <field name="view_mode">tree,form</field>
+            <field name="search_view_id" ref="view_warehouse_search"/>
+            <field name="context">{'search_default_filter_active': 1}</field>
+        </record>
+
+    </data>
+</odoo>

@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+        <!-- Purchase Approval Signature Template -->
+        <record id="signature_template_purchase" model="tapis.signature.template">
+            <field name="name">Purchase Approval Signature</field>
+            <field name="code">purchase_approval</field>
+            <field name="active">True</field>
+            <field name="model_name">tapis.purchase</field>
+            <field name="description">Required digital signature for final purchase order approval.</field>
+            <field name="require_all_signers">True</field>
+            <field name="allow_reject">True</field>
+            <field name="auto_complete_record">False</field>
+        </record>
+
+        <record id="signature_role_purchase_manager" model="tapis.signature.role">
+            <field name="template_id" ref="signature_template_purchase"/>
+            <field name="name">Purchase Manager</field>
+            <field name="sequence">10</field>
+            <field name="required">True</field>
+            <field name="can_reject">True</field>
+        </record>
+
+        <!-- Budget Approval Signature Template -->
+        <record id="signature_template_budget" model="tapis.signature.template">
+            <field name="name">Budget Approval Signature</field>
+            <field name="code">budget_approval</field>
+            <field name="active">True</field>
+            <field name="model_name">tapis.budget</field>
+            <field name="description">Electronic signature for approved budget documents.</field>
+            <field name="require_all_signers">True</field>
+            <field name="allow_reject">True</field>
+            <field name="auto_complete_record">False</field>
+        </record>
+
+        <record id="signature_role_budget_finance" model="tapis.signature.role">
+            <field name="template_id" ref="signature_template_budget"/>
+            <field name="name">Finance Manager</field>
+            <field name="sequence">10</field>
+            <field name="required">True</field>
+            <field name="can_reject">True</field>
+        </record>
+
+        <!-- Sales Contract Signature Template -->
+        <record id="signature_template_sale" model="tapis.signature.template">
+            <field name="name">Sales Contract Signature</field>
+            <field name="code">sale_contract</field>
+            <field name="active">True</field>
+            <field name="model_name">tapis.sale</field>
+            <field name="description">Digital signature for customer sales contracts.</field>
+            <field name="require_all_signers">True</field>
+            <field name="allow_reject">True</field>
+            <field name="auto_complete_record">False</field>
+        </record>
+
+        <record id="signature_role_sale_manager" model="tapis.signature.role">
+            <field name="template_id" ref="signature_template_sale"/>
+            <field name="name">Sales Manager</field>
+            <field name="sequence">10</field>
+            <field name="required">True</field>
+            <field name="can_reject">True</field>
+        </record>
+    </data>
+</odoo>

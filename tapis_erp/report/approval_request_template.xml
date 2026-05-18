@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="report_approval_request">
+        <t t-call="web.external_layout">
+            <t t-set="o" t-value="doc"/>
+            <div class="page">
+                <h2>Approval Request</h2>
+                <table class="table table-bordered">
+                    <tr>
+                        <td><strong>Reference</strong></td>
+                        <td><span t-field="o.name"/></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Category</strong></td>
+                        <td><span t-field="o.category_id.name"/></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Reference Record</strong></td>
+                        <td><span t-field="o.reference_display"/></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Requested By</strong></td>
+                        <td><span t-field="o.requested_by.name"/></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Request Date</strong></td>
+                        <td><span t-field="o.request_date"/></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Amount</strong></td>
+                        <td><span t-field="o.amount"/></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Status</strong></td>
+                        <td><span t-field="o.state"/></td>
+                    </tr>
+                </table>
+                <h3>Approval Lines</h3>
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Sequence</th>
+                            <th>Approver</th>
+                            <th>Status</th>
+                            <th>Decision Date</th>
+                            <th>Comment</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr t-foreach="o.line_ids" t-as="line">
+                            <td><span t-field="line.sequence"/></td>
+                            <td><span t-field="line.approver_id.name"/></td>
+                            <td><span t-field="line.state"/></td>
+                            <td><span t-field="line.decision_date"/></td>
+                            <td><span t-field="line.comment"/></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </t>
+    </template>
+</odoo>

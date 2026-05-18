@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_ai_analysis_log_tree" model="ir.ui.view">
+        <field name="name">tapis.ai.analysis.log.tree</field>
+        <field name="model">tapis.ai.analysis.log</field>
+        <field name="arch" type="xml">
+            <tree string="AI Analysis Logs">
+                <field name="request_datetime"/>
+                <field name="design_id"/>
+                <field name="provider_id"/>
+                <field name="duration_seconds" string="Duration (s)"/>
+                <field name="status" widget="badge"/>
+                <field name="error_message"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_ai_analysis_log_form" model="ir.ui.view">
+        <field name="name">tapis.ai.analysis.log.form</field>
+        <field name="model">tapis.ai.analysis.log</field>
+        <field name="arch" type="xml">
+            <form string="AI Analysis Log">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="design_id"/>
+                            <field name="provider_id"/>
+                            <field name="status" widget="badge"/>
+                        </group>
+                        <group>
+                            <field name="request_datetime"/>
+                            <field name="response_datetime"/>
+                            <field name="duration_seconds" string="Duration (s)"/>
+                        </group>
+                    </group>
+                    <group string="Details">
+                        <field name="prompt_used" readonly="1"/>
+                        <field name="raw_response" readonly="1"/>
+                        <field name="parsed_json" readonly="1"/>
+                        <field name="error_message" readonly="1"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_ai_analysis_log_search" model="ir.ui.view">
+        <field name="name">tapis.ai.analysis.log.search</field>
+        <field name="model">tapis.ai.analysis.log</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="design_id"/>
+                <field name="provider_id"/>
+                <filter name="success" string="Success" domain="[('status','=','success')]"/>
+                <filter name="failed" string="Failed" domain="[('status','=','failed')]"/>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_ai_analysis_log" model="ir.actions.act_window">
+        <field name="name">AI Analysis Logs</field>
+        <field name="res_model">tapis.ai.analysis.log</field>
+        <field name="view_mode">tree,form</field>
+        <field name="search_view_id" ref="view_ai_analysis_log_search"/>
+    </record>
+
+    <menuitem id="menu_ai_analysis_log"
+        name="AI Analysis Logs"
+        parent="tapis_erp.menu_configuration_root"
+        action="action_ai_analysis_log"
+        sequence="6"/>
+</odoo>

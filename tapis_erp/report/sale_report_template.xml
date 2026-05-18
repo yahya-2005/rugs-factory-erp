@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="report_sale_document">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="o">
+                <t t-call="web.external_layout">
+                    <div class="page">
+                        <div class="row">
+                            <div class="col-xs-6">
+                                <strong>INVOICE</strong>
+                                <br/>
+                                <span>Reference: </span><span t-field="o.name"/>
+                                <br/>
+                                <span>Date: </span><span t-field="o.order_date"/>
+                            </div>
+                            <div class="col-xs-6 text-right">
+                                <strong>Tapis Morocco</strong>
+                                <br/>
+                                <span>Marrakech, Morocco</span>
+                            </div>
+                        </div>
+                        <hr/>
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <strong>Bill To:</strong>
+                                <br/>
+                                <span t-field="o.partner_id.name"/>
+                                <br/>
+                                <span t-field="o.partner_id.street"/>
+                                <br/>
+                                <span t-field="o.partner_id.city"/>
+                                <span t-field="o.partner_id.country_id.name"/>
+                            </div>
+                        </div>
+                        <br/>
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>Product</th>
+                                    <th class="text-right">Quantity</th>
+                                    <th class="text-right">Unit Price (MAD)</th>
+                                    <th class="text-right">Total (MAD)</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><span t-field="o.product_id.name"/></td>
+                                    <td class="text-right"><span t-field="o.quantity"/></td>
+                                    <td class="text-right">
+                                        <span t-esc="'{:,.2f}'.format(o.unit_price or o.product_id.price)"/>
+                                    </td>
+                                    <td class="text-right">
+                                        <span t-esc="'{:,.2f}'.format(o.total_price)"/>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <br/>
+                        <div class="row">
+                            <div class="col-xs-6 col-xs-offset-6">
+                                <table class="table table-bordered">
+                                    <tr>
+                                        <td><strong>Total Amount</strong></td>
+                                        <td class="text-right">
+                                            <strong>
+                                                <span t-esc="'{:,.2f}'.format(o.total_price)"/> MAD
+                                            </strong>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                        <hr/>
+                        <p class="text-center">Thank you for your trust</p>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+</odoo>

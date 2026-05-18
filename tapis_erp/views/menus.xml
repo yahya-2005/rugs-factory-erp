@@ -1,0 +1,320 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Root Application Menu -->
+    <menuitem id="menu_tapis_root" name="Tapis ERP" web_icon="tapis_erp,static/description/icon.png" sequence="10"/>
+
+    <!--
+    ====================================================
+    DASHBOARD (sequence 10)
+    ====================================================
+    -->
+    <menuitem id="menu_dashboard_root" name="Dashboard" parent="menu_tapis_root" sequence="10"/>
+    <menuitem id="menu_dashboard" name="Main Dashboard" action="action_dashboard" parent="menu_dashboard_root" sequence="10"/>
+    <menuitem id="menu_analytics_dashboard"
+              name="Analytics Dashboard"
+              action="action_analytics_dashboard"
+              parent="menu_dashboard_root"
+              sequence="20"/>
+
+    <!--
+    ====================================================
+    PRODUCTS (sequence 20)
+    ====================================================
+    -->
+    <menuitem id="menu_products_root" name="Products" parent="menu_tapis_root" sequence="20"/>
+    <menuitem id="menu_tapis_product"
+        name="Products"
+        parent="menu_products_root"
+        action="action_tapis_product"
+        sequence="10"/>
+    <menuitem id="menu_tag"
+        name="Product Tags"
+        parent="menu_products_root"
+        action="action_tag"
+        sequence="20"/>
+    <menuitem id="menu_design" name="Designs" action="action_design" parent="menu_products_root" sequence="30"/>
+    <menuitem id="menu_bom"
+        name="Bills of Materials"
+        parent="menu_products_root"
+        action="action_bom"
+        sequence="40"/>
+    <menuitem id="menu_raw_material"
+        name="Raw Materials"
+        parent="menu_products_root"
+        action="action_raw_material"
+        sequence="50"/>
+
+    <!--
+    ====================================================
+    SALES (sequence 30)
+    ====================================================
+    -->
+    <menuitem id="menu_sales_root" name="Sales" parent="menu_tapis_root" sequence="30"/>
+    <menuitem id="menu_tapis_crm_pipeline" name="CRM Pipeline" action="action_tapis_crm_lead" parent="menu_sales_root" sequence="10"/>
+    <menuitem id="menu_customer"
+        name="Customers"
+        parent="menu_sales_root"
+        action="action_customer"
+        sequence="20"/>
+    <menuitem id="menu_sale" name="Sales Orders" parent="menu_sales_root" action="action_sale" sequence="30"/>
+    <menuitem id="menu_invoice" name="Invoices" action="action_invoice" parent="menu_sales_root" sequence="40"/>
+    <menuitem id="menu_customer_payment"
+        name="Customer Payments"
+        parent="menu_sales_root"
+        action="action_customer_payment"
+        sequence="50"/>
+
+    <!--
+    ====================================================
+    MANUFACTURING (sequence 40)
+    ====================================================
+    -->
+    <menuitem id="menu_manufacturing_root" name="Manufacturing" parent="menu_tapis_root" sequence="40"/>
+    <menuitem id="menu_production" name="Productions" action="action_tapis_production" parent="menu_manufacturing_root" sequence="10"/>
+    <menuitem id="menu_quality" name="Quality Inspections"
+              action="action_quality_inspection" parent="menu_manufacturing_root" sequence="20"/>
+    <menuitem id="menu_tapis_equipment"
+              name="Equipment"
+              action="action_tapis_equipment"
+              parent="menu_manufacturing_root"
+              sequence="30"/>
+    <menuitem id="menu_tapis_maintenance_order"
+              name="Maintenance Orders"
+              action="action_tapis_maintenance_order"
+              parent="menu_manufacturing_root"
+              sequence="40"/>
+
+    <!--
+    ====================================================
+    INVENTORY (sequence 45)
+    ====================================================
+    -->
+    <menuitem id="menu_inventory_root" name="Inventory" parent="menu_tapis_root" sequence="45"/>
+    <menuitem id="menu_warehouse"
+        name="Warehouses"
+        parent="menu_inventory_root"
+        action="action_warehouse"
+        sequence="10"/>
+    <menuitem id="menu_stock_quant"
+        name="Stock Quants"
+        parent="menu_inventory_root"
+        action="action_stock_quant"
+        sequence="20"/>
+    <menuitem id="menu_stock_move" name="Stock Moves" action="action_stock_move" parent="menu_inventory_root" sequence="30"/>
+    <menuitem id="menu_stock_transfer"
+        name="Stock Transfers"
+        parent="menu_inventory_root"
+        action="action_stock_transfer"
+        sequence="40"/>
+    <menuitem id="menu_reorder_rule"
+        name="Reorder Rules"
+        parent="menu_inventory_root"
+        action="action_reorder_rule"
+        sequence="50"/>
+
+    <!--
+    ====================================================
+    PURCHASING (sequence 50)
+    ====================================================
+    -->
+    <menuitem id="menu_purchasing_root" name="Purchasing" parent="menu_tapis_root" sequence="50"/>
+    <menuitem id="menu_supplier"
+        name="Suppliers"
+        parent="menu_purchasing_root"
+        action="action_supplier"
+        sequence="10"/>
+    <menuitem id="menu_purchase"
+        name="Purchases"
+        parent="menu_purchasing_root"
+        action="action_purchase"
+        sequence="20"/>
+    <menuitem id="menu_supplier_pricelist"
+        name="Supplier Pricelists"
+        parent="menu_purchasing_root"
+        action="action_supplier_pricelist"
+        sequence="25"/>
+
+    <!--
+    ====================================================
+    PROJECT MANAGEMENT (sequence 60)
+    ====================================================
+    -->
+    <menuitem id="menu_project_root" name="Project Management" parent="menu_tapis_root" sequence="60"/>
+    <menuitem id="menu_tapis_project" name="Projects" action="action_tapis_project" parent="menu_project_root" sequence="10"/>
+    <menuitem id="menu_tapis_task" name="Tasks" action="action_tapis_task" parent="menu_project_root" sequence="20"/>
+    <menuitem id="menu_tapis_task_timesheet" name="Timesheets" action="action_tapis_task_timesheet" parent="menu_project_root" sequence="30"/>
+    <menuitem id="menu_tapis_project_tag" name="Project Tags" action="action_tapis_project_tag" parent="menu_project_root" sequence="40"/>
+
+    <!--
+    ====================================================
+    HUMAN RESOURCES (sequence 70)
+    ====================================================
+    -->
+    <menuitem id="menu_hr_root" name="Human Resources" parent="menu_tapis_root" sequence="70"/>
+    <menuitem id="menu_hr"
+      name="Employees"
+      parent="menu_hr_root"
+      action="action_employee"
+      sequence="10"
+      groups="tapis_erp.group_tapis_manager"/>
+
+    <!--
+    ====================================================
+    ACCOUNTING & FINANCE (sequence 55)
+    ====================================================
+    -->
+    <menuitem id="menu_accounting_root" name="Accounting &amp; Finance" parent="menu_tapis_root" sequence="55"/>
+    <menuitem id="menu_tapis_cost_center"
+        name="Cost Centers"
+        parent="menu_accounting_root"
+        action="action_tapis_cost_center"
+        sequence="10"/>
+    <menuitem id="menu_tapis_budget"
+        name="Budgets"
+        parent="menu_accounting_root"
+        action="action_tapis_budget"
+        sequence="20"/>
+
+    <!--
+    ====================================================
+    DOCUMENTS (sequence 75)
+    ====================================================
+    -->
+    <menuitem id="menu_documents_root" name="Documents" parent="menu_tapis_root" sequence="75"/>
+    <menuitem id="menu_tapis_document"
+        name="Documents"
+        parent="menu_documents_root"
+        action="action_tapis_document"
+        sequence="10"/>
+    <menuitem id="menu_tapis_document_folder"
+        name="Document Folders"
+        parent="menu_documents_root"
+        action="action_tapis_document_folder"
+        sequence="20"/>
+
+    <!--
+    ====================================================
+    APPROVALS (sequence 65)
+    ====================================================
+    -->
+    <menuitem id="menu_approval_root" name="Approvals" parent="menu_tapis_root" sequence="65"/>
+    <menuitem id="menu_tapis_approval_request"
+        name="Approval Requests"
+        parent="menu_approval_root"
+        action="action_tapis_approval_request"
+        sequence="10"/>
+    <menuitem id="menu_tapis_approval_category"
+        name="Approval Categories"
+        parent="menu_approval_root"
+        action="action_tapis_approval_category"
+        sequence="20"/>
+    <menuitem id="menu_tapis_approval_rule"
+        name="Approval Rules"
+        parent="menu_approval_root"
+        action="action_tapis_approval_rule"
+        sequence="30"/>
+    <menuitem id="menu_tapis_my_approvals"
+        name="My Approvals"
+        parent="menu_approval_root"
+        action="action_tapis_my_approvals"
+        sequence="5"/>
+
+    <!--
+    ====================================================
+    CONFIGURATION (sequence 80)
+    ====================================================
+    -->
+    <menuitem id="menu_configuration_root" name="Configuration" parent="menu_tapis_root" sequence="80"/>
+    <menuitem id="menu_tapis_crm_stage" name="CRM Stages" action="action_tapis_crm_stage" parent="menu_configuration_root" sequence="10"/>
+    <menuitem id="menu_tapis_communication_template"
+        name="Communication Templates"
+        parent="menu_configuration_root"
+        action="action_tapis_communication_template"
+        sequence="20"/>
+    <menuitem id="menu_tapis_communication_log"
+        name="Communication Logs"
+        parent="menu_configuration_root"
+        action="action_tapis_communication_log"
+        sequence="30"/>
+    <menuitem id="menu_tapis_automation_root"
+        name="Automation"
+        parent="menu_configuration_root"
+        sequence="40"/>
+    <menuitem id="menu_tapis_automation_job"
+        name="Automation Jobs"
+        parent="menu_tapis_automation_root"
+        action="action_tapis_automation_job"
+        sequence="10"/>
+    <menuitem id="menu_tapis_automation_job_log"
+        name="Automation Logs"
+        parent="menu_tapis_automation_root"
+        action="action_tapis_automation_job_log"
+        sequence="20"/>
+    <menuitem id="menu_tapis_audit_log"
+        name="Audit Logs"
+        parent="menu_configuration_root"
+        action="action_tapis_audit_log"
+        groups="tapis_erp.group_audit_manager"
+        sequence="50"/>
+    <menuitem id="menu_tapis_signature_root"
+        name="Signature"
+        parent="menu_configuration_root"
+        sequence="60"/>
+    <menuitem id="menu_tapis_signature_template"
+        name="Signature Templates"
+        parent="menu_tapis_signature_root"
+        action="action_tapis_signature_template"
+        sequence="10"/>
+    <menuitem id="menu_tapis_signature_request"
+        name="Signature Requests"
+        parent="menu_tapis_signature_root"
+        action="action_tapis_signature_request"
+        sequence="20"/>
+
+    <!--
+    ====================================================
+    SECURITY (sequence 85)
+    ====================================================
+    -->
+    <menuitem id="menu_security_root"
+        name="Security"
+        parent="menu_configuration_root"
+        sequence="70"
+        groups="tapis_erp.group_security_manager"/>
+    <menuitem id="menu_tapis_security_department"
+        name="Security Departments"
+        parent="menu_security_root"
+        action="action_tapis_security_department"
+        sequence="10"/>
+    <menuitem id="menu_tapis_security_policy"
+        name="Security Policies"
+        parent="menu_security_root"
+        action="action_tapis_security_policy"
+        sequence="20"/>
+    <menuitem id="menu_tapis_security_incident"
+        name="Security Incidents"
+        parent="menu_security_root"
+        action="action_tapis_security_incident"
+        sequence="30"/>
+
+    <!--
+    ====================================================
+    MULTI-COMPANY (sequence 90)
+    ====================================================
+    -->
+    <menuitem id="menu_multicompany_root"
+        name="Multi-Company"
+        parent="menu_configuration_root"
+        sequence="80"
+        groups="tapis_erp.group_multicompany_manager"/>
+    <menuitem id="menu_tapis_company_profile"
+        name="Company Profiles"
+        parent="menu_multicompany_root"
+        action="action_tapis_company_profile"
+        sequence="10"/>
+    <menuitem id="menu_tapis_intercompany_rule"
+        name="Intercompany Rules"
+        parent="menu_multicompany_root"
+        action="action_tapis_intercompany_rule"
+        sequence="20"/>
+</odoo>

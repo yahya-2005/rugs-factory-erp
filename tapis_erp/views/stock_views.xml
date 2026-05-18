@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- TREE VIEW -->
+        <record id="view_stock_tree" model="ir.ui.view">
+            <field name="name">tapis.stock.move.tree</field>
+            <field name="model">tapis.stock.move</field>
+            <field name="arch" type="xml">
+                <tree string="Stock Moves" decoration-success="move_type == 'in'" decoration-danger="move_type == 'out'">
+                    <field name="name"/>
+                    <field name="product_id"/>
+                    <field name="quantity"/>
+                    <field name="move_type"/>
+                    <field name="source_warehouse_id"/>
+                    <field name="destination_warehouse_id"/>
+                    <field name="date"/>
+                </tree>
+            </field>
+        </record>
+
+        <!-- ACTION -->
+        <record id="action_stock_move" model="ir.actions.act_window">
+            <field name="name">Stock Moves</field>
+            <field name="res_model">tapis.stock.move</field>
+            <field name="view_mode">tree</field>
+        </record>
+
+    </data>
+</odoo>

@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+        <!-- Overdue Invoices -->
+        <record id="automation_job_overdue_invoices" model="tapis.automation.job">
+            <field name="name">Check Overdue Invoices</field>
+            <field name="code">overdue_invoices</field>
+            <field name="active">True</field>
+            <field name="description">Send notifications for invoices past their due date with unpaid or partial payment status.</field>
+            <field name="model_name">tapis.communication.mixin</field>
+            <field name="method_name">_cron_check_overdue_invoices</field>
+            <field name="interval_number">1</field>
+            <field name="interval_type">days</field>
+            <field name="timeout_seconds">300</field>
+            <field name="notify_on_failure">True</field>
+        </record>
+
+        <!-- Low Stock -->
+        <record id="automation_job_low_stock" model="tapis.automation.job">
+            <field name="name">Check Low Stock Products</field>
+            <field name="code">low_stock</field>
+            <field name="active">True</field>
+            <field name="description">Alert when product stock quantity falls below minimum threshold.</field>
+            <field name="model_name">tapis.communication.mixin</field>
+            <field name="method_name">_cron_check_low_stock</field>
+            <field name="interval_number">1</field>
+            <field name="interval_type">days</field>
+            <field name="timeout_seconds">300</field>
+            <field name="notify_on_failure">True</field>
+        </record>
+
+        <!-- Document Expiration -->
+        <record id="automation_job_document_expiration" model="tapis.automation.job">
+            <field name="name">Check Document Expiration</field>
+            <field name="code">document_expiration</field>
+            <field name="active">True</field>
+            <field name="description">Notify when approved documents reach their expiration date.</field>
+            <field name="model_name">tapis.communication.mixin</field>
+            <field name="method_name">_cron_check_document_expiration</field>
+            <field name="interval_number">1</field>
+            <field name="interval_type">days</field>
+            <field name="timeout_seconds">300</field>
+            <field name="notify_on_failure">True</field>
+        </record>
+
+        <!-- Task Deadlines -->
+        <record id="automation_job_task_deadlines" model="tapis.automation.job">
+            <field name="name">Check Task Deadlines</field>
+            <field name="code">task_deadlines</field>
+            <field name="active">True</field>
+            <field name="description">Notify when task deadlines are approaching or overdue.</field>
+            <field name="model_name">tapis.communication.mixin</field>
+            <field name="method_name">_cron_check_task_deadlines</field>
+            <field name="interval_number">1</field>
+            <field name="interval_type">days</field>
+            <field name="timeout_seconds">300</field>
+            <field name="notify_on_failure">True</field>
+        </record>
+
+        <!-- Maintenance Due -->
+        <record id="automation_job_maintenance_due" model="tapis.automation.job">
+            <field name="name">Check Maintenance Due</field>
+            <field name="code">maintenance_due</field>
+            <field name="active">True</field>
+            <field name="description">Alert when scheduled maintenance orders are due.</field>
+            <field name="model_name">tapis.communication.mixin</field>
+            <field name="method_name">_cron_check_maintenance_due</field>
+            <field name="interval_number">1</field>
+            <field name="interval_type">days</field>
+            <field name="timeout_seconds">300</field>
+            <field name="notify_on_failure">True</field>
+        </record>
+
+        <!-- Budget Overruns -->
+        <record id="automation_job_budget_overruns" model="tapis.automation.job">
+            <field name="name">Check Budget Overruns</field>
+            <field name="code">budget_overruns</field>
+            <field name="active">True</field>
+            <field name="description">Alert when approved budgets exceed their allocated limits.</field>
+            <field name="model_name">tapis.communication.mixin</field>
+            <field name="method_name">_cron_check_budget_overruns</field>
+            <field name="interval_number">1</field>
+            <field name="interval_type">days</field>
+            <field name="timeout_seconds">300</field>
+            <field name="notify_on_failure">True</field>
+        </record>
+    </data>
+</odoo>

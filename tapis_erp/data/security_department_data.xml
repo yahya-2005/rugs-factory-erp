@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo noupdate="1">
+    <record id="dept_sales" model="tapis.security.department">
+        <field name="name">Sales</field>
+        <field name="code">SALES</field>
+        <field name="description">Sales department handling customer relations and sales orders.</field>
+    </record>
+
+    <record id="dept_purchasing" model="tapis.security.department">
+        <field name="name">Purchasing</field>
+        <field name="code">PURCH</field>
+        <field name="description">Purchasing department managing supplier relations and procurement.</field>
+    </record>
+
+    <record id="dept_manufacturing" model="tapis.security.department">
+        <field name="name">Manufacturing</field>
+        <field name="code">MFG</field>
+        <field name="description">Manufacturing department overseeing production and quality.</field>
+    </record>
+
+    <record id="dept_finance" model="tapis.security.department">
+        <field name="name">Finance</field>
+        <field name="code">FIN</field>
+        <field name="description">Finance department managing budgets, invoices, and financial reporting.</field>
+    </record>
+
+    <record id="dept_hr" model="tapis.security.department">
+        <field name="name">Human Resources</field>
+        <field name="code">HR</field>
+        <field name="description">Human resources department managing employee data and relations.</field>
+    </record>
+
+    <record id="dept_management" model="tapis.security.department">
+        <field name="name">Management</field>
+        <field name="code">MGMT</field>
+        <field name="description">Executive management with company-wide oversight.</field>
+    </record>
+
+    <record id="dept_it" model="tapis.security.department">
+        <field name="name">IT</field>
+        <field name="code">IT</field>
+        <field name="description">Information technology department managing systems and access.</field>
+    </record>
+</odoo>

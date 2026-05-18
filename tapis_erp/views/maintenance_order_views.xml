@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- SEARCH VIEW -->
+        <record id="view_tapis_maintenance_order_search" model="ir.ui.view">
+            <field name="name">tapis.maintenance.order.search</field>
+            <field name="model">tapis.maintenance.order</field>
+            <field name="arch" type="xml">
+                <search string="Search Maintenance Orders">
+                    <field name="name"/>
+                    <field name="equipment_id"/>
+                    <field name="assigned_to"/>
+                    <field name="maintenance_type"/>
+                    <field name="priority"/>
+                    <filter name="filter_draft" string="Draft" domain="[('state','=','draft')]"/>
+                    <filter name="filter_scheduled" string="Scheduled" domain="[('state','=','scheduled')]"/>
+                    <filter name="filter_in_progress" string="In Progress" domain="[('state','=','in_progress')]"/>
+                    <filter name="filter_done" string="Done" domain="[('state','=','done')]"/>
+                    <filter name="filter_critical" string="Critical" domain="[('priority','=','critical')]"/>
+                    <filter name="filter_preventive" string="Preventive" domain="[('maintenance_type','=','preventive')]"/>
+                    <filter name="filter_corrective" string="Corrective" domain="[('maintenance_type','=','corrective')]"/>
+                    <separator/>
+                    <group expand="0" string="Group By">
+                        <filter name="group_by_state" string="Status" context="{'group_by':'state'}"/>
+                        <filter name="group_by_priority" string="Priority" context="{'group_by':'priority'}"/>
+                        <filter name="group_by_type" string="Type" context="{'group_by':'maintenance_type'}"/>
+                        <filter name="group_by_equipment" string="Equipment" context="{'group_by':'equipment_id'}"/>
+                        <filter name="group_by_assigned" string="Assigned To" context="{'group_by':'assigned_to'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
+        <!-- TREE VIEW -->
+        <record id="view_tapis_maintenance_order_tree" model="ir.ui.view">
+            <field name="name">tapis.maintenance.order.tree</field>
+            <field name="model">tapis.maintenance.order</field>
+            <field name="arch" type="xml">
+                <tree string="Maintenance Orders" decoration-danger="priority == 'critical' and state not in ('done','cancelled')" decoration-warning="priority == 'high' and state not in ('done','cancelled')" decoration-info="priority == 'medium' and state not in ('done','cancelled')">
+                    <field name="name"/>
+                    <field name="equipment_id"/>
+                    <field name="maintenance_type"/>
+                    <field name="priority" widget="badge" decoration-danger="priority == 'critical'" decoration-warning="priority == 'high'" decoration-info="priority == 'medium'" decoration-success="priority == 'low'"/>
+                    <field name="state" widget="badge" decoration-success="state == 'done'" decoration-danger="state == 'cancelled'" decoration-warning="state == 'in_progress'" decoration-info="state == 'scheduled'" decoration-muted="state == 'draft'"/>
+                    <field name="assigned_to"/>
+                    <field name="scheduled_date"/>
+                    <field name="total_cost"/>
+                </tree>
+            </field>
+        </record>
+
+        <!-- FORM VIEW -->
+        <record id="view_tapis_maintenance_order_form" model="ir.ui.view">
+            <field name="name">tapis.maintenance.order.form</field>
+            <field name="model">tapis.maintenance.order</field>
+            <field name="arch" type="xml">
+                <form string="Maintenance Order">
+                    <header>
+                        <button name="action_validate" type="object" string="Schedule" states="draft" class="btn-primary"/>
+                        <button name="action_start" type="object" string="Start Maintenance" states="scheduled" class="btn-warning"/>
+                        <button name="action_done" type="object" string="Complete" states="in_progress" class="btn-success"/>
+                        <button name="action_cancel" type="object" string="Cancel" states="draft,scheduled,in_progress" class="btn-danger"/>
+                        <field name="state" widget="statusbar" statusbar_visible="draft,scheduled,in_progress,done,cancelled"/>
+                    </header>
+                    <sheet>
+                        <div class="row mt16">
+                            <div class="col-lg-6">
+                                <group string="General">
+                                    <field name="name"/>
+                                    <field name="equipment_id" options="{'no_create': True}"/>
+                                    <field name="maintenance_type"/>
+                                    <field name="priority"/>
+                                    <field name="assigned_to"/>
+                                </group>
+                            </div>
+                            <div class="col-lg-6">
+                                <group string="Schedule">
+                                    <field name="scheduled_date"/>
+                                    <field name="start_date"/>
+                                    <field name="end_date"/>
+                                    <field name="downtime_hours"/>
+                                </group>
+                            </div>
+                        </div>
+                        <notebook>
+                            <page string="Description">
+                                <field name="description" nolabel="1"/>
+                            </page>
+                            <page string="Costs">
+                                <group>
+                                    <field name="cost_estimated"/>
+                                    <field name="cost_actual"/>
+                                    <field name="parts_cost"/>
+                                    <field name="labor_cost"/>
+                                    <field name="total_cost"/>
+                                </group>
+                            </page>
+                            <page string="Parts Used">
+                                <field name="parts_notes" nolabel="1"/>
+                            </page>
+                            <page string="Internal Notes">
+                                <field name="notes" nolabel="1"/>
+                            </page>
+                        </notebook>
+                    </sheet>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids"/>
+                        <field name="activity_ids"/>
+                        <field name="message_ids"/>
+                    </div>
+                </form>
+            </field>
+        </record>
+
+        <!-- ACTION -->
+        <record id="action_tapis_maintenance_order" model="ir.actions.act_window">
+            <field name="name">Maintenance Orders</field>
+            <field name="res_model">tapis.maintenance.order</field>
+            <field name="view_mode">tree,form</field>
+            <field name="search_view_id" ref="view_tapis_maintenance_order_search"/>
+        </record>
+
+    </data>
+</odoo>

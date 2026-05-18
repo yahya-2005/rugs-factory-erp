@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+<report
+    id="action_report_crm_pipeline"
+    model="tapis.crm.lead"
+    string="Pipeline Summary Report"
+    report_type="qweb-pdf"
+    name="tapis_erp.crm_pipeline_report_template"
+    file="tapis_erp.crm_pipeline_report_template"
+    print_report_name="'Pipeline_Summary_%s' % (context_timestamp(datetime.now()).strftime('%%Y-%%m-%%d'))"
+/>
+</odoo>

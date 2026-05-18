@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="action_report_folder_content" model="ir.actions.report">
+            <field name="name">Folder Content Report</field>
+            <field name="model">tapis.document.folder</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">tapis_erp.folder_content_report_template</field>
+            <field name="report_file">tapis_erp.folder_content_report_template</field>
+            <field name="binding_model_id" ref="model_tapis_document_folder"/>
+            <field name="binding_type">report</field>
+            <field name="print_report_name">'Folder Content - %s' % (object.name)</field>
+        </record>
+    </data>
+</odoo>

@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_security_policy_tree" model="ir.ui.view">
+        <field name="name">tapis.security.policy.tree</field>
+        <field name="model">tapis.security.policy</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name"/>
+                <field name="code"/>
+                <field name="model_name"/>
+                <field name="active"/>
+                <field name="hide_fields"/>
+                <field name="readonly_fields"/>
+                <field name="block_export"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_security_policy_form" model="ir.ui.view">
+        <field name="name">tapis.security.policy.form</field>
+        <field name="model">tapis.security.policy</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="name"/>
+                            <field name="code"/>
+                        </group>
+                        <group>
+                            <field name="active"/>
+                            <field name="model_name"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Restrictions">
+                            <group>
+                                <group>
+                                    <field name="allowed_group_ids" widget="many2many_tags"/>
+                                    <field name="minimum_employee_level"/>
+                                </group>
+                                <group>
+                                    <field name="allowed_department_ids" widget="many2many_tags"/>
+                                </group>
+                            </group>
+                        </page>
+                        <page string="Sensitive Fields">
+                            <group>
+                                <field name="field_names"/>
+                            </group>
+                        </page>
+                        <page string="Behavior">
+                            <group>
+                                <group>
+                                    <field name="hide_fields"/>
+                                    <field name="readonly_fields"/>
+                                </group>
+                                <group>
+                                    <field name="block_export"/>
+                                </group>
+                            </group>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_security_policy_search" model="ir.ui.view">
+        <field name="name">tapis.security.policy.search</field>
+        <field name="model">tapis.security.policy</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name"/>
+                <field name="code"/>
+                <field name="model_name"/>
+                <filter name="active" string="Active" domain="[('active','=',True)]"/>
+                <filter name="block_export" string="Block Export" domain="[('block_export','=',True)]"/>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_tapis_security_policy" model="ir.actions.act_window">
+        <field name="name">Security Policies</field>
+        <field name="res_model">tapis.security.policy</field>
+        <field name="view_mode">tree,form</field>
+        <field name="search_view_id" ref="view_security_policy_search"/>
+    </record>
+</odoo>

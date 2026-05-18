@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo noupdate="1">
+    <record id="demo_ai_provider_gemini" model="tapis.ai.provider">
+        <field name="name">Google Gemini</field>
+        <field name="provider_type">gemini</field>
+        <field name="api_key">YOUR_GEMINI_API_KEY_HERE</field>
+        <field name="model_name">gemini-flash-latest</field>
+        <field name="timeout_seconds" eval="120"/>
+        <field name="active" eval="True"/>
+        <field name="is_default" eval="True"/>
+    </record>
+
+    <record id="demo_ai_provider_ollama" model="tapis.ai.provider">
+        <field name="name">Local Ollama</field>
+        <field name="provider_type">ollama</field>
+        <field name="base_url">http://localhost:11434</field>
+        <field name="model_name">llama3.2-vision</field>
+        <field name="timeout_seconds" eval="120"/>
+        <field name="active" eval="True"/>
+        <field name="is_default" eval="False"/>
+    </record>
+
+    <record id="demo_ai_provider_openrouter" model="tapis.ai.provider">
+        <field name="name">OpenRouter</field>
+        <field name="provider_type">openai</field>
+        <field name="api_key">YOUR_OPENROUTER_API_KEY_HERE</field>
+        <field name="base_url">https://openrouter.ai/api/v1</field>
+        <field name="model_name">qwen/qwen-vl-plus:free</field>
+        <field name="timeout_seconds" eval="120"/>
+        <field name="active" eval="True"/>
+        <field name="is_default" eval="False"/>
+    </record>
+</odoo>

@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- SEARCH VIEW -->
+        <record id="view_tapis_equipment_search" model="ir.ui.view">
+            <field name="name">tapis.equipment.search</field>
+            <field name="model">tapis.equipment</field>
+            <field name="arch" type="xml">
+                <search string="Search Equipment">
+                    <field name="name"/>
+                    <field name="code"/>
+                    <field name="category"/>
+                    <field name="location"/>
+                    <field name="tag_ids"/>
+                    <filter name="filter_operational" string="Operational" domain="[('state','=','operational')]"/>
+                    <filter name="filter_broken" string="Broken" domain="[('state','=','broken')]"/>
+                    <filter name="filter_maintenance" string="Under Maintenance" domain="[('state','=','maintenance')]"/>
+                    <filter name="filter_overdue" string="Overdue Maintenance" domain="[('overdue_maintenance','=',True)]"/>
+                    <separator/>
+                    <group expand="0" string="Group By">
+                        <filter name="group_by_category" string="Category" context="{'group_by':'category'}"/>
+                        <filter name="group_by_state" string="Status" context="{'group_by':'state'}"/>
+                        <filter name="group_by_location" string="Location" context="{'group_by':'location'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
+        <!-- TREE VIEW -->
+        <record id="view_tapis_equipment_tree" model="ir.ui.view">
+            <field name="name">tapis.equipment.tree</field>
+            <field name="model">tapis.equipment</field>
+            <field name="arch" type="xml">
+                <tree string="Equipment" decoration-danger="state == 'broken'" decoration-warning="state == 'maintenance'" decoration-success="state == 'operational'">
+                    <field name="name"/>
+                    <field name="code"/>
+                    <field name="category"/>
+                    <field name="location"/>
+                    <field name="state" widget="badge" decoration-success="state == 'operational'" decoration-danger="state == 'broken'" decoration-warning="state == 'maintenance'" decoration-muted="state == 'retired'"/>
+                    <field name="condition_percent" widget="progressbar"/>
+                    <field name="next_maintenance_date"/>
+                    <field name="overdue_maintenance" decoration-danger="overdue_maintenance == True"/>
+                </tree>
+            </field>
+        </record>
+
+        <!-- FORM VIEW -->
+        <record id="view_tapis_equipment_form" model="ir.ui.view">
+            <field name="name">tapis.equipment.form</field>
+            <field name="model">tapis.equipment</field>
+            <field name="arch" type="xml">
+                <form string="Equipment">
+                    <header>
+                        <button name="action_set_running" type="object" string="Set Operational" states="broken,maintenance" class="btn-success"/>
+                        <button name="action_set_broken" type="object" string="Mark Broken" states="operational,maintenance" class="btn-danger"/>
+                        <button name="action_set_maintenance" type="object" string="Send to Maintenance" states="operational,broken" class="btn-warning"/>
+                        <button name="action_set_retired" type="object" string="Retire" states="operational,broken,maintenance" class="btn-secondary"/>
+                        <field name="state" widget="statusbar" statusbar_visible="operational,broken,maintenance,retired"/>
+                    </header>
+                    <sheet>
+                        <div class="oe_button_box" name="button_box">
+                            <button name="action_view_maintenance_orders" type="object" class="oe_stat_button" icon="fa-wrench">
+                                <div class="o_stat_info">
+                                    <field name="maintenance_count" widget="statinfo"/>
+                                    <span class="o_stat_text">Maintenance Orders</span>
+                                </div>
+                            </button>
+                            <button name="action_view_maintenance_orders" type="object" class="oe_stat_button" icon="fa-exclamation-triangle">
+                                <div class="o_stat_info">
+                                    <field name="maintenance_open_count" widget="statinfo"/>
+                                    <span class="o_stat_text">Open Orders</span>
+                                </div>
+                            </button>
+                            <button name="action_view_documents" type="object" class="oe_stat_button" icon="fa-file">
+                                <div class="o_stat_info">
+                                    <field name="document_count" widget="statinfo"/>
+                                    <span class="o_stat_text">Documents</span>
+                                </div>
+                            </button>
+                        </div>
+                        <div class="row mt16">
+                            <div class="col-lg-6">
+                                <group string="General">
+                                    <field name="name"/>
+                                    <field name="code"/>
+                                    <field name="category"/>
+                                    <field name="location"/>
+                                    <field name="tag_ids" widget="many2many_tags"/>
+                                </group>
+                            </div>
+                            <div class="col-lg-6">
+                                <group string="Condition">
+                                    <field name="condition_percent" widget="progressbar"/>
+                                    <field name="last_maintenance_date"/>
+                                    <field name="next_maintenance_date"/>
+                                    <field name="overdue_maintenance"/>
+                                </group>
+                            </div>
+                        </div>
+                        <notebook>
+                            <page string="Maintenance">
+                                <group>
+                                    <field name="total_maintenance_cost" string="Total Cost (MAD)"/>
+                                    <field name="total_downtime_hours" string="Total Downtime (Hours)"/>
+                                </group>
+                            </page>
+                            <page string="Notes">
+                                <field name="notes"/>
+                            </page>
+                        </notebook>
+                        <field name="image" widget="image" class="oe_avatar"/>
+                    </sheet>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids"/>
+                        <field name="activity_ids"/>
+                        <field name="message_ids"/>
+                    </div>
+                </form>
+            </field>
+        </record>
+
+        <!-- ACTION -->
+        <record id="action_tapis_equipment" model="ir.actions.act_window">
+            <field name="name">Equipment</field>
+            <field name="res_model">tapis.equipment</field>
+            <field name="view_mode">tree,form</field>
+            <field name="search_view_id" ref="view_tapis_equipment_search"/>
+        </record>
+
+    </data>
+</odoo>

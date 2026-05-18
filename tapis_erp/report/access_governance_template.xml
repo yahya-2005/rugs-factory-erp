@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="report_access_governance_template">
+        <t t-foreach="doc_ids" t-as="doc_id">
+            <t t-raw="report_access_governance_document(doc_id)"/>
+        </t>
+    </template>
+
+    <template id="report_access_governance_document">
+        <t t-set="doc" t-value="docs.filtered(lambda d: d.id == doc_id)[0]"/>
+        <div class="page">
+            <h2>Access Governance Report</h2>
+            <table class="table table-bordered">
+                <tr><td><strong>User</strong></td><td><span t-esc="doc.name"/></td></tr>
+                <tr><td><strong>Login</strong></td><td><span t-esc="doc.login"/></td></tr>
+                <tr><td><strong>Department</strong></td>
+                    <td><span t-esc="doc.security_department_id.name or ''"/></td></tr>
+                <tr><td><strong>Employee Level</strong></td>
+                    <td><span t-esc="doc.employee_level or ''"/></td></tr>
+                <tr><td><strong>Data Access Scope</strong></td>
+                    <td><span t-esc="doc.data_access_scope or ''"/></td></tr>
+                <tr><td><strong>Can View Financial Data</strong></td>
+                    <td><span t-esc="'Yes' if doc.can_view_financial_data else 'No'"/></td></tr>
+                <tr><td><strong>Can Export Sensitive Data</strong></td>
+                    <td><span t-esc="'Yes' if doc.can_export_sensitive_data else 'No'"/></td></tr>
+            </table>
+        </div>
+    </template>
+</odoo>

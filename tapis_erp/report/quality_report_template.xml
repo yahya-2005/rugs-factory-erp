@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="report_quality_document">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="o">
+                <t t-call="web.external_layout">
+                    <div class="page">
+                        <div class="row">
+                            <div class="col-xs-6">
+                                <strong>QUALITY INSPECTION REPORT</strong>
+                                <br/>
+                                <span>Reference: </span><span t-field="o.name"/>
+                                <br/>
+                                <span>Date: </span><span t-field="o.inspection_date"/>
+                            </div>
+                            <div class="col-xs-6 text-right">
+                                <strong>Tapis Morocco</strong>
+                                <br/>
+                                <span>Marrakech, Morocco</span>
+                            </div>
+                        </div>
+                        <hr/>
+                        <div class="row">
+                            <div class="col-xs-6">
+                                <strong>Product:</strong>
+                                <span t-field="o.product_id.name"/>
+                                <br/>
+                                <strong>Production:</strong>
+                                <span t-field="o.production_id.name"/>
+                                <br/>
+                                <strong>Inspector:</strong>
+                                <span t-field="o.inspector_id.name"/>
+                                <br/>
+                                <strong>Result:</strong>
+                                <span t-esc="dict(o._fields['result'].selection).get(o.result)"/>
+                            </div>
+                            <div class="col-xs-6 text-right">
+                                <strong>Average Score:</strong>
+                                <span t-esc="'{:,.1f}'.format(o.average_score)"/> / 100
+                            </div>
+                        </div>
+                        <br/>
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>Criterion</th>
+                                    <th class="text-right">Score</th>
+                                    <th class="text-right">Max</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Appearance</td>
+                                    <td class="text-right"><span t-esc="o.appearance_score or 'N/A'"/></td>
+                                    <td class="text-right">100</td>
+                                </tr>
+                                <tr>
+                                    <td>Dimensions</td>
+                                    <td class="text-right"><span t-esc="o.dimensions_score or 'N/A'"/></td>
+                                    <td class="text-right">100</td>
+                                </tr>
+                                <tr>
+                                    <td>Weaving</td>
+                                    <td class="text-right"><span t-esc="o.weaving_score or 'N/A'"/></td>
+                                    <td class="text-right">100</td>
+                                </tr>
+                                <tr>
+                                    <td>Finishing</td>
+                                    <td class="text-right"><span t-esc="o.finishing_score or 'N/A'"/></td>
+                                    <td class="text-right">100</td>
+                                </tr>
+                                <tr class="active">
+                                    <td><strong>Average Score</strong></td>
+                                    <td class="text-right">
+                                        <strong>
+                                            <span t-esc="'{:,.1f}'.format(o.average_score)"/>
+                                        </strong>
+                                    </td>
+                                    <td class="text-right"><strong>100</strong></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <br/>
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <strong>Result: </strong>
+                                <span t-esc="dict(o._fields['result'].selection).get(o.result)"/>
+                                <br/>
+                                <br/>
+                                <strong>Defect Notes:</strong>
+                                <br/>
+                                <p t-field="o.defect_notes"/>
+                                <br/>
+                                <strong>Corrective Action:</strong>
+                                <br/>
+                                <p t-field="o.corrective_action"/>
+                            </div>
+                        </div>
+                        <hr/>
+                        <p class="text-center">Tapis ERP - Quality Control Document</p>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+</odoo>

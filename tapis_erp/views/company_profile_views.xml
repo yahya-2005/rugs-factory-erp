@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_company_profile_tree" model="ir.ui.view">
+        <field name="name">tapis.company.profile.tree</field>
+        <field name="model">tapis.company.profile</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="company_id"/>
+                <field name="legal_name"/>
+                <field name="trade_name"/>
+                <field name="tax_id"/>
+                <field name="phone"/>
+                <field name="email"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_company_profile_form" model="ir.ui.view">
+        <field name="name">tapis.company.profile.form</field>
+        <field name="model">tapis.company.profile</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button name="%(tapis_erp.action_warehouse)d" type="action" class="oe_stat_button" icon="fa-building-o">
+                            <div class="o_stat_info">
+                                <span class="o_stat_text">Warehouses</span>
+                            </div>
+                        </button>
+                        <button name="%(tapis_erp.action_employee)d" type="action" class="oe_stat_button" icon="fa-users">
+                            <div class="o_stat_info">
+                                <span class="o_stat_text">Employees</span>
+                            </div>
+                        </button>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="company_id" options="{'no_create': True}"/>
+                            <field name="legal_name"/>
+                            <field name="trade_name"/>
+                            <field name="tax_id"/>
+                            <field name="registration_number"/>
+                            <field name="industry"/>
+                        </group>
+                        <group>
+                            <field name="logo" widget="image"/>
+                            <field name="currency_id"/>
+                            <field name="fiscal_year_start_month"/>
+                            <field name="phone"/>
+                            <field name="email"/>
+                            <field name="website"/>
+                        </group>
+                    </group>
+                    <group>
+                        <field name="address"/>
+                    </group>
+                    <notebook>
+                        <page string="Financial KPIs">
+                            <group>
+                                <group>
+                                    <field name="revenue_ytd" string="Revenue YTD"/>
+                                </group>
+                                <group>
+                                    <field name="expenses_ytd" string="Expenses YTD"/>
+                                </group>
+                                <group>
+                                    <field name="net_profit_ytd" string="Net Profit YTD"/>
+                                </group>
+                            </group>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_company_profile_search" model="ir.ui.view">
+        <field name="name">tapis.company.profile.search</field>
+        <field name="model">tapis.company.profile</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="legal_name"/>
+                <field name="trade_name"/>
+                <field name="company_id"/>
+                <field name="tax_id"/>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_tapis_company_profile" model="ir.actions.act_window">
+        <field name="name">Company Profiles</field>
+        <field name="res_model">tapis.company.profile</field>
+        <field name="view_mode">tree,form</field>
+        <field name="search_view_id" ref="view_company_profile_search"/>
+    </record>
+</odoo>

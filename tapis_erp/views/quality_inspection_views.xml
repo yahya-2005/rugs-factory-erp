@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- TREE VIEW -->
+        <record id="view_quality_inspection_tree" model="ir.ui.view">
+            <field name="name">tapis.quality.inspection.tree</field>
+            <field name="model">tapis.quality.inspection</field>
+            <field name="arch" type="xml">
+                <tree string="Quality Inspections"
+                    decoration-success="result == 'passed'"
+                    decoration-danger="result == 'failed'"
+                    decoration-warning="result == 'pending'">
+                    <field name="name"/>
+                    <field name="production_id"/>
+                    <field name="product_id"/>
+                    <field name="inspector_id"/>
+                    <field name="average_score" sum="Total Avg"/>
+                    <field name="result"/>
+                    <field name="state"/>
+                    <field name="inspection_date"/>
+                </tree>
+            </field>
+        </record>
+
+        <!-- FORM VIEW -->
+        <record id="view_quality_inspection_form" model="ir.ui.view">
+            <field name="name">tapis.quality.inspection.form</field>
+            <field name="model">tapis.quality.inspection</field>
+            <field name="arch" type="xml">
+                <form string="Quality Inspection">
+                    <header>
+                        <button name="action_set_passed" type="object" string="Set Passed"
+                                states="draft" class="btn-success"
+                                attrs="{'invisible': [('state', 'in', ('completed', 'cancelled'))]}"/>
+                        <button name="action_set_failed" type="object" string="Set Failed"
+                                states="draft" class="btn-danger"
+                                attrs="{'invisible': [('state', 'in', ('completed', 'cancelled'))]}"/>
+                        <button name="action_complete" type="object" string="Complete"
+                                states="draft" class="btn-primary"/>
+                        <button name="action_cancel" type="object" string="Cancel"
+                                states="draft" class="btn-danger"/>
+                        <button name="%(action_report_quality)d"
+                                type="action"
+                                string="Print Quality Report"
+                                class="btn-secondary"/>
+                        <field name="state" widget="statusbar"
+                               statusbar_visible="draft,completed"
+                               statusbar_colors='{"completed":"success","cancelled":"danger"}'>
+                            <field name="result" invisible="1"/>
+                        </field>
+                    </header>
+                    <sheet>
+                        <div class="oe_button_box" name="button_box">
+                            <button name="action_open_production" type="object"
+                                    class="oe_stat_button" icon="fa-industry">
+                                <div class="o_stat_info">
+                                    <field name="production_id" widget="statinfo"/>
+                                    <span class="o_stat_text">Production</span>
+                                </div>
+                            </button>
+                        </div>
+                        <group>
+                            <field name="name"/>
+                            <field name="product_id"/>
+                            <field name="inspector_id"/>
+                            <field name="inspection_date"/>
+                        </group>
+                        <notebook>
+                            <page string="Scores">
+                                <group>
+                                    <group>
+                                        <field name="appearance_score"/>
+                                        <field name="dimensions_score"/>
+                                        <field name="weaving_score"/>
+                                        <field name="finishing_score"/>
+                                    </group>
+                                    <group>
+                                        <field name="average_score" widget="progressbar"
+                                               options="{'precision': 1}"/>
+                                        <field name="result" widget="badge"
+                                               decoration-success="result == 'passed'"
+                                               decoration-danger="result == 'failed'"
+                                               decoration-warning="result == 'pending'"/>
+                                    </group>
+                                </group>
+                            </page>
+                            <page string="Defects">
+                                <group>
+                                    <field name="defect_notes" nolabel="1"
+                                           placeholder="Describe any defects found during inspection..."/>
+                                </group>
+                                <group string="Corrective Action">
+                                    <field name="corrective_action" nolabel="1"
+                                           placeholder="Describe the corrective action taken..."/>
+                                </group>
+                            </page>
+                            <page string="Chatter">
+                                <field name="message_follower_ids"/>
+                                <field name="activity_ids"/>
+                                <field name="message_ids"/>
+                            </page>
+                        </notebook>
+                    </sheet>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids"/>
+                        <field name="activity_ids"/>
+                        <field name="message_ids"/>
+                    </div>
+                </form>
+            </field>
+        </record>
+
+        <!-- SEARCH VIEW -->
+        <record id="view_quality_inspection_search" model="ir.ui.view">
+            <field name="name">tapis.quality.inspection.search</field>
+            <field name="model">tapis.quality.inspection</field>
+            <field name="arch" type="xml">
+                <search string="Search Quality Inspections">
+                    <field name="name"/>
+                    <field name="production_id"/>
+                    <field name="product_id"/>
+                    <field name="inspector_id"/>
+                    <filter name="passed" string="Passed" domain="[('result','=','passed')]"/>
+                    <filter name="failed" string="Failed" domain="[('result','=','failed')]"/>
+                    <filter name="pending" string="Pending" domain="[('result','=','pending')]"/>
+                    <filter name="draft" string="Draft" domain="[('state','=','draft')]"/>
+                    <filter name="completed" string="Completed" domain="[('state','=','completed')]"/>
+                    <group expand="0" string="Group By">
+                        <filter name="group_by_product" string="Product" context="{'group_by':'product_id'}"/>
+                        <filter name="group_by_result" string="Result" context="{'group_by':'result'}"/>
+                        <filter name="group_by_state" string="State" context="{'group_by':'state'}"/>
+                        <filter name="group_by_inspector" string="Inspector" context="{'group_by':'inspector_id'}"/>
+                        <filter name="group_by_date" string="Inspection Date" context="{'group_by':'inspection_date'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
+        <!-- ACTION -->
+        <record id="action_quality_inspection" model="ir.actions.act_window">
+            <field name="name">Quality Inspections</field>
+            <field name="res_model">tapis.quality.inspection</field>
+            <field name="view_mode">tree,form</field>
+            <field name="search_view_id" ref="view_quality_inspection_search"/>
+        </record>
+
+        </data>
+</odoo>

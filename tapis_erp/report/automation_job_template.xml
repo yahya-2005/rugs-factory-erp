@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="report_automation_job">
+        <t t-call="web.external_layout">
+            <t t-set="o" t-value="doc"/>
+            <div class="page">
+                <h2>Automation Job Summary</h2>
+                <table class="table table-bordered">
+                    <tr>
+                        <td><strong>Job Name</strong></td>
+                        <td><span t-field="o.name"/></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Code</strong></td>
+                        <td><span t-field="o.code"/></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Model</strong></td>
+                        <td><span t-field="o.model_name"/></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Method</strong></td>
+                        <td><span t-field="o.method_name"/></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Interval</strong></td>
+                        <td><span t-field="o.interval_number"/> <span t-field="o.interval_type"/></td>
+                    </tr>
+                    <tr>
+                        <td><strong>State</strong></td>
+                        <td><span t-field="o.state"/></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Next Execution</strong></td>
+                        <td><span t-field="o.next_execution"/></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Last Execution</strong></td>
+                        <td><span t-field="o.last_execution"/></td>
+                    </tr>
+                </table>
+                <h3>Statistics</h3>
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Metric</th>
+                            <th>Value</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Total Runs</td>
+                            <td><span t-field="o.total_runs"/></td>
+                        </tr>
+                        <tr>
+                            <td>Success Count</td>
+                            <td><span t-field="o.success_count"/></td>
+                        </tr>
+                        <tr>
+                            <td>Failure Count</td>
+                            <td><span t-field="o.failure_count"/></td>
+                        </tr>
+                        <tr>
+                            <td>Success Rate</td>
+                            <td><span t-field="o.success_rate"/>%</td>
+                        </tr>
+                        <tr>
+                            <td>Average Duration</td>
+                            <td><span t-field="o.average_duration_seconds"/> seconds</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <h3>Recent Execution Logs</h3>
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Start</th>
+                            <th>Status</th>
+                            <th>Duration (s)</th>
+                            <th>Records</th>
+                            <th>Trigger</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr t-foreach="o.log_ids[:10]" t-as="log">
+                            <td><span t-field="log.start_datetime"/></td>
+                            <td><span t-field="log.status"/></td>
+                            <td><span t-field="log.duration_seconds"/></td>
+                            <td><span t-field="log.records_processed"/></td>
+                            <td><span t-field="log.triggered_by"/></td>
+                        </tr>
+                        <tr t-if="not o.log_ids">
+                            <td colspan="5">No execution logs available.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </t>
+    </template>
+</odoo>

@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_security_incident_tree" model="ir.ui.view">
+        <field name="name">tapis.security.incident.tree</field>
+        <field name="model">tapis.security.incident</field>
+        <field name="arch" type="xml">
+            <tree decoration-danger="severity in ('high','critical')" decoration-warning="severity == 'medium'" decoration-info="severity == 'low'">
+                <field name="name"/>
+                <field name="user_id"/>
+                <field name="model_name"/>
+                <field name="operation"/>
+                <field name="severity" widget="badge"/>
+                <field name="incident_date"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_security_incident_form" model="ir.ui.view">
+        <field name="name">tapis.security.incident.form</field>
+        <field name="model">tapis.security.incident</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="name"/>
+                            <field name="user_id"/>
+                            <field name="incident_date"/>
+                        </group>
+                        <group>
+                            <field name="severity" widget="badge"/>
+                            <field name="model_name"/>
+                            <field name="operation"/>
+                        </group>
+                    </group>
+                    <group>
+                        <field name="description"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_security_incident_search" model="ir.ui.view">
+        <field name="name">tapis.security.incident.search</field>
+        <field name="model">tapis.security.incident</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name"/>
+                <field name="user_id"/>
+                <field name="model_name"/>
+                <field name="severity"/>
+                <filter name="critical_high" string="Critical &amp; High" domain="[('severity','in',('critical','high'))]"/>
+                <filter name="today" string="Today" date="incident_date"/>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_tapis_security_incident" model="ir.actions.act_window">
+        <field name="name">Security Incidents</field>
+        <field name="res_model">tapis.security.incident</field>
+        <field name="view_mode">tree,form</field>
+        <field name="search_view_id" ref="view_security_incident_search"/>
+    </record>
+</odoo>

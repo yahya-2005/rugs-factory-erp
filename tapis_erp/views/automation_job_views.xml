@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- TREE VIEW -->
+        <record id="view_tapis_automation_job_tree" model="ir.ui.view">
+            <field name="name">tapis.automation.job.tree</field>
+            <field name="model">tapis.automation.job</field>
+            <field name="arch" type="xml">
+                <tree decoration-danger="state == 'failed'" decoration-info="state == 'running'" decoration-success="state == 'success'" decoration-muted="state == 'disabled'">
+                    <field name="name"/>
+                    <field name="state" widget="badge"/>
+                    <field name="next_execution"/>
+                    <field name="last_execution"/>
+                    <field name="success_rate" widget="progressbar"/>
+                    <field name="total_runs"/>
+                </tree>
+            </field>
+        </record>
+
+        <!-- FORM VIEW -->
+        <record id="view_tapis_automation_job_form" model="ir.ui.view">
+            <field name="name">tapis.automation.job.form</field>
+            <field name="model">tapis.automation.job</field>
+            <field name="arch" type="xml">
+                <form string="Automation Job">
+                    <header>
+                        <button name="action_run_now" type="object" string="Run Now" class="btn-primary" attrs="{'invisible': [('state', 'in', ('running', 'disabled'))]}"/>
+                        <button name="action_enable" type="object" string="Enable" attrs="{'invisible': [('active', '=', True)]}"/>
+                        <button name="action_disable" type="object" string="Disable" attrs="{'invisible': [('active', '=', False)]}"/>
+                        <button name="action_sync_ir_cron" type="object" string="Sync Cron"/>
+                        <button name="action_open_logs" type="object" string="Open Logs"/>
+                        <field name="state" widget="statusbar" statusbar_visible="idle,running,success,failed"/>
+                    </header>
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="name"/>
+                                <field name="code"/>
+                                <field name="active"/>
+                                <field name="description"/>
+                            </group>
+                            <group>
+                                <field name="ir_cron_id"/>
+                            </group>
+                        </group>
+                        <notebook>
+                            <page name="configuration" string="Configuration">
+                                <group>
+                                    <group>
+                                        <field name="model_name"/>
+                                        <field name="method_name"/>
+                                    </group>
+                                    <group>
+                                        <field name="interval_number"/>
+                                        <field name="interval_type"/>
+                                    </group>
+                                </group>
+                                <group>
+                                    <group>
+                                        <field name="timeout_seconds"/>
+                                    </group>
+                                    <group>
+                                        <field name="next_execution"/>
+                                        <field name="last_execution"/>
+                                        <field name="last_duration_seconds" string="Last Duration (s)"/>
+                                    </group>
+                                </group>
+                            </page>
+                            <page name="statistics" string="Statistics">
+                                <group>
+                                    <group>
+                                        <field name="total_runs"/>
+                                        <field name="success_count"/>
+                                        <field name="failure_count"/>
+                                    </group>
+                                    <group>
+                                        <field name="average_duration_seconds" string="Avg Duration (s)"/>
+                                        <field name="success_rate" widget="progressbar"/>
+                                    </group>
+                                </group>
+                            </page>
+                            <page name="notifications" string="Notifications">
+                                <group>
+                                    <field name="notify_on_failure"/>
+                                    <field name="notification_user_ids" widget="many2many_tags"/>
+                                </group>
+                            </page>
+                            <page name="logs" string="Logs">
+                                <field name="log_ids" nolabel="1">
+                                    <tree limit="50" editable="bottom">
+                                        <field name="start_datetime"/>
+                                        <field name="status" widget="badge"/>
+                                        <field name="duration_seconds" string="Duration (s)"/>
+                                        <field name="records_processed"/>
+                                        <field name="triggered_by"/>
+                                    </tree>
+                                </field>
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <!-- SEARCH VIEW -->
+        <record id="view_tapis_automation_job_search" model="ir.ui.view">
+            <field name="name">tapis.automation.job.search</field>
+            <field name="model">tapis.automation.job</field>
+            <field name="arch" type="xml">
+                <search>
+                    <filter name="active" string="Active" domain="[('active', '=', True)]"/>
+                    <filter name="failed" string="Failed" domain="[('state', '=', 'failed')]"/>
+                    <filter name="running" string="Running" domain="[('state', '=', 'running')]"/>
+                    <filter name="disabled" string="Disabled" domain="[('active', '=', False)]"/>
+                    <separator/>
+                    <filter name="group_state" string="State" context="{'group_by': 'state'}"/>
+                    <filter name="group_interval" string="Interval Type" context="{'group_by': 'interval_type'}"/>
+                </search>
+            </field>
+        </record>
+
+        <!-- ACTION -->
+        <record id="action_tapis_automation_job" model="ir.actions.act_window">
+            <field name="name">Automation Jobs</field>
+            <field name="res_model">tapis.automation.job</field>
+            <field name="view_mode">tree,form</field>
+            <field name="search_view_id" ref="view_tapis_automation_job_search"/>
+        </record>
+    </data>
+</odoo>

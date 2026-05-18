@@ -1,0 +1,311 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- FORM VIEW -->
+        <record id="view_dashboard_form" model="ir.ui.view">
+            <field name="name">tapis.dashboard.form</field>
+            <field name="model">tapis.dashboard</field>
+            <field name="arch" type="xml">
+                <form string="ERP Dashboard">
+                    <header>
+                        <button name="action_refresh" type="object" string="Refresh Dashboard" class="btn-primary"/>
+                    </header>
+                    <sheet>
+                        <div class="oe_button_box" name="button_box">
+                            <!-- Operations Section -->
+                            <button name="action_open_products" type="object" class="oe_stat_button" icon="fa-cube">
+                                <div class="o_stat_info">
+                                    <field name="total_products" widget="statinfo"/>
+                                    <span class="o_stat_text">Products</span>
+                                </div>
+                            </button>
+                            <button name="action_open_designs" type="object" class="oe_stat_button" icon="fa-paint-brush">
+                                <div class="o_stat_info">
+                                    <field name="total_designs" widget="statinfo"/>
+                                    <span class="o_stat_text">Designs</span>
+                                </div>
+                            </button>
+                            <button name="action_open_productions" type="object" class="oe_stat_button" icon="fa-industry">
+                                <div class="o_stat_info">
+                                    <field name="total_productions" widget="statinfo"/>
+                                    <span class="o_stat_text">Productions</span>
+                                </div>
+                            </button>
+                            <button name="action_open_sales" type="object" class="oe_stat_button" icon="fa-shopping-cart">
+                                <div class="o_stat_info">
+                                    <field name="total_sales" widget="statinfo"/>
+                                    <span class="o_stat_text">Sales</span>
+                                </div>
+                            </button>
+                            <button name="action_open_purchases" type="object" class="oe_stat_button" icon="fa-truck">
+                                <div class="o_stat_info">
+                                    <field name="total_purchases" widget="statinfo"/>
+                                    <span class="o_stat_text">Purchases</span>
+                                </div>
+                            </button>
+                            <button name="action_open_suppliers" type="object" class="oe_stat_button" icon="fa-users">
+                                <div class="o_stat_info">
+                                    <field name="total_suppliers" widget="statinfo"/>
+                                    <span class="o_stat_text">Suppliers</span>
+                                </div>
+                            </button>
+                            <button name="action_open_employees" type="object" class="oe_stat_button" icon="fa-user">
+                                <div class="o_stat_info">
+                                    <field name="total_employees" widget="statinfo"/>
+                                    <span class="o_stat_text">Employees</span>
+                                </div>
+                            </button>
+                            <button name="action_open_raw_materials" type="object" class="oe_stat_button" icon="fa-cubes">
+                                <div class="o_stat_info">
+                                    <field name="raw_material_count" widget="statinfo"/>
+                                    <span class="o_stat_text">Raw Materials</span>
+                                </div>
+                            </button>
+                            <button name="action_open_quality_inspections" type="object" class="oe_stat_button" icon="fa-check-circle">
+                                <div class="o_stat_info">
+                                    <field name="total_quality_inspections" widget="statinfo"/>
+                                    <span class="o_stat_text">Inspections</span>
+                                </div>
+                            </button>
+                            <button name="action_open_invoices" type="object" class="oe_stat_button" icon="fa-file-text-o">
+                                <div class="o_stat_info">
+                                    <field name="total_invoices" widget="statinfo"/>
+                                    <span class="o_stat_text">Invoices</span>
+                                </div>
+                            </button>
+                            <button name="action_open_equipment" type="object" class="oe_stat_button" icon="fa-cogs">
+                                <div class="o_stat_info">
+                                    <field name="total_equipment" widget="statinfo"/>
+                                    <span class="o_stat_text">Equipment</span>
+                                </div>
+                            </button>
+                            <button name="action_open_maintenance_orders" type="object" class="oe_stat_button" icon="fa-wrench">
+                                <div class="o_stat_info">
+                                    <field name="overdue_maintenance_count" widget="statinfo"/>
+                                    <span class="o_stat_text">Overdue Maint.</span>
+                                </div>
+                            </button>
+                            <button name="action_open_projects" type="object" class="oe_stat_button" icon="fa-tasks">
+                                <div class="o_stat_info">
+                                    <field name="total_projects" widget="statinfo"/>
+                                    <span class="o_stat_text">Projects</span>
+                                </div>
+                            </button>
+                            <button name="action_open_tasks" type="object" class="oe_stat_button" icon="fa-check-square-o">
+                                <div class="o_stat_info">
+                                    <field name="total_tasks" widget="statinfo"/>
+                                    <span class="o_stat_text">Tasks</span>
+                                </div>
+                            </button>
+                            <button name="action_open_crm_pipeline" type="object" class="oe_stat_button" icon="fa-tasks">
+                                <div class="o_stat_info">
+                                    <field name="total_open_leads" widget="statinfo"/>
+                                    <span class="o_stat_text">Open Leads</span>
+                                </div>
+                            </button>
+                        </div>
+                        <div class="row mt16">
+                            <div class="col-lg-3">
+                                <h4>Invoicing</h4>
+                                <group>
+                                    <field name="total_invoice_amount" string="Invoiced Amount (MAD)"/>
+                                    <field name="unpaid_invoices" string="Unpaid Invoices"/>
+                                    <field name="total_receivables_from_invoices" string="Receivables (MAD)"/>
+                                    <button name="action_open_unpaid_invoices" type="object" string="View Unpaid" class="btn-warning"/>
+                                </group>
+                            </div>
+                            <div class="col-lg-3">
+                                <h4>Quality</h4>
+                                <group>
+                                    <field name="passed_inspections" string="Passed"/>
+                                    <field name="failed_inspections" string="Failed"/>
+                                    <field name="quality_pass_rate" string="Pass Rate (%)"/>
+                                </group>
+                            </div>
+                            <div class="col-lg-3">
+                                <h4>Finance</h4>
+                                <group>
+                                    <field name="inventory_value" string="Inventory Value (MAD)"/>
+                                    <field name="total_sales_revenue" string="Sales Revenue (MAD)"/>
+                                    <field name="total_purchase_cost" string="Purchase Cost (MAD)"/>
+                                </group>
+                            </div>
+                            <div class="col-lg-3">
+                                <h4>Profitability</h4>
+                                <group>
+                                    <field name="total_profit" string="Total Profit (MAD)"/>
+                                    <field name="average_margin_percent" string="Avg Margin %"/>
+                                    <field name="total_customer_receivables" string="Customer Receivables"/>
+                                    <button name="action_open_customers" type="object" string="View Customers" class="btn-primary"/>
+                                </group>
+                            </div>
+                            <div class="col-lg-3">
+                                <h4>Stock</h4>
+                                <group>
+                                    <field name="total_stock" string="Total Product Stock"/>
+                                    <field name="raw_material_inventory_value" string="Raw Materials Value (MAD)"/>
+                                    <field name="avg_manufacturing_cost" string="Avg Manufacturing Cost"/>
+                                </group>
+                            </div>
+                            <div class="col-lg-3">
+                                <h4>Alerts</h4>
+                                <group>
+                                    <field name="low_stock_count" string="Low Product Stock"/>
+                                    <field name="low_raw_material_count" string="Low Raw Material Stock"/>
+                                    <field name="products_to_reorder" string="Products to Reorder"/>
+                                    <button name="action_open_low_stock" type="object" string="Low Stock Products" class="btn-warning"/>
+                                    <button name="action_open_low_raw_materials" type="object" string="Low Stock Raw Materials" class="btn-warning"/>
+                                    <button name="action_open_reorder_rules" type="object" string="Reorder Rules" class="btn-primary"/>
+                                </group>
+                            </div>
+                            <div class="col-lg-3">
+                                <h4>Maintenance</h4>
+                                <group>
+                                    <field name="broken_equipment_count" string="Broken"/>
+                                    <field name="under_maintenance_equipment_count" string="Under Maintenance"/>
+                                    <field name="total_equipment_maintenance_cost" string="Total Cost (MAD)"/>
+                                    <field name="total_equipment_downtime" string="Total Downtime (Hours)"/>
+                                    <button name="action_open_broken_equipment" type="object" string="View Broken" class="btn-danger"/>
+                                    <button name="action_open_maintenance_equipment" type="object" string="View Maintenance" class="btn-warning"/>
+                                </group>
+                            </div>
+                            <div class="col-lg-3">
+                                <h4>Projects</h4>
+                                <group>
+                                    <field name="total_projects" string="Total Projects"/>
+                                    <field name="active_projects" string="Active"/>
+                                    <field name="tasks_in_review" string="Tasks in Review"/>
+                                    <field name="overdue_tasks" string="Overdue Tasks"/>
+                                    <field name="total_timesheet_hours" string="Timesheet Hours"/>
+                                    <button name="action_open_projects" type="object" string="View Projects" class="btn-primary"/>
+                                    <button name="action_open_overdue_tasks" type="object" string="Overdue Tasks" class="btn-danger"/>
+                                </group>
+                            </div>
+                            <div class="col-lg-3">
+                                <h4>CRM</h4>
+                                <group>
+                                    <field name="total_open_leads" string="Open Opportunities"/>
+                                    <field name="total_weighted_pipeline" string="Weighted Pipeline (MAD)"/>
+                                    <field name="leads_closing_this_month" string="Closing This Month"/>
+                                    <field name="crm_win_rate" string="Win Rate (%)"/>
+                                    <button name="action_open_crm_pipeline" type="object" string="Open Pipeline" class="btn-primary"/>
+                                    <button name="action_open_closing_this_month" type="object" string="Closing This Month" class="btn-success"/>
+                                </group>
+                            </div>
+                            <div class="col-lg-3">
+                                <h4>Documents</h4>
+                                <group>
+                                    <field name="total_documents" string="Total Documents"/>
+                                    <field name="expired_documents" string="Expired"/>
+                                    <field name="documents_pending_approval" string="Pending Approval"/>
+                                    <button name="action_open_documents" type="object" string="View Documents" class="btn-primary"/>
+                                    <button name="action_open_expired_documents" type="object" string="View Expired" class="btn-warning"/>
+                                </group>
+                            </div>
+                            <div class="col-lg-3">
+                                <h4>Communications</h4>
+                                <group>
+                                    <field name="emails_sent_today" string="Emails Sent Today"/>
+                                    <field name="failed_emails" string="Failed Emails"/>
+                                    <field name="pending_notifications" string="Pending Notifications"/>
+                                    <field name="overdue_alerts" string="Overdue Alerts"/>
+                                    <button name="action_open_communication_logs" type="object" string="View Logs" class="btn-primary"/>
+                                </group>
+                            </div>
+                            <div class="col-lg-3">
+                                <h4>Approvals</h4>
+                                <group>
+                                    <field name="pending_approvals" string="Pending"/>
+                                    <field name="approvals_approved_today" string="Approved Today"/>
+                                    <field name="approvals_rejected_today" string="Rejected Today"/>
+                                    <field name="average_approval_time" string="Avg Approval Time (Hours)"/>
+                                    <button name="action_open_approval_requests" type="object" string="View Approvals" class="btn-primary"/>
+                                </group>
+                            </div>
+                            <div class="col-lg-3">
+                                <h4>Automation</h4>
+                                <group>
+                                    <field name="total_automation_jobs" string="Total Jobs"/>
+                                    <field name="active_jobs" string="Active"/>
+                                    <field name="failed_jobs_today" string="Failed Today"/>
+                                    <field name="automation_success_rate" string="Success Rate (%)"/>
+                                    <field name="average_job_duration" string="Avg Duration (s)"/>
+                                    <field name="pending_next_runs" string="Pending Next Run"/>
+                                    <button name="action_open_automation_jobs" type="object" string="View Jobs" class="btn-primary"/>
+                                </group>
+                            </div>
+                            <div class="col-lg-3">
+                                <h4>Digital Signatures</h4>
+                                <group>
+                                    <field name="pending_signatures" string="Pending"/>
+                                    <field name="signed_today" string="Signed Today"/>
+                                    <field name="rejected_signatures" string="Rejected"/>
+                                    <button name="action_open_signature_requests" type="object" string="View Signatures" class="btn-primary"/>
+                                </group>
+                            </div>
+                            <div class="col-lg-3">
+                                <h4>Audit Trail</h4>
+                                <group>
+                                    <field name="total_changes_today" string="Changes Today"/>
+                                    <field name="most_modified_model" string="Most Modified"/>
+                                    <field name="active_users_today" string="Active Users"/>
+                                    <field name="deletion_count" string="Deletions Today"/>
+                                    <button name="action_open_audit_logs" type="object" string="View Audit" class="btn-primary"/>
+                                </group>
+                            </div>
+                            <div class="col-lg-3">
+                                <h4>Design &amp; Wool</h4>
+                                <group>
+                                    <field name="total_designs" string="Total Designs"/>
+                                    <field name="total_wool_required" string="Total Wool (kg)"/>
+                                    <field name="average_design_weight" string="Avg Weight (kg)"/>
+                                    <field name="designs_with_invalid_percentages" string="Invalid % Designs"/>
+                                    <button name="action_open_designs" type="object" string="View Designs" class="btn-primary"/>
+                                </group>
+                            </div>
+                            <div class="col-lg-3">
+                                <h4>Multi-Company</h4>
+                                <group>
+                                    <field name="active_companies" string="Active Companies"/>
+                                    <field name="consolidated_revenue" string="Consolidated Revenue (MAD)"/>
+                                    <field name="consolidated_profit" string="Consolidated Profit (MAD)"/>
+                                    <field name="intercompany_transactions_count" string="Intercompany Rules"/>
+                                    <button name="action_open_company_profiles" type="object" string="View Profiles" class="btn-primary"/>
+                                </group>
+                            </div>
+                            <div class="col-lg-3">
+                                <h4>Security &amp; Governance</h4>
+                                <group>
+                                    <field name="security_incidents_today" string="Incidents Today"/>
+                                    <field name="blocked_access_attempts" string="Blocked Attempts"/>
+                                    <field name="high_severity_incidents" string="High Severity"/>
+                                    <field name="users_with_global_access" string="Global Access Users"/>
+                                    <button name="action_open_security_incidents" type="object" string="View Incidents" class="btn-danger"/>
+                                </group>
+                            </div>
+                            <div class="col-lg-3">
+                                <h4>Procurement</h4>
+                                <group>
+                                    <field name="total_pending_approval_purchases" string="Pending Approval"/>
+                                    <field name="total_purchase_cost" string="Total Purchase Cost (MAD)"/>
+                                    <field name="avg_delivery_delay" string="Avg Delivery Delay (Days)"/>
+                                    <field name="on_time_delivery_rate" string="On-Time Delivery (%)"/>
+                                    <button name="action_open_purchases" type="object" string="View Purchases" class="btn-primary"/>
+                                </group>
+                            </div>
+                        </div>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <!-- ACTION -->
+        <record id="action_dashboard" model="ir.actions.act_window">
+            <field name="name">Dashboard</field>
+            <field name="res_model">tapis.dashboard</field>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="view_dashboard_form"/>
+        </record>
+
+    </data>
+</odoo>

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo><data>
+<record id="view_tapis_task_timesheet_search" model="ir.ui.view">
+    <field name="name">tapis.task.timesheet.search</field>
+    <field name="model">tapis.task.timesheet</field>
+    <field name="arch" type="xml">
+        <search string="Search Timesheets">
+            <field name="task_id"/><field name="employee_id"/><field name="date"/>
+            <group expand="0" string="Group By">
+                <filter name="group_by_task" string="Task" context="{'group_by':'task_id'}"/>
+                <filter name="group_by_employee" string="Employee" context="{'group_by':'employee_id'}"/>
+                <filter name="group_by_date" string="Date" context="{'group_by':'date'}"/>
+            </group>
+        </search>
+    </field>
+</record>
+<record id="view_tapis_task_timesheet_tree" model="ir.ui.view">
+    <field name="name">tapis.task.timesheet.tree</field>
+    <field name="model">tapis.task.timesheet</field>
+    <field name="arch" type="xml">
+        <tree string="Timesheets" editable="bottom">
+            <field name="task_id" options="{'no_create': True}"/>
+            <field name="employee_id" options="{'no_create': True}"/>
+            <field name="date"/><field name="hours"/><field name="description"/>
+        </tree>
+    </field>
+</record>
+<record id="view_tapis_task_timesheet_form" model="ir.ui.view">
+    <field name="name">tapis.task.timesheet.form</field>
+    <field name="model">tapis.task.timesheet</field>
+    <field name="arch" type="xml">
+        <form string="Timesheet"><sheet><group>
+            <field name="task_id" options="{'no_create': True}"/>
+            <field name="employee_id" options="{'no_create': True}"/>
+            <field name="date"/><field name="hours"/><field name="description"/>
+        </group></sheet></form>
+    </field>
+</record>
+<record id="action_tapis_task_timesheet" model="ir.actions.act_window">
+    <field name="name">Timesheets</field>
+    <field name="res_model">tapis.task.timesheet</field>
+    <field name="view_mode">tree,form</field>
+    <field name="search_view_id" ref="view_tapis_task_timesheet_search"/>
+</record>
+</data></odoo>

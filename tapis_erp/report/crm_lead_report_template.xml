@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+<template id="crm_lead_report_template">
+    <t t-foreach="docs" t-as="doc">
+        <t t-call="web.html_container">
+            <t t-call="web.internal_layout">
+                <div class="page">
+                    <h2>Opportunity Report</h2>
+                    <table class="table table-bordered">
+                        <tr><th>Code</th><td><t t-esc="doc.code"/></td></tr>
+                        <tr><th>Name</th><td><t t-esc="doc.name"/></td></tr>
+                        <tr><th>Contact</th><td><t t-esc="doc.contact_name or ''"/></td></tr>
+                        <tr><th>Company</th><td><t t-esc="doc.company_name or ''"/></td></tr>
+                        <tr><th>Phone</th><td><t t-esc="doc.phone or ''"/></td></tr>
+                        <tr><th>Email</th><td><t t-esc="doc.email or ''"/></td></tr>
+                        <tr><th>Stage</th><td><t t-esc="doc.stage_id.name or ''"/></td></tr>
+                        <tr><th>Salesperson</th><td><t t-esc="doc.salesperson_id.name or ''"/></td></tr>
+                        <tr><th>Expected Revenue</th><td><t t-esc="doc.expected_revenue"/> MAD</td></tr>
+                        <tr><th>Probability</th><td><t t-esc="doc.probability"/>%</td></tr>
+                        <tr><th>Weighted Revenue</th><td><t t-esc="doc.weighted_revenue"/> MAD</td></tr>
+                        <tr><th>Expected Closing</th><td><t t-esc="doc.expected_closing_date or ''"/></td></tr>
+                        <tr><th>Source</th><td><t t-esc="doc.source or ''"/></td></tr>
+                        <tr><th>Status</th><td><t t-esc="doc.state"/></td></tr>
+                    </table>
+                </div>
+            </t>
+        </t>
+    </t>
+</template>
+</odoo>

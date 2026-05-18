@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="report_purchase_document">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="o">
+                <t t-call="web.external_layout">
+                    <div class="page">
+                        <div class="row">
+                            <div class="col-xs-6">
+                                <strong>PURCHASE ORDER</strong>
+                                <br/>
+                                <span>Reference: </span><span t-field="o.name"/>
+                            </div>
+                            <div class="col-xs-6 text-right">
+                                <strong>Tapis Morocco</strong>
+                                <br/>
+                                <span>Marrakech, Morocco</span>
+                            </div>
+                        </div>
+                        <hr/>
+                        <table class="table table-bordered">
+                            <tr>
+                                <td><strong>Supplier</strong></td>
+                                <td><span t-field="o.supplier_id.name"/></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Product</strong></td>
+                                <td><span t-field="o.product_id.name"/></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Quantity</strong></td>
+                                <td><span t-field="o.quantity"/></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Unit Price (MAD)</strong></td>
+                                <td><span t-esc="'{:,.2f}'.format(o.unit_price or 0.0)"/></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Total (MAD)</strong></td>
+                                <td><span t-esc="'{:,.2f}'.format(o.total_price)"/></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Expected Date</strong></td>
+                                <td><span t-field="o.expected_date"/></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Received Date</strong></td>
+                                <td><span t-field="o.received_date"/></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Status</strong></td>
+                                <td><span t-field="o.state"/></td>
+                            </tr>
+                        </table>
+                        <br/>
+                        <div t-if="o.note">
+                            <strong>Notes:</strong>
+                            <br/>
+                            <span t-field="o.note"/>
+                        </div>
+                        <hr/>
+                        <p class="text-center">Tapis ERP - Procurement Department</p>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+</odoo>

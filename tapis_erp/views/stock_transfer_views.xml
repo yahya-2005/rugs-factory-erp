@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="view_stock_transfer_tree" model="ir.ui.view">
+            <field name="name">tapis.stock.transfer.tree</field>
+            <field name="model">tapis.stock.transfer</field>
+            <field name="arch" type="xml">
+                <tree string="Internal Transfers"
+                    decoration-info="state == 'confirmed'"
+                    decoration-success="state == 'done'"
+                    decoration-danger="state == 'cancelled'">
+                    <field name="name"/>
+                    <field name="product_id"/>
+                    <field name="source_warehouse_id"/>
+                    <field name="destination_warehouse_id"/>
+                    <field name="quantity"/>
+                    <field name="transfer_date"/>
+                    <field name="state"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="view_stock_transfer_form" model="ir.ui.view">
+            <field name="name">tapis.stock.transfer.form</field>
+            <field name="model">tapis.stock.transfer</field>
+            <field name="arch" type="xml">
+                <form string="Internal Transfer">
+                    <header>
+                        <button name="action_confirm" type="object" string="Confirm" states="draft" class="btn-primary"/>
+                        <button name="action_done" type="object" string="Complete Transfer" states="confirmed" class="btn-success"/>
+                        <button name="action_cancel" type="object" string="Cancel" states="draft,confirmed" class="btn-danger"/>
+                        <field name="state" widget="statusbar" statusbar_visible="draft,confirmed,done"/>
+                    </header>
+                    <sheet>
+                        <group>
+                            <field name="name"/>
+                            <field name="product_id"/>
+                            <field name="quantity"/>
+                        </group>
+                        <group>
+                            <field name="source_warehouse_id"/>
+                            <field name="destination_warehouse_id"/>
+                            <field name="transfer_date"/>
+                        </group>
+                        <group>
+                            <field name="note"/>
+                        </group>
+                    </sheet>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids"/>
+                        <field name="activity_ids"/>
+                        <field name="message_ids"/>
+                    </div>
+                </form>
+            </field>
+        </record>
+
+        <record id="view_stock_transfer_search" model="ir.ui.view">
+            <field name="name">tapis.stock.transfer.search</field>
+            <field name="model">tapis.stock.transfer</field>
+            <field name="arch" type="xml">
+                <search string="Search Transfers">
+                    <field name="name"/>
+                    <field name="product_id"/>
+                    <field name="source_warehouse_id"/>
+                    <field name="destination_warehouse_id"/>
+                    <filter name="draft" string="Draft" domain="[('state','=','draft')]"/>
+                    <filter name="confirmed" string="Confirmed" domain="[('state','=','confirmed')]"/>
+                    <filter name="done" string="Done" domain="[('state','=','done')]"/>
+                    <group expand="0" string="Group By">
+                        <filter name="group_by_source" string="Source" context="{'group_by':'source_warehouse_id'}"/>
+                        <filter name="group_by_dest" string="Destination" context="{'group_by':'destination_warehouse_id'}"/>
+                        <filter name="group_by_state" string="State" context="{'group_by':'state'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
+        <record id="action_stock_transfer" model="ir.actions.act_window">
+            <field name="name">Internal Transfers</field>
+            <field name="res_model">tapis.stock.transfer</field>
+            <field name="view_mode">tree,form</field>
+            <field name="search_view_id" ref="view_stock_transfer_search"/>
+        </record>
+
+    </data>
+</odoo>

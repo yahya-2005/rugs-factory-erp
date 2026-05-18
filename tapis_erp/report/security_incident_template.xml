@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="report_security_incident_template">
+        <t t-foreach="doc_ids" t-as="doc_id">
+            <t t-raw="report_security_incident_document(doc_id)"/>
+        </t>
+    </template>
+
+    <template id="report_security_incident_document">
+        <t t-set="doc" t-value="docs.filtered(lambda d: d.id == doc_id)[0]"/>
+        <div class="page">
+            <h2>Security Incident Report</h2>
+            <table class="table table-bordered">
+                <tr><td><strong>Reference</strong></td><td><span t-esc="doc.name"/></td></tr>
+                <tr><td><strong>User</strong></td><td><span t-esc="doc.user_id.name"/></td></tr>
+                <tr><td><strong>Date</strong></td><td><span t-esc="doc.incident_date"/></td></tr>
+                <tr><td><strong>Model</strong></td><td><span t-esc="doc.model_name"/></td></tr>
+                <tr><td><strong>Operation</strong></td><td><span t-esc="doc.operation"/></td></tr>
+                <tr><td><strong>Severity</strong></td><td><span t-esc="doc.severity"/></td></tr>
+                <tr><td><strong>Description</strong></td><td><span t-esc="doc.description"/></td></tr>
+            </table>
+        </div>
+    </template>
+</odoo>

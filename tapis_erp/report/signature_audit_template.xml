@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="report_signature_audit">
+        <t t-call="web.external_layout">
+            <t t-set="o" t-value="doc"/>
+            <div class="page">
+                <h2>Signature Audit Report</h2>
+                <table class="table table-bordered">
+                    <tr>
+                        <td><strong>Reference</strong></td>
+                        <td><span t-field="o.name"/></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Document</strong></td>
+                        <td><span t-field="o.reference_display"/></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Status</strong></td>
+                        <td><span t-field="o.state"/></td>
+                    </tr>
+                </table>
+                <h3>Signature Audit Trail</h3>
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Signer</th>
+                            <th>Role</th>
+                            <th>Status</th>
+                            <th>Date/Time</th>
+                            <th>IP Address</th>
+                            <th>Comment</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr t-foreach="o.line_ids" t-as="line">
+                            <td><span t-field="line.signer_id.name"/></td>
+                            <td><span t-field="line.role_id.name"/></td>
+                            <td><span t-field="line.state"/></td>
+                            <td><span t-field="line.signed_date"/></td>
+                            <td><span t-field="line.signer_ip"/></td>
+                            <td><span t-field="line.signer_comment"/></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </t>
+    </template>
+</odoo>

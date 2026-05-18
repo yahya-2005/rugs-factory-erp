@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="action_report_automation_job" model="ir.actions.report">
+            <field name="name">Automation Job Summary Report</field>
+            <field name="model">tapis.automation.job</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">tapis_erp.report_automation_job</field>
+            <field name="report_file">tapis_erp.report_automation_job</field>
+            <field name="binding_model_id" ref="model_tapis_automation_job"/>
+            <field name="binding_type">report</field>
+        </record>
+    </data>
+</odoo>

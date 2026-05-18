@@ -1,0 +1,516 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+
+        <!-- ==========================================
+             SECURITY DEPARTMENT RECORD RULES
+             ========================================== -->
+        <record id="rule_security_department_own" model="ir.rule">
+            <field name="name">Security Department: Own Access</field>
+            <field name="model_id" ref="model_tapis_security_department"/>
+            <field name="groups" eval="[(4, ref('group_tapis_user'))]"/>
+            <field name="domain_force">[('id', 'in', [d.id for d in (user.security_department_id or [])])]</field>
+            <field name="perm_read" eval="True"/>
+            <field name="perm_write" eval="False"/>
+            <field name="perm_create" eval="False"/>
+            <field name="perm_unlink" eval="False"/>
+        </record>
+
+        <record id="rule_security_department_manager" model="ir.rule">
+            <field name="name">Security Department: Manager Access</field>
+            <field name="model_id" ref="model_tapis_security_department"/>
+            <field name="groups" eval="[(4, ref('group_tapis_manager'))]"/>
+            <field name="domain_force">[('id', 'in', [d.id for d in (user.security_department_id or [])])]</field>
+            <field name="perm_read" eval="True"/>
+            <field name="perm_write" eval="True"/>
+            <field name="perm_create" eval="True"/>
+            <field name="perm_unlink" eval="True"/>
+        </record>
+
+        <record id="rule_security_department_admin" model="ir.rule">
+            <field name="name">Security Department: Admin Full Access</field>
+            <field name="model_id" ref="model_tapis_security_department"/>
+            <field name="groups" eval="[(4, ref('group_security_manager'))]"/>
+            <field name="domain_force" eval="[(1,'=',1)]"/>
+            <field name="perm_read" eval="True"/>
+            <field name="perm_write" eval="True"/>
+            <field name="perm_create" eval="True"/>
+            <field name="perm_unlink" eval="True"/>
+        </record>
+
+        <!-- ==========================================
+             SECURITY POLICY RECORD RULES
+             ========================================== -->
+        <record id="rule_security_policy_admin" model="ir.rule">
+            <field name="name">Security Policy: Admin Only</field>
+            <field name="model_id" ref="model_tapis_security_policy"/>
+            <field name="groups" eval="[(4, ref('group_security_manager'))]"/>
+            <field name="domain_force" eval="[(1,'=',1)]"/>
+            <field name="perm_read" eval="True"/>
+            <field name="perm_write" eval="True"/>
+            <field name="perm_create" eval="True"/>
+            <field name="perm_unlink" eval="True"/>
+        </record>
+
+        <!-- ==========================================
+             SECURITY INCIDENT RECORD RULES
+             ========================================== -->
+        <record id="rule_security_incident_readonly" model="ir.rule">
+            <field name="name">Security Incident: Readonly for Non-Managers</field>
+            <field name="model_id" ref="model_tapis_security_incident"/>
+            <field name="groups" eval="[(4, ref('group_tapis_user'))]"/>
+            <field name="domain_force" eval="[(1,'=',1)]"/>
+            <field name="perm_read" eval="True"/>
+            <field name="perm_write" eval="False"/>
+            <field name="perm_create" eval="False"/>
+            <field name="perm_unlink" eval="False"/>
+        </record>
+
+        <record id="rule_security_incident_manager" model="ir.rule">
+            <field name="name">Security Incident: Manager Full Access</field>
+            <field name="model_id" ref="model_tapis_security_incident"/>
+            <field name="groups" eval="[(4, ref('group_security_manager'))]"/>
+            <field name="domain_force" eval="[(1,'=',1)]"/>
+            <field name="perm_read" eval="True"/>
+            <field name="perm_write" eval="True"/>
+            <field name="perm_create" eval="True"/>
+            <field name="perm_unlink" eval="True"/>
+        </record>
+
+        <!-- ==========================================
+             CRM LEAD RECORD RULES
+             ========================================== -->
+        <record id="rule_crm_lead_own" model="ir.rule">
+            <field name="name">CRM Lead: Own Records</field>
+            <field name="model_id" ref="model_tapis_crm_lead"/>
+            <field name="groups" eval="[(4, ref('group_tapis_user'))]"/>
+            <field name="domain_force">
+                ['|', ('salesperson_id.employee_user_id','=',user.id),
+                      ('create_uid','=',user.id)]
+            </field>
+            <field name="perm_read" eval="True"/>
+            <field name="perm_write" eval="True"/>
+            <field name="perm_create" eval="True"/>
+            <field name="perm_unlink" eval="False"/>
+        </record>
+
+        <!-- ==========================================
+             SALE ORDER RECORD RULES
+             ========================================== -->
+        <record id="rule_sale_own" model="ir.rule">
+            <field name="name">Sale: Own Records</field>
+            <field name="model_id" ref="model_tapis_sale"/>
+            <field name="groups" eval="[(4, ref('group_tapis_user'))]"/>
+            <field name="domain_force">[('create_uid','=',user.id)]</field>
+            <field name="perm_read" eval="True"/>
+            <field name="perm_write" eval="True"/>
+            <field name="perm_create" eval="True"/>
+            <field name="perm_unlink" eval="False"/>
+        </record>
+
+        <!-- ==========================================
+             PURCHASE ORDER RECORD RULES
+             ========================================== -->
+        <record id="rule_purchase_own" model="ir.rule">
+            <field name="name">Purchase: Own Records</field>
+            <field name="model_id" ref="model_tapis_purchase"/>
+            <field name="groups" eval="[(4, ref('group_tapis_user'))]"/>
+            <field name="domain_force">[('create_uid','=',user.id)]</field>
+            <field name="perm_read" eval="True"/>
+            <field name="perm_write" eval="True"/>
+            <field name="perm_create" eval="True"/>
+            <field name="perm_unlink" eval="False"/>
+        </record>
+
+        <!-- ==========================================
+             INVOICE RECORD RULES
+             ========================================== -->
+        <record id="rule_invoice_own" model="ir.rule">
+            <field name="name">Invoice: Own Records</field>
+            <field name="model_id" ref="model_tapis_invoice"/>
+            <field name="groups" eval="[(4, ref('group_tapis_user'))]"/>
+            <field name="domain_force">[('create_uid','=',user.id)]</field>
+            <field name="perm_read" eval="True"/>
+            <field name="perm_write" eval="True"/>
+            <field name="perm_create" eval="True"/>
+            <field name="perm_unlink" eval="False"/>
+        </record>
+
+        <!-- ==========================================
+             BUDGET RECORD RULES
+             ========================================== -->
+        <record id="rule_budget_own" model="ir.rule">
+            <field name="name">Budget: Own Records</field>
+            <field name="model_id" ref="model_tapis_budget"/>
+            <field name="groups" eval="[(4, ref('group_tapis_user'))]"/>
+            <field name="domain_force">[('create_uid','=',user.id)]</field>
+            <field name="perm_read" eval="True"/>
+            <field name="perm_write" eval="False"/>
+            <field name="perm_create" eval="True"/>
+            <field name="perm_unlink" eval="False"/>
+        </record>
+
+        <!-- ==========================================
+             DOCUMENT RECORD RULES
+             ========================================== -->
+        <record id="rule_document_own" model="ir.rule">
+            <field name="name">Document: Own Records</field>
+            <field name="model_id" ref="model_tapis_document"/>
+            <field name="groups" eval="[(4, ref('group_tapis_user'))]"/>
+            <field name="domain_force">['|', ('uploaded_by_id','=',user.id), ('create_uid','=',user.id)]</field>
+            <field name="perm_read" eval="True"/>
+            <field name="perm_write" eval="True"/>
+            <field name="perm_create" eval="True"/>
+            <field name="perm_unlink" eval="False"/>
+        </record>
+
+        <!-- ==========================================
+             PROJECT RECORD RULES
+             ========================================== -->
+        <record id="rule_project_own" model="ir.rule">
+            <field name="name">Project: Own Records</field>
+            <field name="model_id" ref="model_tapis_project"/>
+            <field name="groups" eval="[(4, ref('group_tapis_user'))]"/>
+            <field name="domain_force">[('create_uid','=',user.id)]</field>
+            <field name="perm_read" eval="True"/>
+            <field name="perm_write" eval="True"/>
+            <field name="perm_create" eval="True"/>
+            <field name="perm_unlink" eval="False"/>
+        </record>
+
+        <!-- ==========================================
+             TASK RECORD RULES
+             ========================================== -->
+        <record id="rule_task_own" model="ir.rule">
+            <field name="name">Task: Own Records</field>
+            <field name="model_id" ref="model_tapis_task"/>
+            <field name="groups" eval="[(4, ref('group_tapis_user'))]"/>
+            <field name="domain_force">[('create_uid','=',user.id)]</field>
+            <field name="perm_read" eval="True"/>
+            <field name="perm_write" eval="True"/>
+            <field name="perm_create" eval="True"/>
+            <field name="perm_unlink" eval="False"/>
+        </record>
+
+        <!-- ==========================================
+             AUDIT LOG RECORD RULES
+             ========================================== -->
+        <record id="rule_audit_log_own" model="ir.rule">
+            <field name="name">Audit Log: Readonly All</field>
+            <field name="model_id" ref="model_tapis_audit_log"/>
+            <field name="groups" eval="[(4, ref('group_tapis_user'))]"/>
+            <field name="domain_force" eval="[(1,'=',1)]"/>
+            <field name="perm_read" eval="True"/>
+            <field name="perm_write" eval="False"/>
+            <field name="perm_create" eval="False"/>
+            <field name="perm_unlink" eval="False"/>
+        </record>
+
+        <record id="rule_audit_log_admin" model="ir.rule">
+            <field name="name">Audit Log: Admin Full Access</field>
+            <field name="model_id" ref="model_tapis_audit_log"/>
+            <field name="groups" eval="[(4, ref('group_audit_manager'))]"/>
+            <field name="domain_force" eval="[(1,'=',1)]"/>
+            <field name="perm_read" eval="True"/>
+            <field name="perm_write" eval="False"/>
+            <field name="perm_create" eval="False"/>
+            <field name="perm_unlink" eval="False"/>
+        </record>
+
+        <!-- ==========================================
+             APPROVAL REQUEST RECORD RULES
+             ========================================== -->
+        <record id="rule_approval_request_own" model="ir.rule">
+            <field name="name">Approval Request: Own Records</field>
+            <field name="model_id" ref="model_tapis_approval_request"/>
+            <field name="groups" eval="[(4, ref('group_tapis_user'))]"/>
+            <field name="domain_force">[('create_uid','=',user.id)]</field>
+            <field name="perm_read" eval="True"/>
+            <field name="perm_write" eval="True"/>
+            <field name="perm_create" eval="True"/>
+            <field name="perm_unlink" eval="False"/>
+        </record>
+
+        <!-- ==========================================
+             MANAGER OVERRIDE RULES (full access)
+             ========================================== -->
+        <!-- ==========================================
+             COMPANY ISOLATION RULES
+             ========================================== -->
+        <record id="rule_company_isolation_product" model="ir.rule">
+            <field name="name">Product: Company Isolation</field>
+            <field name="model_id" ref="model_tapis_product"/>
+            <field name="global" eval="True"/>
+            <field name="domain_force">['|', ('company_id', 'in', company_ids), ('is_shared', '=', True)]</field>
+            <field name="perm_read" eval="True"/>
+            <field name="perm_write" eval="True"/>
+            <field name="perm_create" eval="True"/>
+            <field name="perm_unlink" eval="True"/>
+        </record>
+
+        <record id="rule_company_isolation_customer" model="ir.rule">
+            <field name="name">Customer: Company Isolation</field>
+            <field name="model_id" ref="model_tapis_customer"/>
+            <field name="global" eval="True"/>
+            <field name="domain_force">['|', ('company_id', 'in', company_ids), ('is_shared', '=', True)]</field>
+            <field name="perm_read" eval="True"/>
+            <field name="perm_write" eval="True"/>
+            <field name="perm_create" eval="True"/>
+            <field name="perm_unlink" eval="True"/>
+        </record>
+
+        <record id="rule_company_isolation_supplier" model="ir.rule">
+            <field name="name">Supplier: Company Isolation</field>
+            <field name="model_id" ref="model_tapis_supplier"/>
+            <field name="global" eval="True"/>
+            <field name="domain_force">['|', ('company_id', 'in', company_ids), ('is_shared', '=', True)]</field>
+            <field name="perm_read" eval="True"/>
+            <field name="perm_write" eval="True"/>
+            <field name="perm_create" eval="True"/>
+            <field name="perm_unlink" eval="True"/>
+        </record>
+
+        <record id="rule_company_isolation_sale" model="ir.rule">
+            <field name="name">Sale: Company Isolation</field>
+            <field name="model_id" ref="model_tapis_sale"/>
+            <field name="global" eval="True"/>
+            <field name="domain_force">[('company_id', 'in', company_ids)]</field>
+            <field name="perm_read" eval="True"/>
+            <field name="perm_write" eval="True"/>
+            <field name="perm_create" eval="True"/>
+            <field name="perm_unlink" eval="True"/>
+        </record>
+
+        <record id="rule_company_isolation_purchase" model="ir.rule">
+            <field name="name">Purchase: Company Isolation</field>
+            <field name="model_id" ref="model_tapis_purchase"/>
+            <field name="global" eval="True"/>
+            <field name="domain_force">[('company_id', 'in', company_ids)]</field>
+            <field name="perm_read" eval="True"/>
+            <field name="perm_write" eval="True"/>
+            <field name="perm_create" eval="True"/>
+            <field name="perm_unlink" eval="True"/>
+        </record>
+
+        <record id="rule_company_isolation_invoice" model="ir.rule">
+            <field name="name">Invoice: Company Isolation</field>
+            <field name="model_id" ref="model_tapis_invoice"/>
+            <field name="global" eval="True"/>
+            <field name="domain_force">[('company_id', 'in', company_ids)]</field>
+            <field name="perm_read" eval="True"/>
+            <field name="perm_write" eval="True"/>
+            <field name="perm_create" eval="True"/>
+            <field name="perm_unlink" eval="True"/>
+        </record>
+
+        <record id="rule_company_isolation_budget" model="ir.rule">
+            <field name="name">Budget: Company Isolation</field>
+            <field name="model_id" ref="model_tapis_budget"/>
+            <field name="global" eval="True"/>
+            <field name="domain_force">[('company_id', 'in', company_ids)]</field>
+            <field name="perm_read" eval="True"/>
+            <field name="perm_write" eval="True"/>
+            <field name="perm_create" eval="True"/>
+            <field name="perm_unlink" eval="True"/>
+        </record>
+
+        <record id="rule_company_isolation_document" model="ir.rule">
+            <field name="name">Document: Company Isolation</field>
+            <field name="model_id" ref="model_tapis_document"/>
+            <field name="global" eval="True"/>
+            <field name="domain_force">['|', ('company_id', 'in', company_ids), ('is_shared', '=', True)]</field>
+            <field name="perm_read" eval="True"/>
+            <field name="perm_write" eval="True"/>
+            <field name="perm_create" eval="True"/>
+            <field name="perm_unlink" eval="True"/>
+        </record>
+
+        <record id="rule_company_isolation_project" model="ir.rule">
+            <field name="name">Project: Company Isolation</field>
+            <field name="model_id" ref="model_tapis_project"/>
+            <field name="global" eval="True"/>
+            <field name="domain_force">[('company_id', 'in', company_ids)]</field>
+            <field name="perm_read" eval="True"/>
+            <field name="perm_write" eval="True"/>
+            <field name="perm_create" eval="True"/>
+            <field name="perm_unlink" eval="True"/>
+        </record>
+
+        <record id="rule_company_isolation_task" model="ir.rule">
+            <field name="name">Task: Company Isolation</field>
+            <field name="model_id" ref="model_tapis_task"/>
+            <field name="global" eval="True"/>
+            <field name="domain_force">[('company_id', 'in', company_ids)]</field>
+            <field name="perm_read" eval="True"/>
+            <field name="perm_write" eval="True"/>
+            <field name="perm_create" eval="True"/>
+            <field name="perm_unlink" eval="True"/>
+        </record>
+
+        <record id="rule_company_isolation_crm_lead" model="ir.rule">
+            <field name="name">CRM Lead: Company Isolation</field>
+            <field name="model_id" ref="model_tapis_crm_lead"/>
+            <field name="global" eval="True"/>
+            <field name="domain_force">[('company_id', 'in', company_ids)]</field>
+            <field name="perm_read" eval="True"/>
+            <field name="perm_write" eval="True"/>
+            <field name="perm_create" eval="True"/>
+            <field name="perm_unlink" eval="True"/>
+        </record>
+
+        <record id="rule_company_isolation_approval" model="ir.rule">
+            <field name="name">Approval Request: Company Isolation</field>
+            <field name="model_id" ref="model_tapis_approval_request"/>
+            <field name="global" eval="True"/>
+            <field name="domain_force">[('company_id', 'in', company_ids)]</field>
+            <field name="perm_read" eval="True"/>
+            <field name="perm_write" eval="True"/>
+            <field name="perm_create" eval="True"/>
+            <field name="perm_unlink" eval="True"/>
+        </record>
+
+        <record id="rule_company_isolation_equipment" model="ir.rule">
+            <field name="name">Equipment: Company Isolation</field>
+            <field name="model_id" ref="model_tapis_equipment"/>
+            <field name="global" eval="True"/>
+            <field name="domain_force">[('company_id', 'in', company_ids)]</field>
+            <field name="perm_read" eval="True"/>
+            <field name="perm_write" eval="True"/>
+            <field name="perm_create" eval="True"/>
+            <field name="perm_unlink" eval="True"/>
+        </record>
+
+        <record id="rule_company_isolation_maintenance" model="ir.rule">
+            <field name="name">Maintenance: Company Isolation</field>
+            <field name="model_id" ref="model_tapis_maintenance_order"/>
+            <field name="global" eval="True"/>
+            <field name="domain_force">[('company_id', 'in', company_ids)]</field>
+            <field name="perm_read" eval="True"/>
+            <field name="perm_write" eval="True"/>
+            <field name="perm_create" eval="True"/>
+            <field name="perm_unlink" eval="True"/>
+        </record>
+
+        <record id="rule_company_isolation_production" model="ir.rule">
+            <field name="name">Production: Company Isolation</field>
+            <field name="model_id" ref="model_tapis_production"/>
+            <field name="global" eval="True"/>
+            <field name="domain_force">[('company_id', 'in', company_ids)]</field>
+            <field name="perm_read" eval="True"/>
+            <field name="perm_write" eval="True"/>
+            <field name="perm_create" eval="True"/>
+            <field name="perm_unlink" eval="True"/>
+        </record>
+
+        <record id="rule_company_isolation_warehouse" model="ir.rule">
+            <field name="name">Warehouse: Company Isolation</field>
+            <field name="model_id" ref="model_tapis_warehouse"/>
+            <field name="global" eval="True"/>
+            <field name="domain_force">[('company_id', 'in', company_ids)]</field>
+            <field name="perm_read" eval="True"/>
+            <field name="perm_write" eval="True"/>
+            <field name="perm_create" eval="True"/>
+            <field name="perm_unlink" eval="True"/>
+        </record>
+
+        <record id="rule_sale_manager_full" model="ir.rule">
+            <field name="name">Sale: Manager Full Access</field>
+            <field name="model_id" ref="model_tapis_sale"/>
+            <field name="groups" eval="[(4, ref('group_tapis_manager'))]"/>
+            <field name="domain_force" eval="[(1,'=',1)]"/>
+            <field name="perm_read" eval="True"/>
+            <field name="perm_write" eval="True"/>
+            <field name="perm_create" eval="True"/>
+            <field name="perm_unlink" eval="True"/>
+        </record>
+
+        <record id="rule_purchase_manager_full" model="ir.rule">
+            <field name="name">Purchase: Manager Full Access</field>
+            <field name="model_id" ref="model_tapis_purchase"/>
+            <field name="groups" eval="[(4, ref('group_tapis_manager'))]"/>
+            <field name="domain_force" eval="[(1,'=',1)]"/>
+            <field name="perm_read" eval="True"/>
+            <field name="perm_write" eval="True"/>
+            <field name="perm_create" eval="True"/>
+            <field name="perm_unlink" eval="True"/>
+        </record>
+
+        <record id="rule_invoice_manager_full" model="ir.rule">
+            <field name="name">Invoice: Manager Full Access</field>
+            <field name="model_id" ref="model_tapis_invoice"/>
+            <field name="groups" eval="[(4, ref('group_tapis_manager'))]"/>
+            <field name="domain_force" eval="[(1,'=',1)]"/>
+            <field name="perm_read" eval="True"/>
+            <field name="perm_write" eval="True"/>
+            <field name="perm_create" eval="True"/>
+            <field name="perm_unlink" eval="True"/>
+        </record>
+
+        <record id="rule_budget_manager_full" model="ir.rule">
+            <field name="name">Budget: Manager Full Access</field>
+            <field name="model_id" ref="model_tapis_budget"/>
+            <field name="groups" eval="[(4, ref('group_tapis_manager'))]"/>
+            <field name="domain_force" eval="[(1,'=',1)]"/>
+            <field name="perm_read" eval="True"/>
+            <field name="perm_write" eval="True"/>
+            <field name="perm_create" eval="True"/>
+            <field name="perm_unlink" eval="True"/>
+        </record>
+
+        <record id="rule_document_manager_full" model="ir.rule">
+            <field name="name">Document: Manager Full Access</field>
+            <field name="model_id" ref="model_tapis_document"/>
+            <field name="groups" eval="[(4, ref('group_tapis_manager'))]"/>
+            <field name="domain_force" eval="[(1,'=',1)]"/>
+            <field name="perm_read" eval="True"/>
+            <field name="perm_write" eval="True"/>
+            <field name="perm_create" eval="True"/>
+            <field name="perm_unlink" eval="True"/>
+        </record>
+
+        <record id="rule_project_manager_full" model="ir.rule">
+            <field name="name">Project: Manager Full Access</field>
+            <field name="model_id" ref="model_tapis_project"/>
+            <field name="groups" eval="[(4, ref('group_tapis_manager'))]"/>
+            <field name="domain_force" eval="[(1,'=',1)]"/>
+            <field name="perm_read" eval="True"/>
+            <field name="perm_write" eval="True"/>
+            <field name="perm_create" eval="True"/>
+            <field name="perm_unlink" eval="True"/>
+        </record>
+
+        <record id="rule_task_manager_full" model="ir.rule">
+            <field name="name">Task: Manager Full Access</field>
+            <field name="model_id" ref="model_tapis_task"/>
+            <field name="groups" eval="[(4, ref('group_tapis_manager'))]"/>
+            <field name="domain_force" eval="[(1,'=',1)]"/>
+            <field name="perm_read" eval="True"/>
+            <field name="perm_write" eval="True"/>
+            <field name="perm_create" eval="True"/>
+            <field name="perm_unlink" eval="True"/>
+        </record>
+
+        <record id="rule_crm_lead_manager_full" model="ir.rule">
+            <field name="name">CRM Lead: Manager Full Access</field>
+            <field name="model_id" ref="model_tapis_crm_lead"/>
+            <field name="groups" eval="[(4, ref('group_tapis_manager'))]"/>
+            <field name="domain_force" eval="[(1,'=',1)]"/>
+            <field name="perm_read" eval="True"/>
+            <field name="perm_write" eval="True"/>
+            <field name="perm_create" eval="True"/>
+            <field name="perm_unlink" eval="True"/>
+        </record>
+
+        <record id="rule_approval_request_manager_full" model="ir.rule">
+            <field name="name">Approval Request: Manager Full Access</field>
+            <field name="model_id" ref="model_tapis_approval_request"/>
+            <field name="groups" eval="[(4, ref('group_tapis_manager'))]"/>
+            <field name="domain_force" eval="[(1,'=',1)]"/>
+            <field name="perm_read" eval="True"/>
+            <field name="perm_write" eval="True"/>
+            <field name="perm_create" eval="True"/>
+            <field name="perm_unlink" eval="True"/>
+        </record>
+
+    </data>
+</odoo>

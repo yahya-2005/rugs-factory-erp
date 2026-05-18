@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="view_tapis_budget_search" model="ir.ui.view">
+            <field name="name">tapis.budget.search</field>
+            <field name="model">tapis.budget</field>
+            <field name="arch" type="xml">
+                <search string="Search Budgets">
+                    <field name="name"/>
+                    <field name="cost_center_id"/>
+                    <field name="fiscal_year"/>
+                    <filter name="filter_draft" string="Draft" domain="[('state','=','draft')]"/>
+                    <filter name="filter_confirmed" string="Confirmed" domain="[('state','=','confirmed')]"/>
+                    <filter name="filter_approved" string="Approved" domain="[('state','=','approved')]"/>
+                    <filter name="filter_closed" string="Closed" domain="[('state','=','closed')]"/>
+                    <separator/>
+                    <group expand="0" string="Group By">
+                        <filter name="group_by_state" string="Status" context="{'group_by':'state'}"/>
+                        <filter name="group_by_cost_center" string="Cost Center" context="{'group_by':'cost_center_id'}"/>
+                        <filter name="group_by_fiscal_year" string="Fiscal Year" context="{'group_by':'fiscal_year'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+        <record id="view_tapis_budget_tree" model="ir.ui.view">
+            <field name="name">tapis.budget.tree</field>
+            <field name="model">tapis.budget</field>
+            <field name="arch" type="xml">
+                <tree string="Budgets" decoration-success="state == 'approved'" decoration-info="state == 'confirmed'" decoration-muted="state in ('draft','closed')">
+                    <field name="name"/>
+                    <field name="cost_center_id"/>
+                    <field name="fiscal_year"/>
+                    <field name="state" widget="badge" decoration-success="state == 'approved'" decoration-info="state == 'confirmed'" decoration-warning="state == 'draft'" decoration-muted="state == 'closed'"/>
+                    <field name="total_planned" widget="monetary"/>
+                    <field name="total_actual" widget="monetary"/>
+                    <field name="total_variance" widget="monetary" decoration-danger="total_variance &lt; 0"/>
+                </tree>
+            </field>
+        </record>
+        <record id="view_tapis_budget_form" model="ir.ui.view">
+            <field name="name">tapis.budget.form</field>
+            <field name="model">tapis.budget</field>
+            <field name="arch" type="xml">
+                <form string="Budget">
+                    <header>
+                        <button name="action_confirm" type="object" string="Confirm" states="draft" class="btn-primary"/>
+                        <button name="action_approve" type="object" string="Approve" states="confirmed" class="btn-success"/>
+                        <button name="action_close" type="object" string="Close" states="approved,confirmed" class="btn-warning"/>
+                        <button name="action_draft" type="object" string="Reset to Draft" states="confirmed,approved" class="btn-default"/>
+                        <button name="action_request_approval" type="object" string="Request Approval" states="draft" class="btn-primary" confirm="Submit this budget for approval?"/>
+                        <button name="action_view_documents" type="object" string="Documents" class="btn-secondary"/>
+                        <field name="state" widget="statusbar" statusbar_visible="draft,confirmed,approved,closed"/>
+                    </header>
+                    <sheet>
+                        <field name="approval_request_id" invisible="1"/>
+                        <div class="oe_button_box" name="button_box">
+                            <button name="action_open_approval_request" type="object" class="oe_stat_button" icon="fa-check-circle"
+                                attrs="{'invisible': [('approval_request_id', '=', False)]}">
+                                <div class="o_stat_info">
+                                    <field name="approval_state" widget="statinfo"/>
+                                    <span class="o_stat_text">Approval</span>
+                                </div>
+                            </button>
+                            <button name="action_view_documents" type="object" class="oe_stat_button" icon="fa-file">
+                                <div class="o_stat_info">
+                                    <field name="document_count" widget="statinfo"/>
+                                    <span class="o_stat_text">Documents</span>
+                                </div>
+                            </button>
+                        </div>
+                        <div class="row mt16">
+                            <div class="col-lg-6">
+                                <group string="General">
+                                    <field name="name"/>
+                                    <field name="cost_center_id" options="{'no_create': True}"/>
+                                    <field name="fiscal_year"/>
+                                </group>
+                            </div>
+                            <div class="col-lg-6">
+                                <group string="Summary">
+                                    <field name="total_planned"/>
+                                    <field name="total_actual"/>
+                                    <field name="total_variance" decoration-danger="total_variance &lt; 0"/>
+                                </group>
+                            </div>
+                        </div>
+                        <notebook>
+                            <page string="Budget Lines">
+                                <field name="line_ids" readonly="0">
+                                    <tree editable="bottom">
+                                        <field name="category"/>
+                                        <field name="planned_amount"/>
+                                        <field name="actual_amount"/>
+                                        <field name="variance" decoration-danger="variance &lt; 0"/>
+                                        <field name="notes"/>
+                                    </tree>
+                                    <form string="Budget Line">
+                                        <group>
+                                            <field name="category"/>
+                                            <field name="planned_amount"/>
+                                            <field name="actual_amount"/>
+                                            <field name="variance"/>
+                                            <field name="notes"/>
+                                        </group>
+                                    </form>
+                                </field>
+                            </page>
+                            <page string="Notes">
+                                <field name="notes" nolabel="1"/>
+                            </page>
+                        </notebook>
+                    </sheet>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids"/>
+                        <field name="activity_ids"/>
+                        <field name="message_ids"/>
+                    </div>
+                </form>
+            </field>
+        </record>
+        <record id="action_tapis_budget" model="ir.actions.act_window">
+            <field name="name">Budgets</field>
+            <field name="res_model">tapis.budget</field>
+            <field name="view_mode">tree,form</field>
+            <field name="search_view_id" ref="view_tapis_budget_search"/>
+        </record>
+    </data>
+</odoo>

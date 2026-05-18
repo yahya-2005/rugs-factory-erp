@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="report_consolidated_pl_template">
+        <t t-foreach="doc_ids" t-as="doc_id">
+            <t t-raw="report_consolidated_pl_document(doc_id)"/>
+        </t>
+    </template>
+
+    <template id="report_consolidated_pl_document">
+        <t t-set="doc" t-value="docs.filtered(lambda d: d.id == doc_id)[0]"/>
+        <div class="page">
+            <h2>Consolidated Profit &amp; Loss</h2>
+            <h3><span t-esc="doc.legal_name"/></h3>
+            <table class="table table-bordered">
+                <tr><td><strong>Company</strong></td><td><span t-esc="doc.company_id.name"/></td></tr>
+                <tr><td><strong>Revenue YTD</strong></td>
+                    <td><span t-esc="doc.revenue_ytd" t-options='{"widget": "monetary", "display_currency": doc.currency_id}'/></td></tr>
+                <tr><td><strong>Expenses YTD</strong></td>
+                    <td><span t-esc="doc.expenses_ytd" t-options='{"widget": "monetary", "display_currency": doc.currency_id}'/></td></tr>
+                <tr><td><strong>Net Profit YTD</strong></td>
+                    <td><span t-esc="doc.net_profit_ytd" t-options='{"widget": "monetary", "display_currency": doc.currency_id}'/></td></tr>
+            </table>
+        </div>
+    </template>
+
+    <template id="report_consolidated_revenue_template">
+        <t t-foreach="doc_ids" t-as="doc_id">
+            <t t-raw="report_consolidated_revenue_document(doc_id)"/>
+        </t>
+    </template>
+
+    <template id="report_consolidated_revenue_document">
+        <t t-set="doc" t-value="docs.filtered(lambda d: d.id == doc_id)[0]"/>
+        <div class="page">
+            <h2>Consolidated Revenue Report</h2>
+            <h3><span t-esc="doc.legal_name"/></h3>
+            <table class="table table-bordered">
+                <tr><td><strong>Company</strong></td><td><span t-esc="doc.company_id.name"/></td></tr>
+                <tr><td><strong>Revenue YTD</strong></td>
+                    <td><span t-esc="doc.revenue_ytd" t-options='{"widget": "monetary", "display_currency": doc.currency_id}'/></td></tr>
+            </table>
+            <p><em>Note: Intercompany transactions may be included.</em></p>
+        </div>
+    </template>
+
+    <template id="report_intercompany_transactions_template">
+        <t t-foreach="doc_ids" t-as="doc_id">
+            <t t-raw="report_intercompany_transactions_document(doc_id)"/>
+        </t>
+    </template>
+
+    <template id="report_intercompany_transactions_document">
+        <t t-set="doc" t-value="docs.filtered(lambda d: d.id == doc_id)[0]"/>
+        <div class="page">
+            <h2>Intercompany Transactions Report</h2>
+            <table class="table table-bordered">
+                <tr><td><strong>Source Company</strong></td><td><span t-esc="doc.source_company_id.name"/></td></tr>
+                <tr><td><strong>Target Company</strong></td><td><span t-esc="doc.target_company_id.name"/></td></tr>
+                <tr><td><strong>Auto-Create Purchase</strong></td><td><span t-esc="'Yes' if doc.auto_create_purchase else 'No'"/></td></tr>
+                <tr><td><strong>Auto-Create Sale</strong></td><td><span t-esc="'Yes' if doc.auto_create_sale else 'No'"/></td></tr>
+                <tr><td><strong>Margin (%)</strong></td><td><span t-esc="doc.margin_percent"/></td></tr>
+            </table>
+        </div>
+    </template>
+</odoo>

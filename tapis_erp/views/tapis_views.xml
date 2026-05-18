@@ -1,0 +1,210 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- SEARCH VIEW -->
+        <record id="view_tapis_product_search" model="ir.ui.view">
+            <field name="name">tapis.product.search</field>
+            <field name="model">tapis.product</field>
+            <field name="arch" type="xml">
+                <search string="Search Tapis Products">
+                    <field name="name"/>
+                    <field name="code"/>
+                    <field name="category"/>
+                    <field name="designer_id"/>
+                    <field name="tag_ids"/>
+                    <filter name="filter_available" string="Available" domain="[('state','=','available')]"/>
+                    <filter name="filter_out_of_stock" string="Out of Stock" domain="[('state','=','out_of_stock')]"/>
+                    <filter name="filter_low_stock" string="Low Stock" domain="[('stock_qty','&lt;',5)]"/>
+                    <filter name="filter_needs_reorder" string="Needs Reorder" domain="[('reorder_rule_ids.state','=','to_order')]"/>
+                    <separator/>
+                    <filter name="filter_active" string="Active" domain="[('active','=',True)]"/>
+                    <group expand="0" string="Group By">
+                        <filter name="group_by_category" string="Category" context="{'group_by':'category'}"/>
+                        <filter name="group_by_state" string="State" context="{'group_by':'state'}"/>
+                        <filter name="group_by_designer" string="Designer" context="{'group_by':'designer_id'}"/>
+                        <filter name="group_by_tags" string="Tags" context="{'group_by':'tag_ids'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
+        <!-- TREE VIEW -->
+        <record id="view_tapis_product_tree" model="ir.ui.view">
+            <field name="name">tapis.product.tree</field>
+            <field name="model">tapis.product</field>
+            <field name="arch" type="xml">
+                <tree string="Tapis Product" decoration-success="state == 'available'" decoration-danger="state == 'out_of_stock'">
+                    <field name="name"/>
+                    <field name="code"/>
+                    <field name="category"/>
+                    <field name="designer_id"/>
+                    <field name="price"/>
+                    <field name="cost"/>
+                    <field name="margin"/>
+                    <field name="stock_qty"/>
+                    <field name="state"/>
+                    <field name="active"/>
+                </tree>
+            </field>
+        </record>
+
+        <!-- FORM VIEW -->
+        <record id="view_tapis_product_form" model="ir.ui.view">
+            <field name="name">tapis.product.form</field>
+            <field name="model">tapis.product</field>
+            <field name="arch" type="xml">
+                <form string="Tapis Product">
+                    <header>
+                        <button name="action_view_productions" type="object" class="oe_stat_button" icon="fa-industry">
+                            <div class="o_stat_info">
+                                <field name="production_count" widget="statinfo"/>
+                                <span class="o_stat_text">Productions</span>
+                            </div>
+                        </button>
+                        <button name="action_view_sales" type="object" class="oe_stat_button" icon="fa-shopping-cart">
+                            <div class="o_stat_info">
+                                <field name="sale_count" widget="statinfo"/>
+                                <span class="o_stat_text">Sales</span>
+                            </div>
+                        </button>
+                        <button name="action_view_purchases" type="object" class="oe_stat_button" icon="fa-truck">
+                            <div class="o_stat_info">
+                                <field name="purchase_count" widget="statinfo"/>
+                                <span class="o_stat_text">Purchases</span>
+                            </div>
+                        </button>
+                        <button name="action_view_quants" type="object" class="oe_stat_button" icon="fa-cubes">
+                            <div class="o_stat_info">
+                                <field name="warehouse_count" widget="statinfo"/>
+                                <span class="o_stat_text">Warehouses</span>
+                            </div>
+                        </button>
+                        <button name="action_view_reorder_rules" type="object" class="oe_stat_button" icon="fa-exclamation-triangle">
+                            <div class="o_stat_info">
+                                <field name="reorder_rule_count" widget="statinfo"/>
+                                <span class="o_stat_text">Reorder Rules</span>
+                            </div>
+                        </button>
+                        <button name="action_view_boms" type="object" class="oe_stat_button" icon="fa-list-alt">
+                            <div class="o_stat_info">
+                                <field name="bom_count" widget="statinfo"/>
+                                <span class="o_stat_text">BOMs</span>
+                            </div>
+                        </button>
+                        <button name="action_view_documents" type="object" class="oe_stat_button" icon="fa-file">
+                            <div class="o_stat_info">
+                                <field name="document_count" widget="statinfo"/>
+                                <span class="o_stat_text">Documents</span>
+                            </div>
+                        </button>
+                    </header>
+                    <sheet>
+                        <notebook>
+                            <page string="General Information">
+                                <group>
+                                    <field name="name"/>
+                                    <field name="code"/>
+                                    <field name="price"/>
+                                <field name="cost"/>
+                                <field name="manufacturing_cost"/>
+                                <field name="tag_ids" widget="many2many_tags" options="{'color_field': 'color'}"/>
+                                </group>
+                            </page>
+                            <page string="Inventory">
+                                <group>
+                                    <field name="stock_qty"/>
+                                    <field name="state"/>
+                                </group>
+                            </page>
+                            <page string="Productions">
+                                <field name="production_ids">
+                                    <tree>
+                                        <field name="name"/>
+                                        <field name="quantity"/>
+                                        <field name="state"/>
+                                    </tree>
+                                </field>
+                            </page>
+                            <page string="Sales History">
+                                <field name="sale_ids">
+                                    <tree>
+                                        <field name="name"/>
+                                        <field name="partner_id"/>
+                                        <field name="quantity"/>
+                                        <field name="total_price"/>
+                                        <field name="state"/>
+                                    </tree>
+                                </field>
+                            </page>
+                            <page string="Purchases">
+                                <field name="purchase_ids" readonly="1">
+                                    <tree>
+                                        <field name="name"/>
+                                        <field name="supplier_id"/>
+                                        <field name="quantity"/>
+                                        <field name="total_price"/>
+                                        <field name="state"/>
+                                    </tree>
+                                </field>
+                            </page>
+                            <page string="Stock by Warehouse">
+                                <field name="quant_ids">
+                                    <tree>
+                                        <field name="warehouse_id"/>
+                                        <field name="quantity"/>
+                                        <field name="reserved_quantity"/>
+                                        <field name="available_quantity"/>
+                                        <field name="inventory_value"/>
+                                    </tree>
+                                </field>
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <!-- KANBAN VIEW -->
+        <record id="view_tapis_kanban" model="ir.ui.view">
+            <field name="name">tapis.product.kanban</field>
+            <field name="model">tapis.product</field>
+            <field name="arch" type="xml">
+                <kanban>
+                    <field name="name"/>
+                    <field name="price"/>
+                    <field name="stock_qty"/>
+                    <field name="state"/>
+                    <templates>
+                        <t t-name="kanban-box">
+                            <div class="oe_kanban_card">
+                                <strong><field name="name"/></strong>
+                                <div>
+                                    Price:
+                                    <field name="price"/>
+                                </div>
+                                <div>
+                                    Stock:
+                                    <field name="stock_qty"/>
+                                </div>
+                                <div>
+                                    Status:
+                                    <field name="state"/>
+                                </div>
+                            </div>
+                        </t>
+                    </templates>
+                </kanban>
+            </field>
+        </record>
+
+        <!-- ACTION -->
+        <record id="action_tapis_product" model="ir.actions.act_window">
+            <field name="name">Tapis Products</field>
+            <field name="res_model">tapis.product</field>
+            <field name="view_mode">tree,form,kanban</field>
+            <field name="search_view_id" ref="view_tapis_product_search"/>
+            <field name="context">{'search_default_filter_active': 1}</field>
+        </record>
+
+    </data>
+</odoo>

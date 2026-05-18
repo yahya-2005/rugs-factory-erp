@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="document_register_report_template">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="doc">
+                <t t-call="web.external_layout">
+                    <div class="page">
+                        <h2>Document Register</h2>
+                        <table class="table table-bordered">
+                            <tr>
+                                <td><strong>Code</strong></td>
+                                <td><span t-field="doc.code"/></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Name</strong></td>
+                                <td><span t-field="doc.name"/></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Folder</strong></td>
+                                <td><span t-field="doc.folder_id.complete_name"/></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Version</strong></td>
+                                <td><span t-field="doc.version"/></td>
+                            </tr>
+                            <tr>
+                                <td><strong>File Type</strong></td>
+                                <td><span t-field="doc.file_type"/></td>
+                            </tr>
+                            <tr>
+                                <td><strong>File Size</strong></td>
+                                <td><span t-field="doc.file_size_kb"/> KB</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Uploaded By</strong></td>
+                                <td><span t-field="doc.uploaded_by_id.name"/></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Upload Date</strong></td>
+                                <td><span t-field="doc.upload_date"/></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Expiration Date</strong></td>
+                                <td><span t-field="doc.expiration_date"/></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Status</strong></td>
+                                <td><span t-field="doc.state"/></td>
+                            </tr>
+                        </table>
+                        <p t-if="doc.description">
+                            <strong>Description:</strong><br/>
+                            <span t-field="doc.description"/>
+                        </p>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+</odoo>

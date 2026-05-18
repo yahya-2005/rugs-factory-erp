@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="view_tapis_cost_center_search" model="ir.ui.view">
+            <field name="name">tapis.cost.center.search</field>
+            <field name="model">tapis.cost.center</field>
+            <field name="arch" type="xml">
+                <search string="Search Cost Centers">
+                    <field name="name"/>
+                    <field name="code"/>
+                    <field name="manager_id"/>
+                    <field name="parent_id"/>
+                    <filter name="filter_department" string="Department" domain="[('cost_type','=','department')]"/>
+                    <filter name="filter_production" string="Production" domain="[('cost_type','=','production')]"/>
+                    <filter name="filter_project" string="Project" domain="[('cost_type','=','project')]"/>
+                    <filter name="filter_overhead" string="Overhead" domain="[('cost_type','=','overhead')]"/>
+                    <filter name="filter_administrative" string="Administrative" domain="[('cost_type','=','administrative')]"/>
+                    <filter name="filter_active" string="Active" domain="[('active','=',True)]"/>
+                    <separator/>
+                    <group expand="0" string="Group By">
+                        <filter name="group_by_cost_type" string="Type" context="{'group_by':'cost_type'}"/>
+                        <filter name="group_by_manager" string="Manager" context="{'group_by':'manager_id'}"/>
+                        <filter name="group_by_parent" string="Parent" context="{'group_by':'parent_id'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+        <record id="view_tapis_cost_center_tree" model="ir.ui.view">
+            <field name="name">tapis.cost.center.tree</field>
+            <field name="model">tapis.cost.center</field>
+            <field name="arch" type="xml">
+                <tree string="Cost Centers" decoration-muted="not active">
+                    <field name="name"/>
+                    <field name="code"/>
+                    <field name="cost_type" widget="badge"/>
+                    <field name="manager_id"/>
+                    <field name="parent_id"/>
+                    <field name="total_planned_budget" widget="monetary"/>
+                    <field name="total_actual_cost" widget="monetary"/>
+                    <field name="active" invisible="1"/>
+                </tree>
+            </field>
+        </record>
+        <record id="view_tapis_cost_center_form" model="ir.ui.view">
+            <field name="name">tapis.cost.center.form</field>
+            <field name="model">tapis.cost.center</field>
+            <field name="arch" type="xml">
+                <form string="Cost Center">
+                    <sheet>
+                        <div class="oe_button_box" name="button_box">
+                            <button name="action_view_budgets" type="object" class="oe_stat_button" icon="fa-money">
+                                <div class="o_stat_info">
+                                    <field name="budget_count" widget="statinfo"/>
+                                    <span class="o_stat_text">Budgets</span>
+                                </div>
+                            </button>
+                        </div>
+                        <div class="row mt16">
+                            <div class="col-lg-6">
+                                <group string="General">
+                                    <field name="name"/>
+                                    <field name="code"/>
+                                    <field name="cost_type"/>
+                                    <field name="manager_id" options="{'no_create': True}"/>
+                                    <field name="parent_id" options="{'no_create': True}"/>
+                                    <field name="active"/>
+                                </group>
+                            </div>
+                            <div class="col-lg-6">
+                                <group string="Budget Summary">
+                                    <field name="total_planned_budget"/>
+                                    <field name="total_actual_cost"/>
+                                    <field name="budget_count"/>
+                                </group>
+                            </div>
+                        </div>
+                        <notebook>
+                            <page string="Description">
+                                <field name="description" nolabel="1"/>
+                            </page>
+                            <page string="Child Cost Centers">
+                                <field name="child_ids" readonly="1">
+                                    <tree>
+                                        <field name="name"/>
+                                        <field name="code"/>
+                                        <field name="cost_type" widget="badge"/>
+                                    </tree>
+                                </field>
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        <record id="action_tapis_cost_center" model="ir.actions.act_window">
+            <field name="name">Cost Centers</field>
+            <field name="res_model">tapis.cost.center</field>
+            <field name="view_mode">tree,form</field>
+            <field name="search_view_id" ref="view_tapis_cost_center_search"/>
+        </record>
+    </data>
+</odoo>

@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="report_design_wool_document">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="doc">
+                <t t-call="web.external_layout">
+                    <div class="page">
+                        <h2>Wool Consumption Sheet</h2>
+                        <table class="table table-bordered">
+                            <tr>
+                                <td width="50%">
+                                    <p><strong>Design:</strong> <span t-field="doc.name"/></p>
+                                    <p><strong>Dimensions:</strong>
+                                        <span t-field="doc.length_cm"/> × <span t-field="doc.width_cm"/> cm</p>
+                                    <p><strong>Area:</strong> <span t-field="doc.area_m2"/> m²</p>
+                                    <p><strong>Density:</strong> <span t-field="doc.density_kg_per_m2"/> kg/m²</p>
+                                    <p><strong>Total Wool Weight:</strong> <span t-field="doc.total_weight_kg"/> kg</p>
+                                    <p t-if="doc.color_count > 0">
+                                        <strong>Colors:</strong> <span t-esc="doc.color_count"/>
+                                        <strong>Total %:</strong> <span t-esc="doc.total_percentage"/>%
+                                        <span t-if="doc.percentage_ok" style="color:green"> ✓</span>
+                                        <span t-if="not doc.percentage_ok" style="color:red"> ✗</span>
+                                    </p>
+                                </td>
+                                <td width="50%" class="text-center">
+                                    <span t-raw="doc.image_html"/>
+                                </td>
+                            </tr>
+                        </table>
+
+                        <h3>Color Composition</h3>
+                        <table class="table table-striped table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Color Code</th>
+                                    <th>Color Name</th>
+                                    <th class="text-right">Percentage (%)</th>
+                                    <th class="text-right">Weight (kg)</th>
+                                    <th>Wool Product</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr t-foreach="doc.color_line_ids" t-as="line">
+                                    <td><span t-esc="line.sequence or line.id"/></td>
+                                    <td><span t-field="line.color_code"/></td>
+                                    <td><span t-field="line.color_name"/></td>
+                                    <td class="text-right"><span t-esc="line.percentage"/></td>
+                                    <td class="text-right"><span t-esc="'%.2f' % line.weight_kg"/></td>
+                                    <td><span t-field="line.wool_product_id.name"/></td>
+                                </tr>
+                            </tbody>
+                            <tfoot>
+                                <tr style="font-weight:bold">
+                                    <td colspan="3" class="text-right">Total</td>
+                                    <td class="text-right"><span t-esc="'%.2f' % doc.total_percentage"/>%</td>
+                                    <td class="text-right"><span t-esc="'%.2f' % doc.total_weight_kg"/></td>
+                                    <td></td>
+                                </tr>
+                            </tfoot>
+                        </table>
+
+                        <p><em>Generated on <span t-esc="time.strftime('%Y-%m-%d')"/> for carpet manufacturing planning.</em></p>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+</odoo>

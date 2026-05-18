@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="report_bom_document">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="o">
+                <t t-call="web.external_layout">
+                    <div class="page">
+                        <div class="row">
+                            <div class="col-xs-6">
+                                <strong>BILL OF MATERIALS</strong>
+                                <br/>
+                                <span>Reference: </span><span t-field="o.name"/>
+                                <br/>
+                                <span>Version: </span><span t-field="o.version"/>
+                            </div>
+                            <div class="col-xs-6 text-right">
+                                <strong>Tapis Morocco</strong>
+                                <br/>
+                                <span>Marrakech, Morocco</span>
+                            </div>
+                        </div>
+                        <hr/>
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <strong>Product:</strong>
+                                <span t-field="o.product_id.name"/>
+                                <br/>
+                                <strong>Product Code:</strong>
+                                <span t-field="o.product_id.code"/>
+                            </div>
+                        </div>
+                        <br/>
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>Raw Material</th>
+                                    <th>Unit</th>
+                                    <th class="text-right">Quantity</th>
+                                    <th class="text-right">Unit Cost (MAD)</th>
+                                    <th class="text-right">Line Cost (MAD)</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr t-foreach="o.line_ids" t-as="line">
+                                    <td><span t-field="line.raw_material_id.name"/></td>
+                                    <td><span t-field="line.raw_material_id.uom"/></td>
+                                    <td class="text-right"><span t-esc="line.quantity"/></td>
+                                    <td class="text-right">
+                                        <span t-esc="'{:,.2f}'.format(line.unit_cost)"/>
+                                    </td>
+                                    <td class="text-right">
+                                        <span t-esc="'{:,.2f}'.format(line.line_cost)"/>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <br/>
+                        <div class="row">
+                            <div class="col-xs-6 col-xs-offset-6">
+                                <table class="table table-bordered">
+                                    <tr>
+                                        <td><strong>Total Material Cost</strong></td>
+                                        <td class="text-right">
+                                            <strong>
+                                                <span t-esc="'{:,.2f}'.format(o.total_material_cost)"/> MAD
+                                            </strong>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                        <hr/>
+                        <p class="text-center">Tapis ERP - Manufacturing Document</p>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+</odoo>

@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="view_design_tree" model="ir.ui.view">
+            <field name="name">tapis.design.tree</field>
+            <field name="model">tapis.design</field>
+            <field name="arch" type="xml">
+                <tree string="Designs" decoration-danger="not percentage_ok and color_count > 0">
+                    <field name="name"/>
+                    <field name="designer_id"/>
+                    <field name="length_cm"/>
+                    <field name="width_cm"/>
+                    <field name="area_m2" string="Area (m²)"/>
+                    <field name="total_weight_kg" string="Weight (kg)"/>
+                    <field name="total_percentage" string="Total %"/>
+                    <field name="percentage_ok" string="% OK" widget="boolean_fair"/>
+                    <field name="color_count" string="Colors"/>
+                    <field name="state"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="view_design_form" model="ir.ui.view">
+            <field name="name">tapis.design.form</field>
+            <field name="model">tapis.design</field>
+            <field name="arch" type="xml">
+                <form string="Design">
+                    <header>
+                        <button name="action_analyze_colors_ai" type="object" string="Analyze Colors with AI" class="btn-primary"/>
+                        <button name="action_normalize_percentages" type="object" string="Normalize %" class="btn-secondary"/>
+                        <button name="action_recalculate_weights" type="object" string="Recalculate" class="btn-secondary"/>
+                        <button name="action_clear_colors" type="object" string="Clear Colors" class="btn-secondary"
+                                confirm="Remove all color lines?"/>
+                        <button name="%(action_report_design_wool)d" type="action" string="Print Wool Report" class="btn-secondary"/>
+                    </header>
+                    <sheet>
+                        <div class="oe_button_box" name="button_box">
+                            <button name="action_view_documents" type="object" class="oe_stat_button" icon="fa-file">
+                                <div class="o_stat_info">
+                                    <field name="document_count" widget="statinfo"/>
+                                    <span class="o_stat_text">Documents</span>
+                                </div>
+                            </button>
+                            <button class="oe_stat_button" icon="fa-paint-brush">
+                                <div class="o_stat_info">
+                                    <field name="color_count" widget="statinfo"/>
+                                    <span class="o_stat_text">Colors</span>
+                                </div>
+                            </button>
+                        </div>
+                        <div class="row">
+                            <div class="col-7">
+                                <group>
+                                    <field name="name"/>
+                                    <field name="designer_id"/>
+                                    <field name="product_id"/>
+                                    <field name="state"/>
+                                </group>
+                            </div>
+                            <div class="col-5">
+                                <field name="image" widget="image" accept="image/*"
+                                       options="{'preview_image': 'image'}"/>
+                                <field name="image_filename" invisible="1"/>
+                            </div>
+                        </div>
+                        <group string="Dimensions &amp; Weight">
+                            <group>
+                                <field name="length_cm"/>
+                                <field name="width_cm"/>
+                                <field name="area_m2" string="Area (m²)"/>
+                            </group>
+                            <group>
+                                <field name="density_kg_per_m2"/>
+                                <field name="total_weight_kg" string="Total Weight (kg)"/>
+                            </group>
+                        </group>
+                        <group>
+                            <field name="total_percentage" string="Total (%)"/>
+                            <field name="percentage_ok" string="Valid %" widget="boolean_fair"/>
+                        </group>
+                        <notebook>
+                            <page string="Color Composition">
+                                <field name="color_line_ids" nolabel="1">
+                                    <tree string="Colors" editable="bottom">
+                                        <field name="sequence" widget="handle"/>
+                                        <field name="color_code"/>
+                                        <field name="color_name"/>
+                                        <field name="percentage" string="%"/>
+                                        <field name="weight_kg" string="Weight (kg)"/>
+                                        <field name="wool_product_id"/>
+                                    </tree>
+                                    <form string="Color Line">
+                                        <group>
+                                            <field name="color_code"/>
+                                            <field name="color_name"/>
+                                            <field name="percentage"/>
+                                            <field name="weight_kg"/>
+                                            <field name="wool_product_id"/>
+                                            <field name="note"/>
+                                        </group>
+                                    </form>
+                                </field>
+                            </page>
+                            <page string="AI Analysis Logs">
+                                <field name="ai_analysis_log_ids" nolabel="1">
+                                    <tree string="Analysis Logs" readonly="1">
+                                        <field name="request_datetime"/>
+                                        <field name="provider_id"/>
+                                        <field name="duration_seconds" string="Duration (s)"/>
+                                        <field name="status" widget="badge"/>
+                                        <field name="error_message"/>
+                                    </tree>
+                                </field>
+                            </page>
+                            <page string="Notes">
+                                <field name="notes"/>
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="view_design_color_line_tree" model="ir.ui.view">
+            <field name="name">tapis.design.color.line.tree</field>
+            <field name="model">tapis.design.color.line</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="design_id"/>
+                    <field name="color_code"/>
+                    <field name="color_name"/>
+                    <field name="percentage"/>
+                    <field name="weight_kg"/>
+                    <field name="wool_product_id"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="view_design_color_line_search" model="ir.ui.view">
+            <field name="name">tapis.design.color.line.search</field>
+            <field name="model">tapis.design.color.line</field>
+            <field name="arch" type="xml">
+                <search>
+                    <field name="color_code"/>
+                    <field name="design_id"/>
+                    <field name="wool_product_id"/>
+                </search>
+            </field>
+        </record>
+
+        <record id="action_design" model="ir.actions.act_window">
+            <field name="name">Designs</field>
+            <field name="res_model">tapis.design</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+    </data>
+</odoo>

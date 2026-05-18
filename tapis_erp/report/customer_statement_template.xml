@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="report_customer_statement_document">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="o">
+                <t t-call="web.external_layout">
+                    <div class="page">
+                        <div class="row">
+                            <div class="col-xs-6">
+                                <strong>CUSTOMER STATEMENT</strong>
+                                <br/>
+                                <span>Customer: </span><span t-field="o.name"/>
+                                <br/>
+                                <span t-if="o.contact_person">Contact: <span t-field="o.contact_person"/></span>
+                                <br/>
+                                <span t-if="o.phone">Phone: <span t-field="o.phone"/></span>
+                                <br/>
+                                <span t-if="o.email">Email: <span t-field="o.email"/></span>
+                            </div>
+                            <div class="col-xs-6 text-right">
+                                <strong>Tapis Morocco</strong>
+                                <br/>
+                                <span>Marrakech, Morocco</span>
+                                <br/>
+                                <span>Date: </span>
+                                <span t-esc="str(fields.Date.today())"/>
+                            </div>
+                        </div>
+                        <hr/>
+                        <h4>Account Summary</h4>
+                        <table class="table table-bordered">
+                            <tr>
+                                <td><strong>Total Sales Amount</strong></td>
+                                <td class="text-right">
+                                    <span t-esc="'{:,.2f}'.format(o.total_sales_amount)"/> MAD
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><strong>Total Paid Amount</strong></td>
+                                <td class="text-right">
+                                    <span t-esc="'{:,.2f}'.format(o.total_paid_amount)"/> MAD
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><strong>Current Balance</strong></td>
+                                <td class="text-right">
+                                    <strong>
+                                        <span t-esc="'{:,.2f}'.format(o.current_balance)"/> MAD
+                                    </strong>
+                                </td>
+                            </tr>
+                        </table>
+                        <br/>
+                        <h4>Delivered Sales</h4>
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>Reference</th>
+                                    <th>Date</th>
+                                    <th>Product</th>
+                                    <th class="text-right">Qty</th>
+                                    <th class="text-right">Total (MAD)</th>
+                                    <th class="text-right">Paid (MAD)</th>
+                                    <th class="text-right">Due (MAD)</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr t-foreach="o.sale_ids.filtered(lambda s: s.state == 'delivered')" t-as="sale">
+                                    <td><span t-field="sale.name"/></td>
+                                    <td><span t-field="sale.order_date"/></td>
+                                    <td><span t-field="sale.product_id.name"/></td>
+                                    <td class="text-right"><span t-field="sale.quantity"/></td>
+                                    <td class="text-right">
+                                        <span t-esc="'{:,.2f}'.format(sale.total_price)"/>
+                                    </td>
+                                    <td class="text-right">
+                                        <span t-esc="'{:,.2f}'.format(sale.amount_paid)"/>
+                                    </td>
+                                    <td class="text-right">
+                                        <span t-esc="'{:,.2f}'.format(sale.balance_due)"/>
+                                    </td>
+                                </tr>
+                                <tr t-if="not o.sale_ids.filtered(lambda s: s.state == 'delivered')">
+                                    <td colspan="7" class="text-center">No delivered sales found.</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <br/>
+                        <h4>Open Invoices</h4>
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>Invoice</th>
+                                    <th>Date</th>
+                                    <th>Due Date</th>
+                                    <th class="text-right">Total (MAD)</th>
+                                    <th class="text-right">Paid (MAD)</th>
+                                    <th class="text-right">Due (MAD)</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr t-foreach="o.invoice_ids.filtered(lambda i: i.state == 'posted')" t-as="inv">
+                                    <td><span t-field="inv.name"/></td>
+                                    <td><span t-field="inv.invoice_date"/></td>
+                                    <td><span t-field="inv.due_date"/></td>
+                                    <td class="text-right">
+                                        <span t-esc="'{:,.2f}'.format(inv.amount_total)"/>
+                                    </td>
+                                    <td class="text-right">
+                                        <span t-esc="'{:,.2f}'.format(inv.amount_paid)"/>
+                                    </td>
+                                    <td class="text-right">
+                                        <span t-esc="'{:,.2f}'.format(inv.amount_due)"/>
+                                    </td>
+                                    <td>
+                                        <span t-esc="dict(inv._fields['payment_status'].selection).get(inv.payment_status)"/>
+                                    </td>
+                                </tr>
+                                <tr t-if="not o.invoice_ids.filtered(lambda i: i.state == 'posted')">
+                                    <td colspan="7" class="text-center">No posted invoices found.</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <hr/>
+                        <p class="text-center">Tapis ERP - Customer Statement</p>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+</odoo>

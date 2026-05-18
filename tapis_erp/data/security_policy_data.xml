@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo noupdate="1">
+    <record id="policy_financial_data" model="tapis.security.policy">
+        <field name="name">Financial Data Protection</field>
+        <field name="code">FIN_DATA</field>
+        <field name="model_name">tapis.invoice</field>
+        <field name="field_names">amount_total, amount_due, tax_amount, amount_paid</field>
+        <field name="hide_fields" eval="True"/>
+        <field name="block_export" eval="True"/>
+        <field name="minimum_employee_level">manager</field>
+    </record>
+
+    <record id="policy_budget_sensitivity" model="tapis.security.policy">
+        <field name="name">Budget Sensitivity</field>
+        <field name="code">BUDGET_SENS</field>
+        <field name="model_name">tapis.budget</field>
+        <field name="field_names">total_planned, total_actual, total_variance</field>
+        <field name="readonly_fields" eval="True"/>
+        <field name="minimum_employee_level">supervisor</field>
+    </record>
+</odoo>

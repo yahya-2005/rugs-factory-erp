@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="report_automation_failure">
+        <t t-call="web.external_layout">
+            <t t-set="o" t-value="doc"/>
+            <div class="page">
+                <h2>Automation Failure Report</h2>
+                <table class="table table-bordered">
+                    <tr>
+                        <td><strong>Job</strong></td>
+                        <td><span t-field="o.job_id.name"/></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Start Time</strong></td>
+                        <td><span t-field="o.start_datetime"/></td>
+                    </tr>
+                    <tr>
+                        <td><strong>End Time</strong></td>
+                        <td><span t-field="o.end_datetime"/></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Duration</strong></td>
+                        <td><span t-field="o.duration_seconds"/> seconds</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Status</strong></td>
+                        <td><span t-field="o.status"/></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Triggered By</strong></td>
+                        <td><span t-field="o.triggered_by"/></td>
+                    </tr>
+                    <tr>
+                        <td><strong>User</strong></td>
+                        <td><span t-field="o.user_id.name"/></td>
+                    </tr>
+                </table>
+                <h3>Error Message</h3>
+                <pre t-field="o.message"/>
+                <h3 t-if="o.traceback">Traceback</h3>
+                <pre t-if="o.traceback" t-field="o.traceback"/>
+            </div>
+        </t>
+    </template>
+</odoo>

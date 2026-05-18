@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo><data>
+<record id="view_tapis_crm_stage_tree" model="ir.ui.view">
+    <field name="name">tapis.crm.stage.tree</field>
+    <field name="model">tapis.crm.stage</field>
+    <field name="arch" type="xml">
+        <tree string="CRM Stages" editable="bottom">
+            <field name="sequence" widget="handle"/>
+            <field name="name"/>
+            <field name="probability"/>
+            <field name="is_won"/>
+            <field name="is_lost"/>
+            <field name="fold"/>
+        </tree>
+    </field>
+</record>
+<record id="view_tapis_crm_stage_form" model="ir.ui.view">
+    <field name="name">tapis.crm.stage.form</field>
+    <field name="model">tapis.crm.stage</field>
+    <field name="arch" type="xml">
+        <form string="CRM Stage">
+            <sheet>
+                <group>
+                    <field name="name"/>
+                    <field name="sequence"/>
+                    <field name="probability"/>
+                </group>
+                <group>
+                    <field name="is_won"/>
+                    <field name="is_lost"/>
+                    <field name="fold"/>
+                    <field name="color" widget="color_picker"/>
+                </group>
+            </sheet>
+        </form>
+    </field>
+</record>
+<record id="action_tapis_crm_stage" model="ir.actions.act_window">
+    <field name="name">CRM Stages</field>
+    <field name="res_model">tapis.crm.stage</field>
+    <field name="view_mode">tree,form</field>
+</record>
+</data></odoo>

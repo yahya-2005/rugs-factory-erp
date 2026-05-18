@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- TREE VIEW -->
+        <record id="view_tapis_signature_request_tree" model="ir.ui.view">
+            <field name="name">tapis.signature.request.tree</field>
+            <field name="model">tapis.signature.request</field>
+            <field name="arch" type="xml">
+                <tree decoration-warning="state == 'pending'" decoration-success="state == 'signed'" decoration-danger="state == 'rejected'" decoration-muted="state == 'cancelled'">
+                    <field name="name"/>
+                    <field name="template_id"/>
+                    <field name="reference_display"/>
+                    <field name="requested_by_id"/>
+                    <field name="state" widget="badge"/>
+                    <field name="progress_percent" widget="progressbar"/>
+                    <field name="request_date"/>
+                </tree>
+            </field>
+        </record>
+
+        <!-- FORM VIEW -->
+        <record id="view_tapis_signature_request_form" model="ir.ui.view">
+            <field name="name">tapis.signature.request.form</field>
+            <field name="model">tapis.signature.request</field>
+            <field name="arch" type="xml">
+                <form string="Signature Request">
+                    <header>
+                        <button name="action_submit" type="object" string="Submit" class="btn-primary" attrs="{'invisible': [('state', '!=', 'draft')]}"/>
+                        <button name="action_sign" type="object" string="Sign" class="btn-success" attrs="{'invisible': [('state', '!=', 'pending')]}"/>
+                        <button name="action_reject" type="object" string="Reject" class="btn-danger" attrs="{'invisible': [('state', '!=', 'pending')]}"/>
+                        <button name="action_cancel" type="object" string="Cancel" attrs="{'invisible': [('state', 'in', ('signed', 'cancelled'))]}"/>
+                        <button name="action_open_reference" type="object" string="Open Reference"/>
+                        <field name="state" widget="statusbar" statusbar_visible="draft,pending,signed" statusbar_colors='{"signed":"success","rejected":"danger","cancelled":"muted"}'/>
+                    </header>
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="name"/>
+                                <field name="template_id"/>
+                                <field name="reference_display"/>
+                            </group>
+                            <group>
+                                <field name="requested_by_id"/>
+                                <field name="request_date"/>
+                            </group>
+                        </group>
+                        <group string="Progress">
+                            <field name="progress_percent" widget="progressbar"/>
+                            <field name="signed_count" string="Signed"/>
+                            <field name="total_signers" string="Total"/>
+                        </group>
+                        <notebook>
+                            <page name="signers" string="Signers">
+                                <field name="line_ids" nolabel="1">
+                                    <tree>
+                                        <field name="sequence" widget="handle"/>
+                                        <field name="role_id"/>
+                                        <field name="signer_id"/>
+                                        <field name="state" widget="badge"/>
+                                        <field name="signed_date"/>
+                                        <field name="signature_image" widget="signature"/>
+                                    </tree>
+                                    <form>
+                                        <group>
+                                            <group>
+                                                <field name="role_id"/>
+                                                <field name="signer_id"/>
+                                                <field name="state" widget="badge"/>
+                                            </group>
+                                            <group>
+                                                <field name="signed_date"/>
+                                                <field name="sequence"/>
+                                            </group>
+                                        </group>
+                                        <group string="Signature" attrs="{'invisible': [('state', 'not in', ('signed',))]}">
+                                            <field name="signature_image" widget="signature" nolabel="1"/>
+                                        </group>
+                                        <group string="Audit Trail" attrs="{'invisible': [('signed_date', '=', False)]}">
+                                            <field name="signer_ip"/>
+                                            <field name="signer_user_agent"/>
+                                            <field name="signer_comment"/>
+                                        </group>
+                                    </form>
+                                </field>
+                            </page>
+                            <page name="details" string="Details">
+                                <group>
+                                    <field name="reference_model"/>
+                                    <field name="reference_id"/>
+                                </group>
+                            </page>
+                        </notebook>
+                    </sheet>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids" widget="mail_followers"/>
+                        <field name="message_ids" widget="mail_thread"/>
+                    </div>
+                </form>
+            </field>
+        </record>
+
+        <!-- SEARCH VIEW -->
+        <record id="view_tapis_signature_request_search" model="ir.ui.view">
+            <field name="name">tapis.signature.request.search</field>
+            <field name="model">tapis.signature.request</field>
+            <field name="arch" type="xml">
+                <search>
+                    <field name="name"/>
+                    <field name="reference_display"/>
+                    <field name="requested_by_id"/>
+                    <filter name="draft" string="Draft" domain="[('state', '=', 'draft')]"/>
+                    <filter name="pending" string="Pending" domain="[('state', '=', 'pending')]"/>
+                    <filter name="signed" string="Signed" domain="[('state', '=', 'signed')]"/>
+                    <filter name="rejected" string="Rejected" domain="[('state', '=', 'rejected')]"/>
+                    <separator/>
+                    <filter name="my" string="My Requests" domain="[('requested_by_id', '=', uid)]"/>
+                    <filter name="my_sign" string="Needs My Signature" domain="[('line_ids.signer_id', '=', uid), ('state', '=', 'pending')]"/>
+                    <separator/>
+                    <filter name="group_template" string="Template" context="{'group_by': 'template_id'}"/>
+                    <filter name="group_state" string="Status" context="{'group_by': 'state'}"/>
+                    <filter name="group_date" string="Date" context="{'group_by': 'request_date:date'}"/>
+                </search>
+            </field>
+        </record>
+
+        <!-- ACTION -->
+        <record id="action_tapis_signature_request" model="ir.actions.act_window">
+            <field name="name">Signature Requests</field>
+            <field name="res_model">tapis.signature.request</field>
+            <field name="view_mode">tree,form</field>
+            <field name="search_view_id" ref="view_tapis_signature_request_search"/>
+        </record>
+    </data>
+</odoo>

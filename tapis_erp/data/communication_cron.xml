@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+        <record id="cron_check_overdue_invoices" model="ir.cron">
+            <field name="name">Check Overdue Invoices</field>
+            <field name="model_id" ref="model_tapis_communication_mixin"/>
+            <field name="state">code</field>
+            <field name="code">env['tapis.communication.mixin']._cron_check_overdue_invoices()</field>
+            <field name="interval_number">1</field>
+            <field name="interval_type">days</field>
+            <field name="numbercall">-1</field>
+            <field name="active">True</field>
+        </record>
+
+        <record id="cron_check_low_stock" model="ir.cron">
+            <field name="name">Check Low Stock Products</field>
+            <field name="model_id" ref="model_tapis_communication_mixin"/>
+            <field name="state">code</field>
+            <field name="code">env['tapis.communication.mixin']._cron_check_low_stock()</field>
+            <field name="interval_number">1</field>
+            <field name="interval_type">days</field>
+            <field name="numbercall">-1</field>
+            <field name="active">True</field>
+        </record>
+
+        <record id="cron_check_document_expiration" model="ir.cron">
+            <field name="name">Check Document Expiration</field>
+            <field name="model_id" ref="model_tapis_communication_mixin"/>
+            <field name="state">code</field>
+            <field name="code">env['tapis.communication.mixin']._cron_check_document_expiration()</field>
+            <field name="interval_number">1</field>
+            <field name="interval_type">days</field>
+            <field name="numbercall">-1</field>
+            <field name="active">True</field>
+        </record>
+
+        <record id="cron_check_task_deadlines" model="ir.cron">
+            <field name="name">Check Task Deadlines</field>
+            <field name="model_id" ref="model_tapis_communication_mixin"/>
+            <field name="state">code</field>
+            <field name="code">env['tapis.communication.mixin']._cron_check_task_deadlines()</field>
+            <field name="interval_number">1</field>
+            <field name="interval_type">days</field>
+            <field name="numbercall">-1</field>
+            <field name="active">True</field>
+        </record>
+
+        <record id="cron_check_maintenance_due" model="ir.cron">
+            <field name="name">Check Maintenance Due</field>
+            <field name="model_id" ref="model_tapis_communication_mixin"/>
+            <field name="state">code</field>
+            <field name="code">env['tapis.communication.mixin']._cron_check_maintenance_due()</field>
+            <field name="interval_number">1</field>
+            <field name="interval_type">days</field>
+            <field name="numbercall">-1</field>
+            <field name="active">True</field>
+        </record>
+
+        <record id="cron_check_budget_overruns" model="ir.cron">
+            <field name="name">Check Budget Overruns</field>
+            <field name="model_id" ref="model_tapis_communication_mixin"/>
+            <field name="state">code</field>
+            <field name="code">env['tapis.communication.mixin']._cron_check_budget_overruns()</field>
+            <field name="interval_number">1</field>
+            <field name="interval_type">days</field>
+            <field name="numbercall">-1</field>
+            <field name="active">True</field>
+        </record>
+    </data>
+</odoo>

@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- TREE VIEW -->
+        <record id="view_tapis_production_tree" model="ir.ui.view">
+            <field name="name">tapis.production.tree</field>
+            <field name="model">tapis.production</field>
+            <field name="arch" type="xml">
+                <tree string="Production">
+                    <field name="name"/>
+                    <field name="product_id"/>
+                    <field name="design_id"/>
+                    <field name="quantity"/>
+                    <field name="state"/>
+                </tree>
+            </field>
+        </record>
+
+        <!-- FORM VIEW -->
+        <record id="view_tapis_production_form" model="ir.ui.view">
+            <field name="name">tapis.production.form</field>
+            <field name="model">tapis.production</field>
+            <field name="arch" type="xml">
+                <form string="Production">
+                    <header>
+                        <button name="action_start" type="object" string="Start" states="planned" class="btn-primary"/>
+                        <button name="action_done" type="object" string="Done" states="in_progress" class="btn-success"/>
+                        <button name="action_cancel" type="object" string="Cancel" states="planned,in_progress" class="btn-danger"/>
+                        <button name="%(action_report_production)d" type="action" string="Print Report" class="btn-secondary"/>
+                        <field name="state" widget="statusbar" statusbar_visible="planned,in_progress,done,cancelled"/>
+                    </header>
+                    <sheet>
+                        <div class="oe_button_box" name="button_box">
+                            <button name="action_view_quality_inspections" type="object"
+                                    class="oe_stat_button" icon="fa-check-circle"
+                                    context="{'search_default_filter_active': 1}">
+                                <div class="o_stat_info">
+                                    <field name="quality_inspection_count" widget="statinfo"/>
+                                    <span class="o_stat_text">Quality Inspections</span>
+                                </div>
+                            </button>
+                            <button name="action_view_documents" type="object" class="oe_stat_button" icon="fa-file">
+                                <div class="o_stat_info">
+                                    <field name="document_count" widget="statinfo"/>
+                                    <span class="o_stat_text">Documents</span>
+                                </div>
+                            </button>
+                        </div>
+                        <notebook>
+                            <page string="Production">
+                                <group>
+                                    <field name="name"/>
+                                    <field name="product_id"/>
+                                    <field name="bom_id"/>
+                                    <field name="warehouse_id"/>
+                                    <field name="design_id"/>
+                                    <field name="quantity"/>
+                                </group>
+                                <group>
+                                    <field name="employee_ids" widget="many2many_tags"/>
+                                </group>
+                                <group>
+                                    <field name="note"/>
+                                </group>
+                            </page>
+                            <page string="Costs">
+                                <group>
+                                    <field name="material_cost"/>
+                                    <field name="labor_cost"/>
+                                    <field name="overhead_cost"/>
+                                    <field name="total_production_cost"/>
+                                    <field name="unit_production_cost"/>
+                                </group>
+                            </page>
+                            <page string="Quality" name="quality_page">
+                                <group>
+                                    <button name="action_create_quality_inspection" type="object"
+                                            string="Create Quality Inspection" class="btn-primary"
+                                            states="done"/>
+                                    <field name="latest_quality_result" widget="badge"
+                                           decoration-success="latest_quality_result == 'passed'"
+                                           decoration-danger="latest_quality_result == 'failed'"
+                                           decoration-warning="latest_quality_result == 'pending'"
+                                           decoration-muted="latest_quality_result == 'no_inspection'"/>
+                                </group>
+                                <field name="quality_inspection_ids" readonly="1">
+                                    <tree>
+                                        <field name="name"/>
+                                        <field name="inspector_id"/>
+                                        <field name="inspection_date"/>
+                                        <field name="average_score"/>
+                                        <field name="result"/>
+                                        <field name="state"/>
+                                    </tree>
+                                </field>
+                            </page>
+                        </notebook>
+                    </sheet>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids"/>
+                        <field name="activity_ids"/>
+                        <field name="message_ids"/>
+                    </div>
+                </form>
+            </field>
+        </record>
+
+        <!-- SEARCH VIEW -->
+        <record id="view_tapis_production_search" model="ir.ui.view">
+            <field name="name">tapis.production.search</field>
+            <field name="model">tapis.production</field>
+            <field name="arch" type="xml">
+                <search string="Search Productions">
+                    <field name="name"/>
+                    <field name="product_id"/>
+                    <field name="design_id"/>
+                    <filter name="planned" string="Planned" domain="[('state','=','planned')]"/>
+                    <filter name="in_progress" string="In Progress" domain="[('state','=','in_progress')]"/>
+                    <filter name="done" string="Done" domain="[('state','=','done')]"/>
+                    <filter name="cancelled" string="Cancelled" domain="[('state','=','cancelled')]"/>
+                    <group expand="0" string="Group By">
+                        <filter name="group_by_product" string="Product" context="{'group_by':'product_id'}"/>
+                        <filter name="group_by_state" string="State" context="{'group_by':'state'}"/>
+                        <filter name="group_by_design" string="Design" context="{'group_by':'design_id'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
+        <!-- ACTION -->
+        <record id="action_tapis_production" model="ir.actions.act_window">
+            <field name="name">Productions</field>
+            <field name="res_model">tapis.production</field>
+            <field name="view_mode">tree,form</field>
+            <field name="search_view_id" ref="view_tapis_production_search"/>
+        </record>
+
+    </data>
+</odoo>

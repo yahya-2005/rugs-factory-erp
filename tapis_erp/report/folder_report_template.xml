@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="folder_content_report_template">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="folder">
+                <t t-call="web.external_layout">
+                    <div class="page">
+                        <h2>Folder Content Report</h2>
+                        <h3><span t-field="folder.complete_name"/></h3>
+                        <p t-if="folder.description">
+                            <span t-field="folder.description"/>
+                        </p>
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>Code</th>
+                                    <th>Name</th>
+                                    <th>File Type</th>
+                                    <th>Version</th>
+                                    <th>Upload Date</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <t t-foreach="folder.document_count and folder.env['tapis.document'].search([('folder_id','=',folder.id)]) or []" t-as="doc">
+                                    <tr>
+                                        <td><span t-field="doc.code"/></td>
+                                        <td><span t-field="doc.name"/></td>
+                                        <td><span t-field="doc.file_type"/></td>
+                                        <td><span t-field="doc.version"/></td>
+                                        <td><span t-field="doc.upload_date"/></td>
+                                        <td><span t-field="doc.state"/></td>
+                                    </tr>
+                                </t>
+                            </tbody>
+                        </table>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+</odoo>

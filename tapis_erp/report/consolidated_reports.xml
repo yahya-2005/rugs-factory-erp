@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="action_report_consolidated_pl" model="ir.actions.report">
+        <field name="name">Consolidated P&amp;L Report</field>
+        <field name="model">tapis.company.profile</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">tapis_erp.report_consolidated_pl_template</field>
+        <field name="report_file">tapis_erp.report_consolidated_pl_template</field>
+        <field name="binding_model_id" ref="model_tapis_company_profile"/>
+        <field name="binding_type">report</field>
+        <field name="print_report_name">'Consolidated-PL-%s' % (object.legal_name)</field>
+    </record>
+
+    <record id="action_report_consolidated_revenue" model="ir.actions.report">
+        <field name="name">Consolidated Revenue Report</field>
+        <field name="model">tapis.company.profile</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">tapis_erp.report_consolidated_revenue_template</field>
+        <field name="report_file">tapis_erp.report_consolidated_revenue_template</field>
+        <field name="binding_model_id" ref="model_tapis_company_profile"/>
+        <field name="binding_type">report</field>
+        <field name="print_report_name">'Consolidated-Revenue-%s' % (object.legal_name)</field>
+    </record>
+
+    <record id="action_report_intercompany_transactions" model="ir.actions.report">
+        <field name="name">Intercompany Transactions Report</field>
+        <field name="model">tapis.intercompany.rule</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">tapis_erp.report_intercompany_transactions_template</field>
+        <field name="report_file">tapis_erp.report_intercompany_transactions_template</field>
+        <field name="binding_model_id" ref="model_tapis_intercompany_rule"/>
+        <field name="binding_type">report</field>
+        <field name="print_report_name">'Intercompany-Transactions-%s' % (object.source_company_id.name)</field>
+    </record>
+</odoo>

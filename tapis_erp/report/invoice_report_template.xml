@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="report_invoice_document">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="o">
+                <t t-call="web.external_layout">
+                    <div class="page">
+                        <div class="row">
+                            <div class="col-xs-6">
+                                <strong>INVOICE</strong>
+                                <br/>
+                                <span>Invoice Number: </span><span t-field="o.name"/>
+                                <br/>
+                                <span>Invoice Date: </span><span t-field="o.invoice_date"/>
+                                <br/>
+                                <span>Due Date: </span><span t-field="o.due_date"/>
+                            </div>
+                            <div class="col-xs-6 text-right">
+                                <strong>Tapis Morocco</strong>
+                                <br/>
+                                <span>Marrakech, Morocco</span>
+                            </div>
+                        </div>
+                        <hr/>
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <strong>Customer:</strong>
+                                <span t-field="o.customer_id.name"/>
+                                <br/>
+                                <strong>Sale Order:</strong>
+                                <span t-field="o.sale_id.name"/>
+                            </div>
+                        </div>
+                        <br/>
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>Product</th>
+                                    <th class="text-right">Quantity</th>
+                                    <th class="text-right">Unit Price (MAD)</th>
+                                    <th class="text-right">Total (MAD)</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><span t-field="o.sale_id.product_id.name"/></td>
+                                    <td class="text-right"><span t-field="o.sale_id.quantity"/></td>
+                                    <td class="text-right">
+                                        <span t-esc="'{:,.2f}'.format(o.sale_id.unit_price)"/>
+                                    </td>
+                                    <td class="text-right">
+                                        <span t-esc="'{:,.2f}'.format(o.amount_untaxed)"/>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <br/>
+                        <div class="row">
+                            <div class="col-xs-6 col-xs-offset-6">
+                                <table class="table table-bordered">
+                                    <tr>
+                                        <td>Untaxed Amount</td>
+                                        <td class="text-right">
+                                            <span t-esc="'{:,.2f}'.format(o.amount_untaxed)"/>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Tax (<span t-field="o.tax_rate"/>%)</td>
+                                        <td class="text-right">
+                                            <span t-esc="'{:,.2f}'.format(o.tax_amount)"/>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Total</strong></td>
+                                        <td class="text-right">
+                                            <strong>
+                                                <span t-esc="'{:,.2f}'.format(o.amount_total)"/> MAD
+                                            </strong>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Amount Paid</td>
+                                        <td class="text-right">
+                                            <span t-esc="'{:,.2f}'.format(o.amount_paid)"/>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Balance Due</strong></td>
+                                        <td class="text-right">
+                                            <strong>
+                                                <span t-esc="'{:,.2f}'.format(o.amount_due)"/> MAD
+                                            </strong>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <strong>Payment Status:</strong>
+                                <span t-esc="dict(o._fields['payment_status'].selection).get(o.payment_status)"/>
+                            </div>
+                        </div>
+                        <hr/>
+                        <p class="text-center">Tapis ERP - Invoice Document</p>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+</odoo>

@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo><data>
+<record id="view_tapis_task_search" model="ir.ui.view">
+    <field name="name">tapis.task.search</field>
+    <field name="model">tapis.task</field>
+    <field name="arch" type="xml">
+        <search string="Search Tasks">
+            <field name="name"/><field name="code"/><field name="project_id"/>
+            <field name="assigned_employee_id"/><field name="tag_ids"/>
+            <filter name="filter_todo" string="To Do" domain="[('state','=','todo')]"/>
+            <filter name="filter_in_progress" string="In Progress" domain="[('state','=','in_progress')]"/>
+            <filter name="filter_review" string="Review" domain="[('state','=','review')]"/>
+            <filter name="filter_done" string="Done" domain="[('state','=','done')]"/>
+            <filter name="filter_urgent" string="Urgent" domain="[('priority','=','urgent')]"/>
+            <separator/>
+            <group expand="0" string="Group By">
+                <filter name="group_by_state" string="Status" context="{'group_by':'state'}"/>
+                <filter name="group_by_priority" string="Priority" context="{'group_by':'priority'}"/>
+                <filter name="group_by_project" string="Project" context="{'group_by':'project_id'}"/>
+                <filter name="group_by_employee" string="Assigned To" context="{'group_by':'assigned_employee_id'}"/>
+            </group>
+        </search>
+    </field>
+</record>
+<record id="view_tapis_task_tree" model="ir.ui.view">
+    <field name="name">tapis.task.tree</field>
+    <field name="model">tapis.task</field>
+    <field name="arch" type="xml">
+        <tree string="Tasks" decoration-danger="priority == 'urgent' and state not in ('done','cancelled')" decoration-warning="priority == 'high' and state not in ('done','cancelled')" decoration-success="state == 'done'" decoration-muted="state == 'cancelled'">
+            <field name="name"/><field name="code"/><field name="project_id"/><field name="assigned_employee_id"/>
+            <field name="state" widget="badge" decoration-success="state == 'done'" decoration-danger="state == 'cancelled'" decoration-warning="state == 'in_progress'" decoration-info="state == 'review'" decoration-muted="state == 'todo'"/>
+            <field name="priority" widget="badge" decoration-danger="priority == 'urgent'" decoration-warning="priority == 'high'" decoration-info="priority == 'medium'" decoration-success="priority == 'low'"/>
+            <field name="progress_percent" widget="progressbar"/><field name="actual_hours"/><field name="planned_hours"/>
+        </tree>
+    </field>
+</record>
+<record id="view_tapis_task_kanban" model="ir.ui.view">
+    <field name="name">tapis.task.kanban</field>
+    <field name="model">tapis.task</field>
+    <field name="arch" type="xml">
+        <kanban class="o_kanban_mobile">
+            <field name="name"/><field name="code"/><field name="state"/><field name="priority"/>
+            <field name="progress_percent"/><field name="assigned_employee_id"/><field name="deadline"/><field name="tag_ids"/>
+            <templates>
+                <t t-name="kanban-box">
+                    <div class="oe_kanban_global_click">
+                        <div class="o_kanban_card_header">
+                            <div class="o_kanban_card_header_title"><a type="open"><field name="name"/></a></div>
+                            <div class="o_kanban_tags_section">
+                                <t t-foreach="record.tag_ids.raw_value" t-as="tag">
+                                    <span class="o_tag" t-att-style="'background-color: ' + (tag.color or 0)">t-esc="tag.name"</span>
+                                </t>
+                            </div>
+                        </div>
+                        <div class="oe_kanban_content">
+                            <div><field name="code"/></div>
+                            <div t-if="record.assigned_employee_id.raw_value"><field name="assigned_employee_id"/></div>
+                            <div t-if="record.deadline.raw_value" class="text-muted">Deadline: <field name="deadline"/></div>
+                            <div class="row mt8"><div class="col-6"><strong>Progress:</strong></div><div class="col-6 text-right"><field name="progress_percent"/>%</div></div>
+                            <div class="progress" style="height:8px;"><div class="progress-bar" role="progressbar" t-att-style="'width: ' + record.progress_percent.raw_value + '%'" t-att-aria-valuenow="record.progress_percent.raw_value" aria-valuemin="0" aria-valuemax="100"/></div>
+                            <div class="row mt8"><div class="col-6">Hours:</div><div class="col-6 text-right"><field name="actual_hours"/> / <field name="planned_hours"/></div></div>
+                        </div>
+                    </div>
+                </t>
+            </templates>
+        </kanban>
+    </field>
+</record>
+<record id="view_tapis_task_form" model="ir.ui.view">
+    <field name="name">tapis.task.form</field>
+    <field name="model">tapis.task</field>
+    <field name="arch" type="xml">
+        <form string="Task">
+            <header>
+                <button name="action_start" type="object" string="Start" states="todo" class="btn-primary"/>
+                <button name="action_submit_review" type="object" string="Submit for Review" states="in_progress" class="btn-warning"/>
+                <button name="action_mark_done" type="object" string="Mark Done" states="in_progress,review" class="btn-success"/>
+                <button name="action_cancel" type="object" string="Cancel" states="todo,in_progress,review" class="btn-danger"/>
+                <field name="state" widget="statusbar" statusbar_visible="todo,in_progress,review,done,cancelled"/>
+            </header>
+            <sheet>
+                <div class="oe_button_box" name="button_box">
+                    <button name="action_view_timesheets" type="object" class="oe_stat_button" icon="fa-clock-o">
+                        <div class="o_stat_info"><field name="timesheet_count" widget="statinfo"/><span class="o_stat_text">Timesheets</span></div>
+                    </button>
+                </div>
+                <div class="row mt16">
+                    <div class="col-lg-6">
+                        <group string="General">
+                            <field name="name"/><field name="code"/>
+                            <field name="project_id" options="{'no_create': True}"/>
+                            <field name="assigned_employee_id" options="{'no_create': True}"/>
+                            <field name="tag_ids" widget="many2many_tags"/>
+                            <field name="priority"/>
+                        </group>
+                    </div>
+                    <div class="col-lg-6">
+                        <group string="Schedule">
+                            <field name="start_date"/><field name="deadline"/>
+                            <field name="planned_hours"/><field name="actual_hours"/>
+                            <field name="progress_percent" widget="progressbar"/>
+                        </group>
+                    </div>
+                </div>
+                <notebook>
+                    <page string="Description"><field name="description" nolabel="1"/></page>
+                    <page string="Related Records">
+                        <group>
+                            <field name="related_design_id"/><field name="related_production_id"/><field name="related_sale_id"/>
+                        </group>
+                    </page>
+                    <page string="Timesheets">
+                        <field name="timesheet_ids" readonly="0">
+                            <tree editable="bottom">
+                                <field name="employee_id" options="{'no_create': True}"/>
+                                <field name="date"/><field name="hours"/><field name="description"/>
+                            </tree>
+                        </field>
+                    </page>
+                    <page string="Notes"><field name="note" nolabel="1"/></page>
+                </notebook>
+            </sheet>
+            <div class="oe_chatter">
+                <field name="message_follower_ids"/><field name="activity_ids"/><field name="message_ids"/>
+            </div>
+        </form>
+    </field>
+</record>
+<record id="action_tapis_task" model="ir.actions.act_window">
+    <field name="name">Tasks</field>
+    <field name="res_model">tapis.task</field>
+    <field name="view_mode">kanban,tree,form</field>
+    <field name="search_view_id" ref="view_tapis_task_search"/>
+</record>
+</data></odoo>

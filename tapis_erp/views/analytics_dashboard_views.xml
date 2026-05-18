@@ -1,0 +1,222 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <!-- FORM VIEW -->
+        <record id="view_analytics_dashboard_form" model="ir.ui.view">
+            <field name="name">tapis.analytics.dashboard.form</field>
+            <field name="model">tapis.analytics.dashboard</field>
+            <field name="arch" type="xml">
+                <form string="Business Intelligence Dashboard">
+                    <header>
+                        <button name="action_refresh" type="object" string="Refresh Data" class="btn-primary"/>
+                        <button name="action_view_sales" type="object" string="Sales" class="btn-secondary"/>
+                        <button name="action_view_purchases" type="object" string="Purchases" class="btn-secondary"/>
+                        <button name="action_view_products" type="object" string="Products" class="btn-secondary"/>
+                        <button name="action_view_productions" type="object" string="Productions" class="btn-secondary"/>
+                        <button name="action_view_projects" type="object" string="Projects" class="btn-secondary"/>
+                        <button name="action_view_tasks" type="object" string="Tasks" class="btn-secondary"/>
+                    </header>
+                    <sheet>
+                        <div class="oe_button_box" name="button_box">
+                            <button name="action_view_sales" type="object" class="oe_stat_button" icon="fa-line-chart">
+                                <div class="o_stat_info">
+                                    <field name="total_sales_revenue" widget="statinfo" nolabel="1"/>
+                                    <span class="o_stat_text">Revenue (MAD)</span>
+                                </div>
+                            </button>
+                            <button name="action_view_sales" type="object" class="oe_stat_button" icon="fa-dollar">
+                                <div class="o_stat_info">
+                                    <field name="total_profit" widget="statinfo" nolabel="1"/>
+                                    <span class="o_stat_text">Profit (MAD)</span>
+                                </div>
+                            </button>
+                            <button name="action_view_purchases" type="object" class="oe_stat_button" icon="fa-truck">
+                                <div class="o_stat_info">
+                                    <field name="total_purchase_cost" widget="statinfo" nolabel="1"/>
+                                    <span class="o_stat_text">Purchases (MAD)</span>
+                                </div>
+                            </button>
+                            <button name="action_view_products" type="object" class="oe_stat_button" icon="fa-cubes">
+                                <div class="o_stat_info">
+                                    <field name="inventory_value" widget="statinfo" nolabel="1"/>
+                                    <span class="o_stat_text">Inventory (MAD)</span>
+                                </div>
+                            </button>
+                            <button name="action_view_invoices" type="object" class="oe_stat_button" icon="fa-credit-card">
+                                <div class="o_stat_info">
+                                    <field name="total_receivables" widget="statinfo" nolabel="1"/>
+                                    <span class="o_stat_text">Receivables (MAD)</span>
+                                </div>
+                            </button>
+                            <button name="action_view_customers" type="object" class="oe_stat_button" icon="fa-users">
+                                <div class="o_stat_info">
+                                    <field name="total_customers" widget="statinfo"/>
+                                    <span class="o_stat_text">Customers</span>
+                                </div>
+                            </button>
+                            <button name="action_view_products" type="object" class="oe_stat_button" icon="fa-cube">
+                                <div class="o_stat_info">
+                                    <field name="total_products" widget="statinfo"/>
+                                    <span class="o_stat_text">Products</span>
+                                </div>
+                            </button>
+                            <button name="action_view_invoices" type="object" class="oe_stat_button" icon="fa-file-text-o">
+                                <div class="o_stat_info">
+                                    <field name="total_invoices" widget="statinfo"/>
+                                    <span class="o_stat_text">Invoices</span>
+                                </div>
+                            </button>
+                            <button name="action_view_projects" type="object" class="oe_stat_button" icon="fa-tasks">
+                                <div class="o_stat_info">
+                                    <field name="total_projects" widget="statinfo"/>
+                                    <span class="o_stat_text">Projects</span>
+                                </div>
+                            </button>
+                            <button name="action_view_tasks" type="object" class="oe_stat_button" icon="fa-check-square-o">
+                                <div class="o_stat_info">
+                                    <field name="total_tasks" widget="statinfo"/>
+                                    <span class="o_stat_text">Tasks</span>
+                                </div>
+                            </button>
+                            <button name="action_view_timesheets" type="object" class="oe_stat_button" icon="fa-clock-o">
+                                <div class="o_stat_info">
+                                    <field name="total_timesheet_hours" widget="statinfo"/>
+                                    <span class="o_stat_text">Hours Logged</span>
+                                </div>
+                            </button>
+                            <button name="action_view_equipment" type="object" class="oe_stat_button" icon="fa-cogs">
+                                <div class="o_stat_info">
+                                    <field name="total_equipment" widget="statinfo"/>
+                                    <span class="o_stat_text">Equipment</span>
+                                </div>
+                            </button>
+                            <button name="action_view_maintenance" type="object" class="oe_stat_button" icon="fa-wrench">
+                                <div class="o_stat_info">
+                                    <field name="overdue_maintenance_count" widget="statinfo"/>
+                                    <span class="o_stat_text">Overdue Maint.</span>
+                                </div>
+                            </button>
+                            <button name="action_view_invoices" type="object" class="oe_stat_button" icon="fa-file-text-o">
+                                <div class="o_stat_info">
+                                    <field name="total_invoices" widget="statinfo"/>
+                                    <span class="o_stat_text">Invoices</span>
+                                </div>
+                            </button>
+                        </div>
+
+                        <!-- Charts -->
+                        <field name="charts_html" widget="html" nolabel="1"/>
+
+                        <!-- Data Tables -->
+                        <div class="row mt16">
+                            <div class="col-lg-4">
+                                <div class="card shadow mb-4">
+                                    <div class="card-header py-3">
+                                        <h6 class="m-0 font-weight-bold text-danger">
+                                            Low Stock Products
+                                            <span class="badge badge-danger float-right">
+                                                <field name="low_stock_count"/>
+                                            </span>
+                                        </h6>
+                                    </div>
+                                    <div class="card-body">
+                                        <field name="low_stock_html" widget="html" nolabel="1"/>
+                                        <button name="action_view_low_stock" type="object" string="View All" class="btn-warning btn-sm"/>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-4">
+                                <div class="card shadow mb-4">
+                                    <div class="card-header py-3">
+                                        <h6 class="m-0 font-weight-bold text-warning">Unpaid Invoices</h6>
+                                    </div>
+                                    <div class="card-body">
+                                        <field name="unpaid_html" widget="html" nolabel="1"/>
+                                        <button name="action_view_invoices" type="object" string="View Invoices" class="btn-primary btn-sm"/>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-4">
+                                <div class="card shadow mb-4">
+                                    <div class="card-header py-3">
+                                        <h6 class="m-0 font-weight-bold text-info">
+                                            Pending Quality Inspections
+                                            <span class="badge badge-info float-right">
+                                                <field name="pending_inspections_count"/>
+                                            </span>
+                                        </h6>
+                                    </div>
+                                    <div class="card-body">
+                                        <p class="text-muted">Inspections awaiting review.</p>
+                                        <button name="action_view_quality" type="object" string="View Inspections" class="btn-info btn-sm"/>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-4">
+                                <div class="card shadow mb-4">
+                                    <div class="card-header py-3">
+                                        <h6 class="m-0 font-weight-bold text-success">Projects &amp; Tasks</h6>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="row">
+                                            <div class="col-6">
+                                                <h3 class="text-primary"><field name="active_projects"/></h3>
+                                                <p>Active Projects</p>
+                                            </div>
+                                            <div class="col-6">
+                                                <h3 class="text-warning"><field name="tasks_in_review"/></h3>
+                                                <p>Tasks in Review</p>
+                                            </div>
+                                        </div>
+                                        <div class="mt-2">
+                                            <p>Overdue Tasks: <strong class="text-danger"><field name="overdue_tasks"/></strong></p>
+                                            <p>Total Hours: <strong><field name="total_timesheet_hours"/></strong></p>
+                                        </div>
+                                        <button name="action_view_projects" type="object" string="View Projects" class="btn-success btn-sm"/>
+                                        <button name="action_view_tasks" type="object" string="View Tasks" class="btn-primary btn-sm"/>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-4">
+                                <div class="card shadow mb-4">
+                                    <div class="card-header py-3">
+                                        <h6 class="m-0 font-weight-bold text-danger">Broken Equipment</h6>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="row">
+                                            <div class="col-6">
+                                                <h3 class="text-danger"><field name="broken_equipment_count"/></h3>
+                                                <p>Broken</p>
+                                            </div>
+                                            <div class="col-6">
+                                                <h3 class="text-warning"><field name="under_maintenance_count"/></h3>
+                                                <p>In Maintenance</p>
+                                            </div>
+                                        </div>
+                                        <div class="mt-2">
+                                            <p>Total Downtime: <strong><field name="total_downtime_hours"/> hours</strong></p>
+                                            <p>Total Cost: <strong><field name="total_maintenance_cost"/> MAD</strong></p>
+                                        </div>
+                                        <button name="action_view_equipment" type="object" string="View Equipment" class="btn-danger btn-sm"/>
+                                        <button name="action_view_maintenance" type="object" string="View Orders" class="btn-warning btn-sm"/>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <!-- ACTION -->
+        <record id="action_analytics_dashboard" model="ir.actions.act_window">
+            <field name="name">Analytics Dashboard</field>
+            <field name="res_model">tapis.analytics.dashboard</field>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="view_analytics_dashboard_form"/>
+        </record>
+
+        </data>
+</odoo>
