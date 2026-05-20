@@ -77,3 +77,5 @@ from . import api_endpoint
 from . import api_log
 from . import webhook_subscription
 from . import integration_queue
+from . import mobile_device
+from . import kpi_snapshot

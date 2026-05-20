@@ -179,3 +179,9 @@ access_tapis_webhook_subscription_manager,tapis.webhook.subscription.manager,mod
 access_tapis_integration_queue_viewer,tapis.integration.queue.viewer,model_tapis_integration_queue,group_integration_viewer,1,0,0,0
 access_tapis_integration_queue_admin,tapis.integration.queue.admin,model_tapis_integration_queue,group_integration_admin,1,1,1,1
 access_tapis_integration_queue_manager,tapis.integration.queue.manager,model_tapis_integration_queue,group_tapis_manager,1,1,1,1
+access_tapis_mobile_device_user,tapis.mobile.device.user,model_tapis_mobile_device,group_tapis_user,1,0,0,0
+access_tapis_mobile_device_manager,tapis.mobile.device.manager,model_tapis_mobile_device,group_tapis_manager,1,1,1,1
+access_tapis_mobile_sync_log_user,tapis.mobile.sync.log.user,model_tapis_mobile_sync_log,group_tapis_user,1,0,0,0
+access_tapis_mobile_sync_log_manager,tapis.mobile.sync.log.manager,model_tapis_mobile_sync_log,group_tapis_manager,1,1,1,1
+access_tapis_kpi_snapshot_user,tapis.kpi.snapshot.user,model_tapis_kpi_snapshot,group_tapis_user,1,0,0,0
+access_tapis_kpi_snapshot_manager,tapis.kpi.snapshot.manager,model_tapis_kpi_snapshot,group_tapis_manager,1,1,1,1

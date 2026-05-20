@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+
+        <record id="mobile_demo_device" model="tapis.mobile.device">
+            <field name="name">Admin iPhone</field>
+            <field name="user_id" ref="base.user_admin"/>
+            <field name="device_uuid">demo-uuid-iphone-001</field>
+            <field name="platform">ios</field>
+            <field name="app_version">1.0.0</field>
+            <field name="push_token">demo-push-token-ios</field>
+            <field name="active" eval="True"/>
+        </record>
+
+        <record id="kpi_demo_snapshot" model="tapis.kpi.snapshot">
+            <field name="snapshot_datetime" eval="datetime.now().strftime('%Y-%m-%d %H:%M:%S')"/>
+            <field name="total_sales">1250000</field>
+            <field name="monthly_sales">320000</field>
+            <field name="open_quotes">15</field>
+            <field name="overdue_invoices">3</field>
+            <field name="active_productions">12</field>
+            <field name="delayed_productions">2</field>
+            <field name="on_time_delivery_rate">85.0</field>
+            <field name="inventory_value">4500000</field>
+            <field name="low_stock_products">5</field>
+            <field name="stock_turnover">4.2</field>
+            <field name="gross_profit">437500</field>
+            <field name="net_profit">250000</field>
+            <field name="average_margin">35.0</field>
+            <field name="active_customers">85</field>
+            <field name="open_tickets">7</field>
+            <field name="customer_satisfaction">88.0</field>
+        </record>
+
+    </data>
+</odoo>

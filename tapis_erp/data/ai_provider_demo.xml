@@ -3,7 +3,7 @@
     <record id="demo_ai_provider_gemini" model="tapis.ai.provider">
         <field name="name">Google Gemini</field>
         <field name="provider_type">gemini</field>
-        <field name="api_key">YOUR_GOOGLE_GEMINI_API_KEY_HERE</field>
+        <field name="api_key">YOUR_GOOGLE_GEMINI_API_KEY</field>
         <field name="model_name">gemini-flash-latest</field>
         <field name="timeout_seconds" eval="120"/>
         <field name="active" eval="True"/>
@@ -23,7 +23,7 @@
     <record id="demo_ai_provider_openrouter" model="tapis.ai.provider">
         <field name="name">OpenRouter</field>
         <field name="provider_type">openai</field>
-        <field name="api_key">YOUR_OPENROUTER_API_KEY_HERE</field>
+        <field name="api_key">YOUR_OPENROUTER_API_KEY</field>
         <field name="base_url">https://openrouter.ai/api/v1</field>
         <field name="model_name">qwen/qwen-vl-plus:free</field>
         <field name="timeout_seconds" eval="120"/>

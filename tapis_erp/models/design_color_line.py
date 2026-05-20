@@ -13,7 +13,7 @@ class DesignColorLine(models.Model):
     color_name = fields.Char(string='Color Name')
     hex_color = fields.Char(string='Hex Color')
     color_preview = fields.Integer(string='Color Preview')
-
+    # percentage of this color in the design, must be between 0 and 100 and the sum of all lines for a design should be 100
     percentage = fields.Float(string='Percentage (%)', required=True)
 
     weight_kg = fields.Float(string='Weight (kg)', compute='_compute_weight_kg', store=True)

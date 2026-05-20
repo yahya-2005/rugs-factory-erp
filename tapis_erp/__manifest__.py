@@ -102,6 +102,9 @@
         'views/support_ticket_views.xml',
         'views/portal_dashboard_views.xml',
         'views/customer_portal_views.xml',
+        'views/mobile_device_views.xml',
+        'views/kpi_snapshot_views.xml',
+        'views/executive_dashboard_views.xml',
         'views/menus.xml',
         'report/project_report.xml',
         'report/supplier_scorecard_report.xml',
@@ -162,6 +165,7 @@
         'data/automation_email_templates.xml',
         'data/automation_templates.xml',
         'data/integration_demo.xml',
+        'data/mobile_demo.xml',
     ],
     'demo': [
         'demo/demo_data.xml',
