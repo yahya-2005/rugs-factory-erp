@@ -3,15 +3,10 @@ import logging
 from datetime import datetime
 
 from odoo import http, _
-from odoo.http import request
+from odoo.http import request, Response
 from odoo.exceptions import AccessDenied
 
 _logger = logging.getLogger(__name__)
-_logger.info('Loading TapisPublicApi controller...')
-_logger.info('http module: %s', http.__file__)
-_logger.info('http.route: %s', http.route)
-import odoo.http as _odoo_http
-_logger.info('tapis_erp controllers in registry: %d', len(_odoo_http.controllers_per_module.get('tapis_erp', [])))
 
 
 class TapisPublicApi(http.Controller):
@@ -38,7 +33,11 @@ class TapisPublicApi(http.Controller):
         return conn
 
     def _json_response(self, data, status=200):
-        return request.make_json_response(data, status=status)
+        return Response(
+            json.dumps(data, default=str),
+            status=status,
+            content_type='application/json'
+        )
 
     def _error(self, msg, status=400):
         return self._json_response({'error': msg}, status=status)
@@ -57,7 +56,7 @@ class TapisPublicApi(http.Controller):
         domain = [('active', '=', True)]
         total = request.env['tapis.customer'].sudo().search_count(domain)
         customers = request.env['tapis.customer'].sudo().search(domain, offset=offset, limit=limit)
-        data = [{'id': c.id, 'name': c.name, 'email': c.email, 'phone': c.phone, 'city': c.city} for c in customers]
+        data = [{'id': c.id, 'name': c.name, 'email': c.email, 'phone': c.phone, 'address': c.address} for c in customers]
         return self._json_response({'count': total, 'data': data})
 
     @http.route('/api/v1/customers/<int:customer_id>', type='http', auth='public', csrf=False, methods=['GET'])
@@ -66,15 +65,15 @@ class TapisPublicApi(http.Controller):
         cust = request.env['tapis.customer'].sudo().browse(customer_id)
         if not cust.exists():
             return self._error('Customer not found', 404)
-        data = {'id': cust.id, 'name': cust.name, 'email': cust.email, 'phone': cust.phone, 'city': cust.city,
-                'state': cust.state, 'country': cust.country}
+        data = {'id': cust.id, 'name': cust.name, 'email': cust.email, 'phone': cust.phone, 'address': cust.address,
+                'contact_person': cust.contact_person, 'credit_limit': cust.credit_limit}
         return self._json_response(data)
 
     @http.route('/api/v1/customers', type='http', auth='public', csrf=False, methods=['POST'])
     def customer_create(self):
         self._authenticate()
         data = json.loads(request.httprequest.data or '{}')
-        vals = {k: data[k] for k in ('name', 'email', 'phone', 'city', 'state', 'country') if k in data}
+        vals = {k: data[k] for k in ('name', 'email', 'phone', 'address', 'contact_person') if k in data}
         if not vals.get('name'):
             return self._error('Name is required')
         cust = request.env['tapis.customer'].sudo().create(vals)
@@ -87,7 +86,7 @@ class TapisPublicApi(http.Controller):
         if not cust.exists():
             return self._error('Customer not found', 404)
         data = json.loads(request.httprequest.data or '{}')
-        vals = {k: data[k] for k in ('name', 'email', 'phone', 'city', 'state', 'country') if k in data}
+        vals = {k: data[k] for k in ('name', 'email', 'phone', 'address', 'contact_person') if k in data}
         cust.write(vals)
         return self._json_response({'message': 'Customer updated'})
 
@@ -119,7 +118,7 @@ class TapisPublicApi(http.Controller):
         domain = [('active', '=', True)]
         sales = request.env['tapis.sale'].sudo().search(domain, offset=offset, limit=limit)
         data = [{'id': s.id, 'name': s.name, 'customer': s.customer_id.name, 'state': s.state,
-                 'amount_total': s.amount_total, 'date_order': str(s.date_order)} for s in sales]
+                 'amount_total': s.total_price, 'date_order': str(s.order_date)} for s in sales]
         return self._json_response({'data': data})
 
     # ---- Productions ----
@@ -129,7 +128,7 @@ class TapisPublicApi(http.Controller):
         offset, limit = self._get_pager_params()
         prods = request.env['tapis.production'].sudo().search([], offset=offset, limit=limit)
         data = [{'id': p.id, 'name': p.name, 'product': p.product_id.name, 'state': p.state,
-                 'qty': p.qty_producing, 'date_start': str(p.date_start)} for p in prods]
+                 'qty': p.quantity, 'date_start': str(p.planned_start_date or p.actual_start_date or '')} for p in prods]
         return self._json_response({'data': data})
 
     # ---- Inventory ----
@@ -142,13 +141,4 @@ class TapisPublicApi(http.Controller):
                  'quantity': q.quantity, 'reserved': q.reserved_quantity} for q in quants]
         return self._json_response({'data': data})
 
-# Debug: check routing attributes at module load
-_logger.info('Controller routes:')
-for attr in dir(TapisPublicApi):
-    if not attr.startswith('_'):
-        fn = getattr(TapisPublicApi, attr, None)
-        if fn:
-            has_routing = hasattr(fn, 'routing')
-            _logger.info('  %s: routing=%s', attr, has_routing)
-            if has_routing:
-                _logger.info('    routing=%s', fn.routing)
+

@@ -3,7 +3,7 @@ import logging
 from datetime import datetime, timedelta
 
 from odoo import http, _
-from odoo.http import request
+from odoo.http import request, Response
 
 _logger = logging.getLogger(__name__)
 
@@ -21,7 +21,11 @@ class TapisMobileApi(http.Controller):
         return device
 
     def _json_response(self, data, status=200):
-        return request.make_json_response(data, status=status)
+        return Response(
+            json.dumps(data, default=str),
+            status=status,
+            content_type='application/json'
+        )
 
     def _error(self, msg, status=401):
         return self._json_response({'error': msg}, status=status)

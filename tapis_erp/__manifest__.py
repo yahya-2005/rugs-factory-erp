@@ -166,6 +166,8 @@
         'data/automation_templates.xml',
         'data/integration_demo.xml',
         'data/mobile_demo.xml',
+        'data/email_templates.xml',
+        'data/mail_cron.xml',
     ],
     'demo': [
         'demo/demo_data.xml',
