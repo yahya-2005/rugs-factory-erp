@@ -210,11 +210,26 @@ class TapisSale(models.Model):
     def _get_customer_email(self):
         return self.customer_id.email if self.customer_id else False
 
+    def _get_portal_url(self):
+        return '/my/sales'
+
+    @api.model_create_multi
+    def create(self, vals_list):
+        records = super().create(vals_list)
+        for rec in records:
+            template = self.env.ref('tapis_erp.email_template_quotation_created', False)
+            if template:
+                template.send_mail(rec.id, force_send=True)
+        return records
+
     def action_confirm(self):
         for rec in self:
             rec.state = 'confirmed'
             rec.message_post(body=_("Sale confirmed."))
             rec._trigger_communication('SALE_CONFIRMED')
+            template = self.env.ref('tapis_erp.email_template_sale_confirmed', False)
+            if template:
+                template.send_mail(rec.id, force_send=True)
 
     def action_deliver(self):
         Quant = self.env['tapis.stock.quant']

@@ -230,12 +230,31 @@ class TapisProduction(models.Model):
             'target': 'current',
         }
 
+    def _get_customer_email(self):
+        sale = self.env['tapis.sale'].search([('product_id', '=', self.product_id.id)], limit=1)
+        return sale._get_customer_email() if sale else self.env.company.email or 'yahyalaadam3@gmail.com'
+
+    def _send_production_email(self, template_xmlid):
+        template = self.env.ref(template_xmlid, False)
+        if template:
+            template.send_mail(self.id, force_send=True)
+
+    def _check_delayed(self):
+        for rec in self:
+            if rec.state == 'in_progress' and rec.planned_end_date:
+                if fields.Datetime.now() > rec.planned_end_date:
+                    template = self.env.ref('tapis_erp.email_template_production_delayed', False)
+                    if template:
+                        template.send_mail(rec.id, force_send=True)
+                    rec.message_post(body=_("Production is delayed past planned end date."))
+
     def action_start(self):
         for rec in self:
             rec.state = 'in_progress'
             rec.message_post(
                 body=_("Production started.")
             )
+            rec._send_production_email('tapis_erp.email_template_production_started')
 
     def action_done(self):
         RawMaterial = self.env['tapis.raw.material']
@@ -305,6 +324,8 @@ class TapisProduction(models.Model):
                 summary=_('Production Finished'),
                 note=_('Production order has been completed.')
             )
+
+            rec._send_production_email('tapis_erp.email_template_production_completed')
 
     def action_cancel(self):
         for rec in self:
@@ -439,10 +460,13 @@ class TapisProduction(models.Model):
             rec.actual_start_date = fields.Datetime.now()
             rec.state = 'in_progress'
             rec.message_post(body=_("Production started on resource %s") % rec.resource_id.name)
+            rec._send_production_email('tapis_erp.email_template_production_started')
 
     def action_finish_production(self):
         for rec in self:
             if rec.state != 'in_progress':
                 raise UserError(_('Only in-progress productions can be finished.'))
             rec.actual_end_date = fields.Datetime.now()
-            super(TapisProduction, rec).action_done()
+            rec.state = 'done'
+            rec.message_post(body=_("Production %s completed.") % rec.name)
+            rec._send_production_email('tapis_erp.email_template_production_completed')

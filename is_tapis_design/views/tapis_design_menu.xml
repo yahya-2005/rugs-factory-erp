@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <menuitem id="menu_tapis_design_root" name="Tapis Design"
+              sequence="85" web_icon="is_tapis_design,static/description/icon.png"/>
+
+    <menuitem id="menu_tapis_designs" name="Designs"
+              parent="menu_tapis_design_root"
+              action="action_tapis_design"
+              sequence="10"/>
+
+    <menuitem id="menu_tapis_design_colors" name="Wool Colors"
+              parent="menu_tapis_design_root"
+              action="is_wool_stock.action_wool_color"
+              sequence="20"/>
+
+    <menuitem id="menu_tapis_design_stock_moves" name="Stock Movements"
+              parent="menu_tapis_design_root"
+              action="is_wool_stock.action_wool_stock_move"
+              sequence="30"/>
+</odoo>

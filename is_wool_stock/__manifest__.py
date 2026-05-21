@@ -1,0 +1,22 @@
+{
+    'name': 'Wool Stock Management',
+    'version': '15.0.1.0.0',
+    'summary': 'Manage wool color references, stock quantities, movements and valuation',
+    'author': 'Tapis ERP',
+    'category': 'Inventory/Stock',
+    'depends': ['base', 'mail', 'web'],
+    'data': [
+        'security/security.xml',
+        'security/ir.model.access.csv',
+        'views/wool_color_views.xml',
+        'views/wool_stock_move_views.xml',
+        'views/wool_stock_adjustment_views.xml',
+        'views/wool_menu.xml',
+        'reports/wool_reports.xml',
+        'reports/wool_templates.xml',
+        'data/wool_demo.xml',
+    ],
+    'installable': True,
+    'application': True,
+    'license': 'LGPL-3',
+}

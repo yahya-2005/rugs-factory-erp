@@ -56,6 +56,10 @@ class TapisApprovalRequest(models.Model):
             rec.total_approved = len(rec.line_ids.filtered(lambda l: l.state == 'approved'))
             rec.progress_percent = (rec.total_approved / rec.total_required * 100) if rec.total_required else 0.0
 
+    def _get_approver_name(self):
+        line = self.line_ids.filtered(lambda l: l.state in ('approved', 'rejected'))[:1]
+        return line.approver_id.name if line else False
+
     def action_submit(self):
         for rec in self:
             if rec.state != 'draft':
@@ -64,6 +68,9 @@ class TapisApprovalRequest(models.Model):
             rec.state = 'pending'
             rec.message_post(body=_('Approval request submitted.'))
             rec._notify_approvers()
+            template = self.env.ref('tapis_erp.email_template_approval_request', False)
+            if template:
+                template.send_mail(rec.id, force_send=True)
 
     def _generate_approval_lines(self):
         self.ensure_one()
@@ -121,6 +128,9 @@ class TapisApprovalRequest(models.Model):
             self.state = 'approved'
             self.message_post(body=_('Approval request fully approved.'))
             self._trigger_approval_callback()
+            template = self.env.ref('tapis_erp.email_template_approval_accepted', False)
+            if template:
+                template.send_mail(self.id, force_send=True)
 
     def _get_current_line(self):
         self.ensure_one()
@@ -185,6 +195,9 @@ class TapisApprovalRequest(models.Model):
         self.state = 'rejected'
         self.message_post(body=_('Approval request rejected by %s.') % self.env.user.name)
         self._trigger_rejection_callback()
+        template = self.env.ref('tapis_erp.email_template_approval_rejected', False)
+        if template:
+            template.send_mail(self.id, force_send=True)
 
     def _trigger_rejection_callback(self):
         self.ensure_one()

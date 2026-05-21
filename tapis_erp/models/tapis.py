@@ -142,3 +142,20 @@ class TapisProduct(models.Model):
             'context': {'default_product_id': self.id},
             'target': 'current',
         }
+
+    def _get_preferred_supplier(self):
+        pricelist = self.env['tapis.supplier.pricelist'].search([
+            ('product_id', '=', self.id),
+            ('active', '=', True),
+        ], order='price asc', limit=1)
+        return pricelist.supplier_id.name if pricelist else False
+
+    @api.model
+    def _check_stock_level(self):
+        threshold = 10
+        low_stock = self.search([('stock_qty', '<', threshold)])
+        for rec in low_stock:
+            template = self.env.ref('tapis_erp.email_template_low_stock_alert', False)
+            if template:
+                template.send_mail(rec.id, force_send=True)
+        return len(low_stock)

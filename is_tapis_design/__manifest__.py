@@ -1,0 +1,20 @@
+{
+    'name': 'Tapis Design Management',
+    'version': '15.0.1.0.0',
+    'summary': 'Manage rug designs, dimensions, wool composition and AI analysis',
+    'author': 'Tapis ERP',
+    'category': 'Manufacturing/Design',
+    'depends': ['base', 'mail', 'web', 'is_wool_stock'],
+    'data': [
+        'security/security.xml',
+        'security/ir.model.access.csv',
+        'views/tapis_design_views.xml',
+        'views/tapis_design_menu.xml',
+        'reports/design_reports.xml',
+        'reports/design_templates.xml',
+        'data/design_demo.xml',
+    ],
+    'installable': True,
+    'application': True,
+    'license': 'LGPL-3',
+}

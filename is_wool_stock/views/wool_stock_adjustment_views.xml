@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_wool_stock_adjustment_tree" model="ir.ui.view">
+        <field name="name">wool.stock.adjustment.tree</field>
+        <field name="model">wool.stock.adjustment</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name"/>
+                <field name="date"/>
+                <field name="wool_color_id"/>
+                <field name="current_qty"/>
+                <field name="counted_qty"/>
+                <field name="difference_qty" decoration-danger="difference_qty &lt; 0" decoration-success="difference_qty > 0"/>
+                <field name="reason"/>
+                <field name="state" widget="badge"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_wool_stock_adjustment_form" model="ir.ui.view">
+        <field name="name">wool.stock.adjustment.form</field>
+        <field name="model">wool.stock.adjustment</field>
+        <field name="arch" type="xml">
+            <form string="Stock Adjustment">
+                <header>
+                    <button name="action_validate" type="object" string="Validate" class="btn-primary"
+                            states="draft"/>
+                    <button name="action_cancel" type="object" string="Cancel" class="btn-secondary"
+                            states="draft"/>
+                    <field name="state" widget="statusbar" statusbar_visible="draft,validated"/>
+                </header>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="name"/>
+                            <field name="date"/>
+                            <field name="wool_color_id" required="1"/>
+                        </group>
+                        <group>
+                            <field name="current_qty"/>
+                            <field name="counted_qty" required="1"/>
+                            <field name="difference_qty"/>
+                        </group>
+                    </group>
+                    <group>
+                        <field name="reason"/>
+                        <field name="notes"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_wool_stock_adjustment" model="ir.actions.act_window">
+        <field name="name">Stock Adjustments</field>
+        <field name="res_model">wool.stock.adjustment</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+</odoo>

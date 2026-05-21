@@ -326,6 +326,9 @@ class TapisSalesForecast(models.Model):
         self.state = 'generated'
         self.message_post(body=_('Forecast generated using %s method.') % dict(
             self._fields['method'].selection).get(self.method, self.method))
+        template = self.env.ref('tapis_erp.email_template_forecast_generated', False)
+        if template:
+            template.send_mail(self.id, force_send=True)
 
     def _compute_accuracy(self, historical, forecast_lines):
         self.ensure_one()

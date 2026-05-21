@@ -38,12 +38,26 @@ class TapisSupportTicket(models.Model):
     resolution_notes = fields.Html(string='Resolution Notes')
     company_id = fields.Many2one('res.company', default=lambda self: self.env.company)
 
+    def _get_customer_email(self):
+        return self.customer_id.email if self.customer_id else self.contact_email or False
+
+    def _get_customer_name(self):
+        return self.customer_id.name if self.customer_id else self.contact_name or False
+
+    def _get_priority_label(self):
+        return dict(self._fields['priority'].selection).get(self.priority, '')
+
     @api.model_create_multi
     def create(self, vals_list):
         for vals in vals_list:
             if vals.get('name', 'New') == 'New':
                 vals['name'] = self.env['ir.sequence'].next_by_code('tapis.support.ticket') or 'New'
-        return super().create(vals_list)
+        records = super().create(vals_list)
+        for rec in records:
+            template = self.env.ref('tapis_erp.email_template_ticket_created', False)
+            if template:
+                template.send_mail(rec.id, force_send=True)
+        return records
 
     def action_assign(self):
         self.assigned_user_id = self.env.user
@@ -61,6 +75,9 @@ class TapisSupportTicket(models.Model):
     def action_resolve(self):
         self.state = 'resolved'
         self.message_post(body=_('Ticket resolved.'))
+        template = self.env.ref('tapis_erp.email_template_ticket_resolved', False)
+        if template:
+            template.send_mail(self.id, force_send=True)
 
     def action_close(self):
         self.state = 'closed'

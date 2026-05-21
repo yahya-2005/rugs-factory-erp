@@ -77,6 +77,9 @@ class TapisMaintenanceOrder(models.Model):
             if not rec.scheduled_date:
                 rec.scheduled_date = fields.Datetime.now()
             rec.message_post(body=_("Maintenance order scheduled."))
+            template = self.env.ref('tapis_erp.email_template_maintenance_scheduled', False)
+            if template:
+                template.send_mail(rec.id, force_send=True)
 
     def action_start(self):
         for rec in self:

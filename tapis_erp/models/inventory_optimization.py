@@ -146,6 +146,9 @@ class TapisInventoryOptimization(models.Model):
             rec._compute_stock_data()
             rec._generate_supplier_recommendations()
             rec.state = 'analyzed'
+            template = self.env.ref('tapis_erp.email_template_inventory_recommendation', False)
+            if template:
+                template.send_mail(rec.id, force_send=True)
 
     def action_approve(self):
         for rec in self:

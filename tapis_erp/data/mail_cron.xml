@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+        <!-- Monthly KPI Summary Cron -->
+        <record id="cron_kpi_monthly_summary" model="ir.cron">
+            <field name="name">Monthly KPI Summary Email</field>
+            <field name="model_id" ref="model_tapis_kpi_snapshot"/>
+            <field name="state">code</field>
+            <field name="code">model.cron_send_monthly_summary()</field>
+            <field name="interval_number">1</field>
+            <field name="interval_type">months</field>
+            <field name="numbercall">-1</field>
+            <field name="nextcall">2025-01-01 08:00:00</field>
+            <field name="doall">False</field>
+            <field name="active">True</field>
+            <field name="priority">5</field>
+        </record>
+
+        <!-- Overdue Invoice Reminder Cron -->
+        <record id="cron_invoice_overdue_reminder" model="ir.cron">
+            <field name="name">Overdue Invoice Reminder</field>
+            <field name="model_id" ref="model_tapis_invoice"/>
+            <field name="state">code</field>
+            <field name="code">model.cron_send_overdue_reminders()</field>
+            <field name="interval_number">1</field>
+            <field name="interval_type">days</field>
+            <field name="numbercall">-1</field>
+            <field name="nextcall">2025-01-01 07:00:00</field>
+            <field name="doall">False</field>
+            <field name="active">True</field>
+            <field name="priority">5</field>
+        </record>
+    </data>
+</odoo>

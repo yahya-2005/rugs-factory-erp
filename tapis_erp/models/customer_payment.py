@@ -26,6 +26,12 @@ class TapisCustomerPayment(models.Model):
         ('cancelled', 'Cancelled'),
     ], default='draft')
 
+    def _get_customer_email(self):
+        return self.customer_id.email if self.customer_id else False
+
+    def _get_customer_name(self):
+        return self.customer_id.name if self.customer_id else False
+
     def action_post(self):
         for rec in self:
             if rec.state != 'draft':
@@ -40,6 +46,9 @@ class TapisCustomerPayment(models.Model):
                 rec.sale_id.amount_paid = new_paid
             rec.state = 'posted'
             rec.message_post(body=_("Payment posted."))
+            template = self.env.ref('tapis_erp.email_template_payment_received', False)
+            if template:
+                template.send_mail(rec.id, force_send=True)
 
     def action_cancel(self):
         for rec in self:

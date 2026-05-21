@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="report_wool_stock_level">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="doc">
+                <t t-call="web.internal_layout">
+                    <div class="page">
+                        <h2>Wool Stock Level Report</h2>
+                        <table class="table table-bordered">
+                            <tr>
+                                <td><strong>Color</strong></td>
+                                <td t-esc="doc.display_name_full"/>
+                            </tr>
+                            <tr>
+                                <td><strong>Code</strong></td>
+                                <td t-esc="doc.code"/>
+                            </tr>
+                            <tr>
+                                <td><strong>On Hand</strong></td>
+                                <td t-esc="doc.qty_on_hand"/>
+                            </tr>
+                            <tr>
+                                <td><strong>Reserved</strong></td>
+                                <td t-esc="doc.qty_reserved"/>
+                            </tr>
+                            <tr>
+                                <td><strong>Available</strong></td>
+                                <td><span t-esc="doc.qty_available"
+                                    t-attf-class="#{doc.qty_available &lt; doc.reorder_point and 'text-danger' or ''}"/></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Reorder Point</strong></td>
+                                <td t-esc="doc.reorder_point"/>
+                            </tr>
+                            <tr>
+                                <td><strong>Unit Cost</strong></td>
+                                <td t-esc="doc.unit_cost"/>
+                            </tr>
+                            <tr>
+                                <td><strong>Inventory Value</strong></td>
+                                <td t-esc="doc.inventory_value"/>
+                            </tr>
+                        </table>
+                        <p><em>Generated on <span t-esc="time.strftime('%Y-%m-%d %H:%M')"/></em></p>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+</odoo>

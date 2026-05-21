@@ -98,6 +98,18 @@ class TapisKpiSnapshot(models.Model):
             'customer_satisfaction': satisfaction,
         })
 
+    def action_send_monthly_summary(self):
+        self._compute_all_kpis()
+        template = self.env.ref('tapis_erp.email_template_kpi_monthly_summary', False)
+        if template:
+            template.send_mail(self.id, force_send=True)
+
+    @api.model
+    def cron_send_monthly_summary(self):
+        snap = self.create({'snapshot_datetime': fields.Datetime.now()})
+        snap.action_send_monthly_summary()
+        return True
+
     def action_refresh_dashboard(self):
         self.action_generate_snapshot()
 

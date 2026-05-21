@@ -1,0 +1,7 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_wool_color_user,wool.color.user,model_wool_color,group_wool_stock_user,1,1,0,0
+access_wool_color_manager,wool.color.manager,model_wool_color,group_wool_stock_manager,1,1,1,1
+access_wool_stock_move_user,wool.stock.move.user,model_wool_stock_move,group_wool_stock_user,1,1,0,0
+access_wool_stock_move_manager,wool.stock.move.manager,model_wool_stock_move,group_wool_stock_manager,1,1,1,1
+access_wool_stock_adjustment_user,wool.stock.adjustment.user,model_wool_stock_adjustment,group_wool_stock_user,1,1,0,0
+access_wool_stock_adjustment_manager,wool.stock.adjustment.manager,model_wool_stock_adjustment,group_wool_stock_manager,1,1,1,1

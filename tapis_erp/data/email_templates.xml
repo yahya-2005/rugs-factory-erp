@@ -1,0 +1,698 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+        <!-- ============================================================ -->
+        <!-- 1. SALE CONFIRMED -->
+        <!-- ============================================================ -->
+        <record id="email_template_sale_confirmed" model="mail.template">
+            <field name="name">Sale Confirmed - Customer Notification</field>
+            <field name="model_id" ref="model_tapis_sale"/>
+            <field name="email_from">yahyalaadam3@gmail.com</field>
+            <field name="email_to">{{ object._get_customer_email() }}</field>
+            <field name="email_cc">yahyalaadam3@gmail.com</field>
+            <field name="subject">Confirmation de votre commande {{ object.name }}</field>
+            <field name="body_html"><![CDATA[
+<div style="font-family:'Segoe UI',Arial,sans-serif;max-width:600px;margin:0 auto;background:#fff;border-radius:8px;overflow:hidden;box-shadow:0 2px 12px rgba(0,0,0,0.1);">
+    <div style="background:#0F4C81;padding:25px 30px;text-align:center;">
+        <h1 style="color:#fff;margin:0;font-size:20px;">Confirmation de Commande</h1>
+    </div>
+    <div style="padding:30px;">
+        <p style="font-size:14px;color:#333;">Bonjour <strong t-esc="object.customer_id.name or ''"/>!</p>
+        <p style="font-size:13px;color:#555;">Nous avons le plaisir de vous confirmer la réception de votre commande.</p>
+        <table style="width:100%;border-collapse:collapse;margin:20px 0;font-size:13px;">
+            <tr><td style="padding:8px 10px;border-bottom:1px solid #eee;color:#666;width:160px;">Référence</td><td style="padding:8px 10px;border-bottom:1px solid #eee;font-weight:bold;" t-esc="object.name"/></tr>
+            <tr><td style="padding:8px 10px;border-bottom:1px solid #eee;color:#666;">Date</td><td style="padding:8px 10px;border-bottom:1px solid #eee;" t-esc="object.order_date or ''"/></tr>
+            <tr><td style="padding:8px 10px;border-bottom:1px solid #eee;color:#666;">Produit</td><td style="padding:8px 10px;border-bottom:1px solid #eee;" t-esc="object.product_id.name or ''"/></tr>
+            <tr><td style="padding:8px 10px;border-bottom:1px solid #eee;color:#666;">Quantité</td><td style="padding:8px 10px;border-bottom:1px solid #eee;"><t t-esc="object.quantity"/> unité(s)</td></tr>
+            <tr><td style="padding:8px 10px;border-bottom:1px solid #eee;color:#666;">Prix unitaire</td><td style="padding:8px 10px;border-bottom:1px solid #eee;"><t t-esc="object.unit_price"/> MAD</td></tr>
+            <tr><td style="padding:8px 10px;border-bottom:1px solid #eee;color:#666;">Montant total</td><td style="padding:8px 10px;border-bottom:1px solid #eee;font-weight:bold;color:#0F4C81;"><t t-esc="object.total_price"/> MAD</td></tr>
+            <tr><td style="padding:8px 10px;border-bottom:1px solid #eee;color:#666;">Commercial</td><td style="padding:8px 10px;border-bottom:1px solid #eee;" t-esc="object.create_uid.name or ''"/></tr>
+        </table>
+        <div style="background:#f8f9fa;border-left:4px solid #C9A227;padding:12px 15px;margin:20px 0;border-radius:4px;">
+            <p style="margin:0;font-size:12px;color:#666;">Notre équipe prépare votre commande. Vous recevrez une notification dès son expédition.</p>
+        </div>
+    </div>
+    <div style="background:#f5f5f5;padding:20px 30px;text-align:center;font-size:11px;color:#999;border-top:1px solid #ddd;">
+        <p style="margin:3px 0;">Tapis ERP — LIVIMAR</p>
+        <p style="margin:3px 0;">Email: yahyalaadam3@gmail.com</p>
+    </div>
+</div>
+]]></field>
+        </record>
+
+        <!-- ============================================================ -->
+        <!-- 2. QUOTATION CREATED -->
+        <!-- ============================================================ -->
+        <record id="email_template_quotation_created" model="mail.template">
+            <field name="name">Quotation Created - Customer Notification</field>
+            <field name="model_id" ref="model_tapis_sale"/>
+            <field name="email_from">yahyalaadam3@gmail.com</field>
+            <field name="email_to">{{ object._get_customer_email() }}</field>
+            <field name="email_cc">yahyalaadam3@gmail.com</field>
+            <field name="subject">Nouveau devis : {{ object.name }}</field>
+            <field name="body_html"><![CDATA[
+<div style="font-family:'Segoe UI',Arial,sans-serif;max-width:600px;margin:0 auto;background:#fff;border-radius:8px;overflow:hidden;box-shadow:0 2px 12px rgba(0,0,0,0.1);">
+    <div style="background:#C9A227;padding:25px 30px;text-align:center;">
+        <h1 style="color:#fff;margin:0;font-size:20px;">Nouveau Devis</h1>
+    </div>
+    <div style="padding:30px;">
+        <p style="font-size:14px;color:#333;">Bonjour <strong t-esc="object.customer_id.name or ''"/>!</p>
+        <p style="font-size:13px;color:#555;">Nous avons le plaisir de vous adresser notre devis détaillé ci-dessous.</p>
+        <table style="width:100%;border-collapse:collapse;margin:20px 0;font-size:13px;">
+            <tr><td style="padding:8px 10px;border-bottom:1px solid #eee;color:#666;">Réf. Devis</td><td style="padding:8px 10px;border-bottom:1px solid #eee;font-weight:bold;" t-esc="object.name"/></tr>
+            <tr><td style="padding:8px 10px;border-bottom:1px solid #eee;color:#666;">Produit</td><td style="padding:8px 10px;border-bottom:1px solid #eee;" t-esc="object.product_id.name or ''"/></tr>
+            <tr><td style="padding:8px 10px;border-bottom:1px solid #eee;color:#666;">Quantité</td><td style="padding:8px 10px;border-bottom:1px solid #eee;"><t t-esc="object.quantity"/> unité(s)</td></tr>
+            <tr><td style="padding:8px 10px;border-bottom:1px solid #eee;color:#666;">Montant</td><td style="padding:8px 10px;border-bottom:1px solid #eee;font-weight:bold;color:#C9A227;"><t t-esc="object.total_price"/> MAD</td></tr>
+        </table>
+        <div style="text-align:center;margin:25px 0;">
+            <a t-att-href="object._get_portal_url()" style="background:#0F4C81;color:#fff;padding:12px 30px;text-decoration:none;border-radius:4px;font-size:14px;display:inline-block;">Voir le devis en ligne</a>
+        </div>
+    </div>
+    <div style="background:#f5f5f5;padding:20px 30px;text-align:center;font-size:11px;color:#999;border-top:1px solid #ddd;">
+        <p style="margin:3px 0;">Tapis ERP — LIVIMAR</p>
+        <p style="margin:3px 0;">Email: yahyalaadam3@gmail.com</p>
+    </div>
+</div>
+]]>
+            </field>
+        </record>
+
+        <!-- ============================================================ -->
+        <!-- 3. PRODUCTION STARTED -->
+        <!-- ============================================================ -->
+        <record id="email_template_production_started" model="mail.template">
+            <field name="name">Production Started - Customer Notification</field>
+            <field name="model_id" ref="model_tapis_production"/>
+            <field name="email_from">yahyalaadam3@gmail.com</field>
+            <field name="email_to">{{ object._get_customer_email() }}</field>
+            <field name="email_cc">yahyalaadam3@gmail.com</field>
+            <field name="subject">Fabrication lancée : {{ object.product_id.name }}</field>
+            <field name="body_html"><![CDATA[
+<div style="font-family:'Segoe UI',Arial,sans-serif;max-width:600px;margin:0 auto;background:#fff;border-radius:8px;overflow:hidden;box-shadow:0 2px 12px rgba(0,0,0,0.1);">
+    <div style="background:#0F4C81;padding:25px 30px;text-align:center;">
+        <h1 style="color:#fff;margin:0;font-size:20px;">Fabrication Lancée</h1>
+    </div>
+    <div style="padding:30px;">
+        <p style="font-size:14px;color:#333;">Bonjour,</p>
+        <p style="font-size:13px;color:#555;">La fabrication de votre produit a démarré dans notre atelier.</p>
+        <table style="width:100%;border-collapse:collapse;margin:20px 0;font-size:13px;">
+            <tr><td style="padding:8px 10px;border-bottom:1px solid #eee;color:#666;">OF</td><td style="padding:8px 10px;border-bottom:1px solid #eee;font-weight:bold;" t-esc="object.name"/></tr>
+            <tr><td style="padding:8px 10px;border-bottom:1px solid #eee;color:#666;">Produit</td><td style="padding:8px 10px;border-bottom:1px solid #eee;" t-esc="object.product_id.name or ''"/></tr>
+            <tr><td style="padding:8px 10px;border-bottom:1px solid #eee;color:#666;">Quantité</td><td style="padding:8px 10px;border-bottom:1px solid #eee;"><t t-esc="object.quantity"/> unité(s)</td></tr>
+            <tr><td style="padding:8px 10px;border-bottom:1px solid #eee;color:#666;">Date début</td><td style="padding:8px 10px;border-bottom:1px solid #eee;" t-esc="object.actual_start_date or ''"/></tr>
+        </table>
+    </div>
+    <div style="background:#f5f5f5;padding:20px 30px;text-align:center;font-size:11px;color:#999;border-top:1px solid #ddd;">
+        <p style="margin:3px 0;">Tapis ERP — LIVIMAR</p>
+    </div>
+</div>
+]]>
+            </field>
+        </record>
+
+        <!-- ============================================================ -->
+        <!-- 4. PRODUCTION COMPLETED -->
+        <!-- ============================================================ -->
+        <record id="email_template_production_completed" model="mail.template">
+            <field name="name">Production Completed - Customer Notification</field>
+            <field name="model_id" ref="model_tapis_production"/>
+            <field name="email_from">yahyalaadam3@gmail.com</field>
+            <field name="email_to">{{ object._get_customer_email() }}</field>
+            <field name="email_cc">yahyalaadam3@gmail.com</field>
+            <field name="subject">Production terminée : {{ object.product_id.name }}</field>
+            <field name="body_html"><![CDATA[
+<div style="font-family:'Segoe UI',Arial,sans-serif;max-width:600px;margin:0 auto;background:#fff;border-radius:8px;overflow:hidden;box-shadow:0 2px 12px rgba(0,0,0,0.1);">
+    <div style="background:#28a745;padding:25px 30px;text-align:center;">
+        <h1 style="color:#fff;margin:0;font-size:20px;">Production Terminée ✓</h1>
+    </div>
+    <div style="padding:30px;">
+        <p style="font-size:14px;color:#333;">Bonjour,</p>
+        <p style="font-size:13px;color:#555;">La fabrication de votre produit est terminée et prête pour l'expédition.</p>
+        <table style="width:100%;border-collapse:collapse;margin:20px 0;font-size:13px;">
+            <tr><td style="padding:8px 10px;border-bottom:1px solid #eee;color:#666;">OF</td><td style="padding:8px 10px;border-bottom:1px solid #eee;font-weight:bold;" t-esc="object.name"/></tr>
+            <tr><td style="padding:8px 10px;border-bottom:1px solid #eee;color:#666;">Produit</td><td style="padding:8px 10px;border-bottom:1px solid #eee;" t-esc="object.product_id.name or ''"/></tr>
+            <tr><td style="padding:8px 10px;border-bottom:1px solid #eee;color:#666;">Quantité produite</td><td style="padding:8px 10px;border-bottom:1px solid #eee;"><t t-esc="object.quantity"/> unité(s)</td></tr>
+            <tr><td style="padding:8px 10px;border-bottom:1px solid #eee;color:#666;">Date fin</td><td style="padding:8px 10px;border-bottom:1px solid #eee;" t-esc="object.actual_end_date or ''"/></tr>
+            <tr><td style="padding:8px 10px;border-bottom:1px solid #eee;color:#666;">Coût total</td><td style="padding:8px 10px;border-bottom:1px solid #eee;"><t t-esc="object.total_production_cost"/> MAD</td></tr>
+        </table>
+        <div style="background:#e8f5e9;border-left:4px solid #28a745;padding:12px 15px;margin:20px 0;border-radius:4px;">
+            <p style="margin:0;font-size:12px;color:#2e7d32;">Votre commande sera expédiée prochainement.</p>
+        </div>
+    </div>
+    <div style="background:#f5f5f5;padding:20px 30px;text-align:center;font-size:11px;color:#999;border-top:1px solid #ddd;">
+        <p style="margin:3px 0;">Tapis ERP — LIVIMAR</p>
+    </div>
+</div>
+]]>
+            </field>
+        </record>
+
+        <!-- ============================================================ -->
+        <!-- 5. LOW STOCK ALERT -->
+        <!-- ============================================================ -->
+        <record id="email_template_low_stock_alert" model="mail.template">
+            <field name="name">Low Stock Alert - Purchasing Manager</field>
+            <field name="model_id" ref="model_tapis_product"/>
+            <field name="email_from">yahyalaadam3@gmail.com</field>
+            <field name="email_to">yahyalaadam3@gmail.com</field>
+            <field name="subject">Alerte Stock Bas : {{ object.name }}</field>
+            <field name="body_html"><![CDATA[
+<div style="font-family:'Segoe UI',Arial,sans-serif;max-width:600px;margin:0 auto;background:#fff;border-radius:8px;overflow:hidden;box-shadow:0 2px 12px rgba(0,0,0,0.1);">
+    <div style="background:#dc3545;padding:25px 30px;text-align:center;">
+        <h1 style="color:#fff;margin:0;font-size:20px;">⚠ Alerte Stock Bas</h1>
+    </div>
+    <div style="padding:30px;">
+        <p style="font-size:14px;color:#333;">Bonjour,</p>
+        <p style="font-size:13px;color:#555;">Le stock du produit suivant est tombé en dessous du seuil de réapprovisionnement.</p>
+        <table style="width:100%;border-collapse:collapse;margin:20px 0;font-size:13px;">
+            <tr><td style="padding:8px 10px;border-bottom:1px solid #eee;color:#666;">Produit</td><td style="padding:8px 10px;border-bottom:1px solid #eee;font-weight:bold;" t-esc="object.name"/></tr>
+            <tr><td style="padding:8px 10px;border-bottom:1px solid #eee;color:#666;">Code</td><td style="padding:8px 10px;border-bottom:1px solid #eee;" t-esc="object.code or ''"/></tr>
+            <tr><td style="padding:8px 10px;border-bottom:1px solid #eee;color:#666;">Stock actuel</td><td style="padding:8px 10px;border-bottom:1px solid #eee;font-weight:bold;color:#dc3545;"><t t-esc="object.stock_qty"/> unité(s)</td></tr>
+            <tr><td style="padding:8px 10px;border-bottom:1px solid #eee;color:#666;">Seuil d'alerte</td><td style="padding:8px 10px;border-bottom:1px solid #eee;">10 unité(s)</td></tr>
+            <tr><td style="padding:8px 10px;border-bottom:1px solid #eee;color:#666;">Fournisseur préféré</td><td style="padding:8px 10px;border-bottom:1px solid #eee;" t-esc="object._get_preferred_supplier() or 'Non défini'"/></tr>
+        </table>
+        <div style="background:#fff3e0;border-left:4px solid #ff9800;padding:12px 15px;margin:20px 0;border-radius:4px;">
+            <p style="margin:0;font-size:12px;color:#e65100;">Merci de commander dès que possible pour éviter les ruptures de stock.</p>
+        </div>
+    </div>
+    <div style="background:#f5f5f5;padding:20px 30px;text-align:center;font-size:11px;color:#999;border-top:1px solid #ddd;">
+        <p style="margin:3px 0;">Tapis ERP — LIVIMAR</p>
+    </div>
+</div>
+]]>
+            </field>
+        </record>
+
+        <!-- ============================================================ -->
+        <!-- 6. PURCHASE ORDER CREATED -->
+        <!-- ============================================================ -->
+        <record id="email_template_purchase_created" model="mail.template">
+            <field name="name">Purchase Order Created - Supplier Notification</field>
+            <field name="model_id" ref="model_tapis_purchase"/>
+            <field name="email_from">yahyalaadam3@gmail.com</field>
+            <field name="email_to">{{ object._get_supplier_email() }}</field>
+            <field name="email_cc">yahyalaadam3@gmail.com</field>
+            <field name="subject">Nouvelle commande fournisseur : {{ object.name }}</field>
+            <field name="body_html"><![CDATA[
+<div style="font-family:'Segoe UI',Arial,sans-serif;max-width:600px;margin:0 auto;background:#fff;border-radius:8px;overflow:hidden;box-shadow:0 2px 12px rgba(0,0,0,0.1);">
+    <div style="background:#0F4C81;padding:25px 30px;text-align:center;">
+        <h1 style="color:#fff;margin:0;font-size:20px;">Commande Fournisseur</h1>
+    </div>
+    <div style="padding:30px;">
+        <p style="font-size:14px;color:#333;">Bonjour <strong t-esc="object.supplier_id.name or ''"/>!</p>
+        <p style="font-size:13px;color:#555;">Nous avons le plaisir de vous adresser une nouvelle commande.</p>
+        <table style="width:100%;border-collapse:collapse;margin:20px 0;font-size:13px;">
+            <tr><td style="padding:8px 10px;border-bottom:1px solid #eee;color:#666;">Référence</td><td style="padding:8px 10px;border-bottom:1px solid #eee;font-weight:bold;" t-esc="object.name"/></tr>
+            <tr><td style="padding:8px 10px;border-bottom:1px solid #eee;color:#666;">Produit</td><td style="padding:8px 10px;border-bottom:1px solid #eee;" t-esc="object.product_id.name or ''"/></tr>
+            <tr><td style="padding:8px 10px;border-bottom:1px solid #eee;color:#666;">Quantité</td><td style="padding:8px 10px;border-bottom:1px solid #eee;"><t t-esc="object.quantity"/> unité(s)</td></tr>
+            <tr><td style="padding:8px 10px;border-bottom:1px solid #eee;color:#666;">Prix unitaire</td><td style="padding:8px 10px;border-bottom:1px solid #eee;"><t t-esc="object.unit_price"/> MAD</td></tr>
+            <tr><td style="padding:8px 10px;border-bottom:1px solid #eee;color:#666;">Total</td><td style="padding:8px 10px;border-bottom:1px solid #eee;font-weight:bold;color:#0F4C81;"><t t-esc="object.total_price"/> MAD</td></tr>
+            <tr><td style="padding:8px 10px;border-bottom:1px solid #eee;color:#666;">Date livraison attendue</td><td style="padding:8px 10px;border-bottom:1px solid #eee;" t-esc="object.expected_date or ''"/></tr>
+        </table>
+    </div>
+    <div style="background:#f5f5f5;padding:20px 30px;text-align:center;font-size:11px;color:#999;border-top:1px solid #ddd;">
+        <p style="margin:3px 0;">Tapis ERP — LIVIMAR</p>
+    </div>
+</div>
+]]>
+            </field>
+        </record>
+
+        <!-- ============================================================ -->
+        <!-- 7. INVOICE OVERDUE -->
+        <!-- ============================================================ -->
+        <record id="email_template_invoice_overdue" model="mail.template">
+            <field name="name">Invoice Overdue Reminder</field>
+            <field name="model_id" ref="model_tapis_invoice"/>
+            <field name="email_from">yahyalaadam3@gmail.com</field>
+            <field name="email_to">{{ object._get_customer_email() }}</field>
+            <field name="email_cc">yahyalaadam3@gmail.com</field>
+            <field name="subject">Relance : Facture {{ object.name }} en retard</field>
+            <field name="body_html"><![CDATA[
+<div style="font-family:'Segoe UI',Arial,sans-serif;max-width:600px;margin:0 auto;background:#fff;border-radius:8px;overflow:hidden;box-shadow:0 2px 12px rgba(0,0,0,0.1);">
+    <div style="background:#dc3545;padding:25px 30px;text-align:center;">
+        <h1 style="color:#fff;margin:0;font-size:20px;">Relance de Paiement</h1>
+    </div>
+    <div style="padding:30px;">
+        <p style="font-size:14px;color:#333;">Bonjour <strong t-esc="object._get_customer_name() or ''"/>!</p>
+        <p style="font-size:13px;color:#555;">Nous attirons votre attention sur la facture suivante arrivée à échéance.</p>
+        <table style="width:100%;border-collapse:collapse;margin:20px 0;font-size:13px;">
+            <tr><td style="padding:8px 10px;border-bottom:1px solid #eee;color:#666;">Facture</td><td style="padding:8px 10px;border-bottom:1px solid #eee;font-weight:bold;" t-esc="object.name"/></tr>
+            <tr><td style="padding:8px 10px;border-bottom:1px solid #eee;color:#666;">Date d'échéance</td><td style="padding:8px 10px;border-bottom:1px solid #eee;color:#dc3545;font-weight:bold;" t-esc="object.due_date or ''"/></tr>
+            <tr><td style="padding:8px 10px;border-bottom:1px solid #eee;color:#666;">Montant dû</td><td style="padding:8px 10px;border-bottom:1px solid #eee;font-weight:bold;font-size:16px;color:#0F4C81;"><t t-esc="object.amount_due or object.amount_total"/> MAD</td></tr>
+        </table>
+        <div style="background:#fff3e0;border-left:4px solid #ff9800;padding:12px 15px;margin:20px 0;border-radius:4px;">
+            <p style="margin:0;font-size:12px;color:#e65100;">Nous vous remercions de bien vouloir procéder au règlement dans les plus brefs délais.</p>
+        </div>
+    </div>
+    <div style="background:#f5f5f5;padding:20px 30px;text-align:center;font-size:11px;color:#999;border-top:1px solid #ddd;">
+        <p style="margin:3px 0;">Tapis ERP — LIVIMAR</p>
+        <p style="margin:3px 0;">Email: yahyalaadam3@gmail.com</p>
+    </div>
+</div>
+]]>
+            </field>
+        </record>
+
+        <!-- ============================================================ -->
+        <!-- 8. SUPPORT TICKET CREATED -->
+        <!-- ============================================================ -->
+        <record id="email_template_ticket_created" model="mail.template">
+            <field name="name">Support Ticket Created - Customer Acknowledgment</field>
+            <field name="model_id" ref="model_tapis_support_ticket"/>
+            <field name="email_from">yahyalaadam3@gmail.com</field>
+            <field name="email_to">{{ object._get_customer_email() }}</field>
+            <field name="email_cc">yahyalaadam3@gmail.com</field>
+            <field name="subject">Ticket #{{ object.id }} : {{ object.subject }} - Accusé de réception</field>
+            <field name="body_html"><![CDATA[
+<div style="font-family:'Segoe UI',Arial,sans-serif;max-width:600px;margin:0 auto;background:#fff;border-radius:8px;overflow:hidden;box-shadow:0 2px 12px rgba(0,0,0,0.1);">
+    <div style="background:#0F4C81;padding:25px 30px;text-align:center;">
+        <h1 style="color:#fff;margin:0;font-size:20px;">Ticket Support Créé</h1>
+    </div>
+    <div style="padding:30px;">
+        <p style="font-size:14px;color:#333;">Bonjour <strong t-esc="object._get_customer_name() or ''"/>!</p>
+        <p style="font-size:13px;color:#555;">Nous vous confirmons la création de votre ticket de support.</p>
+        <table style="width:100%;border-collapse:collapse;margin:20px 0;font-size:13px;">
+            <tr><td style="padding:8px 10px;border-bottom:1px solid #eee;color:#666;">Ticket</td><td style="padding:8px 10px;border-bottom:1px solid #eee;font-weight:bold;">#<t t-esc="object.id"/></td></tr>
+            <tr><td style="padding:8px 10px;border-bottom:1px solid #eee;color:#666;">Sujet</td><td style="padding:8px 10px;border-bottom:1px solid #eee;" t-esc="object.subject or ''"/></tr>
+            <tr><td style="padding:8px 10px;border-bottom:1px solid #eee;color:#666;">Priorité</td><td style="padding:8px 10px;border-bottom:1px solid #eee;" t-esc="object._get_priority_label() or ''"/></tr>
+            <tr><td style="padding:8px 10px;border-bottom:1px solid #eee;color:#666;">Date</td><td style="padding:8px 10px;border-bottom:1px solid #eee;" t-esc="object.create_date or ''"/></tr>
+        </table>
+        <div style="background:#e3f2fd;border-left:4px solid #0F4C81;padding:12px 15px;margin:20px 0;border-radius:4px;">
+            <p style="margin:0;font-size:12px;color:#0F4C81;">Notre équipe support traitera votre demande dans les plus brefs délais.</p>
+        </div>
+    </div>
+    <div style="background:#f5f5f5;padding:20px 30px;text-align:center;font-size:11px;color:#999;border-top:1px solid #ddd;">
+        <p style="margin:3px 0;">Tapis ERP — Support Client</p>
+    </div>
+</div>
+]]>
+            </field>
+        </record>
+
+        <!-- ============================================================ -->
+        <!-- 9. SUPPORT TICKET RESOLVED -->
+        <!-- ============================================================ -->
+        <record id="email_template_ticket_resolved" model="mail.template">
+            <field name="name">Support Ticket Resolved - Customer Notification</field>
+            <field name="model_id" ref="model_tapis_support_ticket"/>
+            <field name="email_from">yahyalaadam3@gmail.com</field>
+            <field name="email_to">{{ object._get_customer_email() }}</field>
+            <field name="email_cc">yahyalaadam3@gmail.com</field>
+            <field name="subject">Ticket #{{ object.id }} : {{ object.subject }} - Résolu</field>
+            <field name="body_html"><![CDATA[
+<div style="font-family:'Segoe UI',Arial,sans-serif;max-width:600px;margin:0 auto;background:#fff;border-radius:8px;overflow:hidden;box-shadow:0 2px 12px rgba(0,0,0,0.1);">
+    <div style="background:#28a745;padding:25px 30px;text-align:center;">
+        <h1 style="color:#fff;margin:0;font-size:20px;">Ticket Résolu ✓</h1>
+    </div>
+    <div style="padding:30px;">
+        <p style="font-size:14px;color:#333;">Bonjour <strong t-esc="object._get_customer_name() or ''"/>!</p>
+        <p style="font-size:13px;color:#555;">Votre ticket de support a été résolu par notre équipe.</p>
+        <table style="width:100%;border-collapse:collapse;margin:20px 0;font-size:13px;">
+            <tr><td style="padding:8px 10px;border-bottom:1px solid #eee;color:#666;">Ticket</td><td style="padding:8px 10px;border-bottom:1px solid #eee;font-weight:bold;">#<t t-esc="object.id"/></td></tr>
+            <tr><td style="padding:8px 10px;border-bottom:1px solid #eee;color:#666;">Sujet</td><td style="padding:8px 10px;border-bottom:1px solid #eee;" t-esc="object.subject or ''"/></tr>
+            <tr><td style="padding:8px 10px;border-bottom:1px solid #eee;color:#666;">Résolution</td><td style="padding:8px 10px;border-bottom:1px solid #eee;" t-esc="object.resolution or ''"/></tr>
+        </table>
+    </div>
+    <div style="background:#f5f5f5;padding:20px 30px;text-align:center;font-size:11px;color:#999;border-top:1px solid #ddd;">
+        <p style="margin:3px 0;">Tapis ERP — Support Client</p>
+    </div>
+</div>
+]]>
+            </field>
+        </record>
+
+        <!-- ============================================================ -->
+        <!-- 10. CUSTOMER PORTAL INVITATION -->
+        <!-- ============================================================ -->
+        <record id="email_template_portal_invitation" model="mail.template">
+            <field name="name">Customer Portal Invitation</field>
+            <field name="model_id" ref="model_tapis_customer"/>
+            <field name="email_from">yahyalaadam3@gmail.com</field>
+            <field name="email_to">{{ object.email }}</field>
+            <field name="email_cc">yahyalaadam3@gmail.com</field>
+            <field name="subject">Bienvenue sur votre espace client Tapis ERP</field>
+            <field name="body_html"><![CDATA[
+<div style="font-family:'Segoe UI',Arial,sans-serif;max-width:600px;margin:0 auto;background:#fff;border-radius:8px;overflow:hidden;box-shadow:0 2px 12px rgba(0,0,0,0.1);">
+    <div style="background:#0F4C81;padding:25px 30px;text-align:center;">
+        <h1 style="color:#fff;margin:0;font-size:20px;">Bienvenue sur votre Espace Client</h1>
+    </div>
+    <div style="padding:30px;">
+        <p style="font-size:14px;color:#333;">Bonjour <strong t-esc="object.name or ''"/>!</p>
+        <p style="font-size:13px;color:#555;">Votre espace client Tapis ERP a été activé. Vous pouvez dès à présent :</p>
+        <ul style="font-size:13px;color:#555;padding-left:20px;">
+            <li>Consulter vos commandes et devis</li>
+            <li>Télécharger vos factures</li>
+            <li>Suivre vos livraisons</li>
+            <li>Contacter le support</li>
+        </ul>
+        <div style="text-align:center;margin:25px 0;">
+            <a t-att-href="object._get_portal_url() or '#'" style="background:#0F4C81;color:#fff;padding:12px 30px;text-decoration:none;border-radius:4px;font-size:14px;display:inline-block;">Accéder à mon espace</a>
+        </div>
+    </div>
+    <div style="background:#f5f5f5;padding:20px 30px;text-align:center;font-size:11px;color:#999;border-top:1px solid #ddd;">
+        <p style="margin:3px 0;">Tapis ERP — LIVIMAR</p>
+    </div>
+</div>
+]]>
+            </field>
+        </record>
+
+        <!-- ============================================================ -->
+        <!-- 11. APPROVAL REQUEST -->
+        <!-- ============================================================ -->
+        <record id="email_template_approval_request" model="mail.template">
+            <field name="name">Approval Request - Approver Notification</field>
+            <field name="model_id" ref="model_tapis_approval_request"/>
+            <field name="email_from">yahyalaadam3@gmail.com</field>
+            <field name="email_to">yahyalaadam3@gmail.com</field>
+            <field name="subject">Demande d'approbation : {{ object.name }}</field>
+            <field name="body_html"><![CDATA[
+<div style="font-family:'Segoe UI',Arial,sans-serif;max-width:600px;margin:0 auto;background:#fff;border-radius:8px;overflow:hidden;box-shadow:0 2px 12px rgba(0,0,0,0.1);">
+    <div style="background:#C9A227;padding:25px 30px;text-align:center;">
+        <h1 style="color:#fff;margin:0;font-size:20px;">Demande d'Approbation</h1>
+    </div>
+    <div style="padding:30px;">
+        <p style="font-size:14px;color:#333;">Bonjour,</p>
+        <p style="font-size:13px;color:#555;">Une nouvelle demande d'approbation nécessite votre attention.</p>
+        <table style="width:100%;border-collapse:collapse;margin:20px 0;font-size:13px;">
+            <tr><td style="padding:8px 10px;border-bottom:1px solid #eee;color:#666;">Référence</td><td style="padding:8px 10px;border-bottom:1px solid #eee;font-weight:bold;" t-esc="object.name"/></tr>
+            <tr><td style="padding:8px 10px;border-bottom:1px solid #eee;color:#666;">Montant</td><td style="padding:8px 10px;border-bottom:1px solid #eee;"><t t-esc="object.amount or '0'"/> MAD</td></tr>
+            <tr><td style="padding:8px 10px;border-bottom:1px solid #eee;color:#666;">Demandeur</td><td style="padding:8px 10px;border-bottom:1px solid #eee;" t-esc="object.create_uid.name or ''"/></tr>
+            <tr><td style="padding:8px 10px;border-bottom:1px solid #eee;color:#666;">Date</td><td style="padding:8px 10px;border-bottom:1px solid #eee;" t-esc="object.create_date or ''"/></tr>
+        </table>
+    </div>
+    <div style="background:#f5f5f5;padding:20px 30px;text-align:center;font-size:11px;color:#999;border-top:1px solid #ddd;">
+        <p style="margin:3px 0;">Tapis ERP — Workflow d'Approbation</p>
+    </div>
+</div>
+]]>
+            </field>
+        </record>
+
+        <!-- ============================================================ -->
+        <!-- 12. APPROVAL ACCEPTED -->
+        <!-- ============================================================ -->
+        <record id="email_template_approval_accepted" model="mail.template">
+            <field name="name">Approval Accepted - Requester Notification</field>
+            <field name="model_id" ref="model_tapis_approval_request"/>
+            <field name="email_from">yahyalaadam3@gmail.com</field>
+            <field name="email_to">yahyalaadam3@gmail.com</field>
+            <field name="subject">Approbation acceptée : {{ object.name }}</field>
+            <field name="body_html"><![CDATA[
+<div style="font-family:'Segoe UI',Arial,sans-serif;max-width:600px;margin:0 auto;background:#fff;border-radius:8px;overflow:hidden;box-shadow:0 2px 12px rgba(0,0,0,0.1);">
+    <div style="background:#28a745;padding:25px 30px;text-align:center;">
+        <h1 style="color:#fff;margin:0;font-size:20px;">Approbation Acceptée ✓</h1>
+    </div>
+    <div style="padding:30px;">
+        <p style="font-size:14px;color:#333;">Bonjour,</p>
+        <p style="font-size:13px;color:#555;">Votre demande d'approbation <strong t-esc="object.name"/> a été acceptée.</p>
+        <table style="width:100%;border-collapse:collapse;margin:20px 0;font-size:13px;">
+            <tr><td style="padding:8px 10px;border-bottom:1px solid #eee;color:#666;">Approuvé par</td><td style="padding:8px 10px;border-bottom:1px solid #eee;" t-esc="object._get_approver_name() or ''"/></tr>
+            <tr><td style="padding:8px 10px;border-bottom:1px solid #eee;color:#666;">Date</td><td style="padding:8px 10px;border-bottom:1px solid #eee;" t-esc="object.write_date or ''"/></tr>
+        </table>
+    </div>
+    <div style="background:#f5f5f5;padding:20px 30px;text-align:center;font-size:11px;color:#999;border-top:1px solid #ddd;">
+        <p style="margin:3px 0;">Tapis ERP — Workflow d'Approbation</p>
+    </div>
+</div>
+]]>
+            </field>
+        </record>
+
+        <!-- ============================================================ -->
+        <!-- 13. APPROVAL REJECTED -->
+        <!-- ============================================================ -->
+        <record id="email_template_approval_rejected" model="mail.template">
+            <field name="name">Approval Rejected - Requester Notification</field>
+            <field name="model_id" ref="model_tapis_approval_request"/>
+            <field name="email_from">yahyalaadam3@gmail.com</field>
+            <field name="email_to">yahyalaadam3@gmail.com</field>
+            <field name="subject">Approbation refusée : {{ object.name }}</field>
+            <field name="body_html"><![CDATA[
+<div style="font-family:'Segoe UI',Arial,sans-serif;max-width:600px;margin:0 auto;background:#fff;border-radius:8px;overflow:hidden;box-shadow:0 2px 12px rgba(0,0,0,0.1);">
+    <div style="background:#dc3545;padding:25px 30px;text-align:center;">
+        <h1 style="color:#fff;margin:0;font-size:20px;">Approbation Refusée</h1>
+    </div>
+    <div style="padding:30px;">
+        <p style="font-size:14px;color:#333;">Bonjour,</p>
+        <p style="font-size:13px;color:#555;">Votre demande d'approbation <strong t-esc="object.name"/> a été refusée.</p>
+        <table style="width:100%;border-collapse:collapse;margin:20px 0;font-size:13px;">
+            <tr><td style="padding:8px 10px;border-bottom:1px solid #eee;color:#666;">Traité par</td><td style="padding:8px 10px;border-bottom:1px solid #eee;" t-esc="object._get_approver_name() or ''"/></tr>
+            <tr><td style="padding:8px 10px;border-bottom:1px solid #eee;color:#666;">Date</td><td style="padding:8px 10px;border-bottom:1px solid #eee;" t-esc="object.write_date or ''"/></tr>
+        </table>
+    </div>
+    <div style="background:#f5f5f5;padding:20px 30px;text-align:center;font-size:11px;color:#999;border-top:1px solid #ddd;">
+        <p style="margin:3px 0;">Tapis ERP — Workflow d'Approbation</p>
+    </div>
+</div>
+]]>
+            </field>
+        </record>
+
+        <!-- ============================================================ -->
+        <!-- 14. PRODUCTION DELAYED -->
+        <!-- ============================================================ -->
+        <record id="email_template_production_delayed" model="mail.template">
+            <field name="name">Production Delayed - Manager Alert</field>
+            <field name="model_id" ref="model_tapis_production"/>
+            <field name="email_from">yahyalaadam3@gmail.com</field>
+            <field name="email_to">yahyalaadam3@gmail.com</field>
+            <field name="subject">Alerte : Production {{ object.name }} en retard</field>
+            <field name="body_html"><![CDATA[
+<div style="font-family:'Segoe UI',Arial,sans-serif;max-width:600px;margin:0 auto;background:#fff;border-radius:8px;overflow:hidden;box-shadow:0 2px 12px rgba(0,0,0,0.1);">
+    <div style="background:#dc3545;padding:25px 30px;text-align:center;">
+        <h1 style="color:#fff;margin:0;font-size:20px;">⚠ Production en Retard</h1>
+    </div>
+    <div style="padding:30px;">
+        <p style="font-size:14px;color:#333;">Bonjour,</p>
+        <p style="font-size:13px;color:#555;">L'ordre de fabrication suivant accuse un retard.</p>
+        <table style="width:100%;border-collapse:collapse;margin:20px 0;font-size:13px;">
+            <tr><td style="padding:8px 10px;border-bottom:1px solid #eee;color:#666;">OF</td><td style="padding:8px 10px;border-bottom:1px solid #eee;font-weight:bold;" t-esc="object.name"/></tr>
+            <tr><td style="padding:8px 10px;border-bottom:1px solid #eee;color:#666;">Produit</td><td style="padding:8px 10px;border-bottom:1px solid #eee;" t-esc="object.product_id.name or ''"/></tr>
+            <tr><td style="padding:8px 10px;border-bottom:1px solid #eee;color:#666;">Retard</td><td style="padding:8px 10px;border-bottom:1px solid #eee;color:#dc3545;"><t t-esc="object.delay_days"/> jour(s)</td></tr>
+            <tr><td style="padding:8px 10px;border-bottom:1px solid #eee;color:#666;">Priorité</td><td style="padding:8px 10px;border-bottom:1px solid #eee;" t-esc="object.priority or ''"/></tr>
+        </table>
+    </div>
+    <div style="background:#f5f5f5;padding:20px 30px;text-align:center;font-size:11px;color:#999;border-top:1px solid #ddd;">
+        <p style="margin:3px 0;">Tapis ERP — Gestion de Production</p>
+    </div>
+</div>
+]]>
+            </field>
+        </record>
+
+        <!-- ============================================================ -->
+        <!-- 15. DESIGN AI ANALYSIS COMPLETED -->
+        <!-- ============================================================ -->
+        <record id="email_template_design_ai_completed" model="mail.template">
+            <field name="name">Design AI Analysis Completed</field>
+            <field name="model_id" ref="model_tapis_design"/>
+            <field name="email_from">yahyalaadam3@gmail.com</field>
+            <field name="email_to">yahyalaadam3@gmail.com</field>
+            <field name="subject">Analyse IA terminée : {{ object.name }}</field>
+            <field name="body_html"><![CDATA[
+<div style="font-family:'Segoe UI',Arial,sans-serif;max-width:600px;margin:0 auto;background:#fff;border-radius:8px;overflow:hidden;box-shadow:0 2px 12px rgba(0,0,0,0.1);">
+    <div style="background:#0F4C81;padding:25px 30px;text-align:center;">
+        <h1 style="color:#fff;margin:0;font-size:20px;">Analyse IA Terminée</h1>
+    </div>
+    <div style="padding:30px;">
+        <p style="font-size:14px;color:#333;">Bonjour,</p>
+        <p style="font-size:13px;color:#555;">L'analyse par intelligence artificielle du design <strong t-esc="object.name"/> est terminée.</p>
+        <table style="width:100%;border-collapse:collapse;margin:20px 0;font-size:13px;">
+            <tr><td style="padding:8px 10px;border-bottom:1px solid #eee;color:#666;">Design</td><td style="padding:8px 10px;border-bottom:1px solid #eee;font-weight:bold;" t-esc="object.name"/></tr>
+            <tr><td style="padding:8px 10px;border-bottom:1px solid #eee;color:#666;">Surface</td><td style="padding:8px 10px;border-bottom:1px solid #eee;"><t t-esc="object.area_m2"/> m²</td></tr>
+            <tr><td style="padding:8px 10px;border-bottom:1px solid #eee;color:#666;">Poids</td><td style="padding:8px 10px;border-bottom:1px solid #eee;"><t t-esc="object.total_weight_kg"/> kg</td></tr>
+            <tr><td style="padding:8px 10px;border-bottom:1px solid #eee;color:#666;">Couleurs</td><td style="padding:8px 10px;border-bottom:1px solid #eee;"><t t-esc="object.color_count"/> couleur(s)</td></tr>
+        </table>
+    </div>
+    <div style="background:#f5f5f5;padding:20px 30px;text-align:center;font-size:11px;color:#999;border-top:1px solid #ddd;">
+        <p style="margin:3px 0;">Tapis ERP — Analyse IA</p>
+    </div>
+</div>
+]]>
+            </field>
+        </record>
+
+        <!-- ============================================================ -->
+        <!-- 16. INVENTORY OPTIMIZATION RECOMMENDATION -->
+        <!-- ============================================================ -->
+        <record id="email_template_inventory_recommendation" model="mail.template">
+            <field name="name">Inventory Optimization Recommendation</field>
+            <field name="model_id" ref="model_tapis_inventory_optimization"/>
+            <field name="email_from">yahyalaadam3@gmail.com</field>
+            <field name="email_to">yahyalaadam3@gmail.com</field>
+            <field name="subject">Recommandation d'optimisation des stocks générée</field>
+            <field name="body_html"><![CDATA[
+<div style="font-family:'Segoe UI',Arial,sans-serif;max-width:600px;margin:0 auto;background:#fff;border-radius:8px;overflow:hidden;box-shadow:0 2px 12px rgba(0,0,0,0.1);">
+    <div style="background:#0F4C81;padding:25px 30px;text-align:center;">
+        <h1 style="color:#fff;margin:0;font-size:20px;">Optimisation des Stocks</h1>
+    </div>
+    <div style="padding:30px;">
+        <p style="font-size:14px;color:#333;">Bonjour,</p>
+        <p style="font-size:13px;color:#555;">Une nouvelle recommandation d'optimisation des stocks a été générée.</p>
+        <table style="width:100%;border-collapse:collapse;margin:20px 0;font-size:13px;">
+            <tr><td style="padding:8px 10px;border-bottom:1px solid #eee;color:#666;">Référence</td><td style="padding:8px 10px;border-bottom:1px solid #eee;font-weight:bold;" t-esc="object.name"/></tr>
+            <tr><td style="padding:8px 10px;border-bottom:1px solid #eee;color:#666;">Produits analysés</td><td style="padding:8px 10px;border-bottom:1px solid #eee;" t-esc="object.line_count or 0"/></tr>
+        </table>
+        <div style="background:#e3f2fd;border-left:4px solid #0F4C81;padding:12px 15px;margin:20px 0;border-radius:4px;">
+            <p style="margin:0;font-size:12px;color:#0F4C81;">Consultez le rapport complet pour voir les recommandations détaillées.</p>
+        </div>
+    </div>
+    <div style="background:#f5f5f5;padding:20px 30px;text-align:center;font-size:11px;color:#999;border-top:1px solid #ddd;">
+        <p style="margin:3px 0;">Tapis ERP — Optimisation des Stocks</p>
+    </div>
+</div>
+]]>
+            </field>
+        </record>
+
+        <!-- ============================================================ -->
+        <!-- 17. FORECAST GENERATED -->
+        <!-- ============================================================ -->
+        <record id="email_template_forecast_generated" model="mail.template">
+            <field name="name">Sales Forecast Generated</field>
+            <field name="model_id" ref="model_tapis_sales_forecast"/>
+            <field name="email_from">yahyalaadam3@gmail.com</field>
+            <field name="email_to">yahyalaadam3@gmail.com</field>
+            <field name="subject">Prévisions de ventes générées : {{ object.name }}</field>
+            <field name="body_html"><![CDATA[
+<div style="font-family:'Segoe UI',Arial,sans-serif;max-width:600px;margin:0 auto;background:#fff;border-radius:8px;overflow:hidden;box-shadow:0 2px 12px rgba(0,0,0,0.1);">
+    <div style="background:#0F4C81;padding:25px 30px;text-align:center;">
+        <h1 style="color:#fff;margin:0;font-size:20px;">Prévisions de Ventes</h1>
+    </div>
+    <div style="padding:30px;">
+        <p style="font-size:14px;color:#333;">Bonjour,</p>
+        <p style="font-size:13px;color:#555;">Les prévisions de ventes ont été générées avec succès.</p>
+        <table style="width:100%;border-collapse:collapse;margin:20px 0;font-size:13px;">
+            <tr><td style="padding:8px 10px;border-bottom:1px solid #eee;color:#666;">Référence</td><td style="padding:8px 10px;border-bottom:1px solid #eee;font-weight:bold;" t-esc="object.name"/></tr>
+            <tr><td style="padding:8px 10px;border-bottom:1px solid #eee;color:#666;">Horizon</td><td style="padding:8px 10px;border-bottom:1px solid #eee;"><t t-esc="object.horizon or 0"/> jour(s)</td></tr>
+            <tr><td style="padding:8px 10px;border-bottom:1px solid #eee;color:#666;">Algorithme</td><td style="padding:8px 10px;border-bottom:1px solid #eee;" t-esc="object.algorithm or ''"/></tr>
+        </table>
+    </div>
+    <div style="background:#f5f5f5;padding:20px 30px;text-align:center;font-size:11px;color:#999;border-top:1px solid #ddd;">
+        <p style="margin:3px 0;">Tapis ERP — Prévisions</p>
+    </div>
+</div>
+]]>
+            </field>
+        </record>
+
+        <!-- ============================================================ -->
+        <!-- 18. MAINTENANCE SCHEDULED -->
+        <!-- ============================================================ -->
+        <record id="email_template_maintenance_scheduled" model="mail.template">
+            <field name="name">Maintenance Scheduled - Technician Alert</field>
+            <field name="model_id" ref="model_tapis_maintenance_order"/>
+            <field name="email_from">yahyalaadam3@gmail.com</field>
+            <field name="email_to">yahyalaadam3@gmail.com</field>
+            <field name="subject">Maintenance programmée : {{ object.name }}</field>
+            <field name="body_html"><![CDATA[
+<div style="font-family:'Segoe UI',Arial,sans-serif;max-width:600px;margin:0 auto;background:#fff;border-radius:8px;overflow:hidden;box-shadow:0 2px 12px rgba(0,0,0,0.1);">
+    <div style="background:#C9A227;padding:25px 30px;text-align:center;">
+        <h1 style="color:#fff;margin:0;font-size:20px;">Maintenance Programmée</h1>
+    </div>
+    <div style="padding:30px;">
+        <p style="font-size:14px;color:#333;">Bonjour,</p>
+        <p style="font-size:13px;color:#555;">Une opération de maintenance a été programmée.</p>
+        <table style="width:100%;border-collapse:collapse;margin:20px 0;font-size:13px;">
+            <tr><td style="padding:8px 10px;border-bottom:1px solid #eee;color:#666;">Intervention</td><td style="padding:8px 10px;border-bottom:1px solid #eee;font-weight:bold;" t-esc="object.name"/></tr>
+            <tr><td style="padding:8px 10px;border-bottom:1px solid #eee;color:#666;">Équipement</td><td style="padding:8px 10px;border-bottom:1px solid #eee;" t-esc="object.equipment_id.name or ''"/></tr>
+            <tr><td style="padding:8px 10px;border-bottom:1px solid #eee;color:#666;">Date prévue</td><td style="padding:8px 10px;border-bottom:1px solid #eee;" t-esc="object.scheduled_date or ''"/></tr>
+            <tr><td style="padding:8px 10px;border-bottom:1px solid #eee;color:#666;">Type</td><td style="padding:8px 10px;border-bottom:1px solid #eee;" t-esc="object.maintenance_type or ''"/></tr>
+        </table>
+    </div>
+    <div style="background:#f5f5f5;padding:20px 30px;text-align:center;font-size:11px;color:#999;border-top:1px solid #ddd;">
+        <p style="margin:3px 0;">Tapis ERP — Maintenance</p>
+    </div>
+</div>
+]]>
+            </field>
+        </record>
+
+        <!-- ============================================================ -->
+        <!-- 19. PAYMENT RECEIVED -->
+        <!-- ============================================================ -->
+        <record id="email_template_payment_received" model="mail.template">
+            <field name="name">Payment Received - Customer Confirmation</field>
+            <field name="model_id" ref="model_tapis_customer_payment"/>
+            <field name="email_from">yahyalaadam3@gmail.com</field>
+            <field name="email_to">{{ object._get_customer_email() }}</field>
+            <field name="email_cc">yahyalaadam3@gmail.com</field>
+            <field name="subject">Paiement reçu — {{ object.name }}</field>
+            <field name="body_html"><![CDATA[
+<div style="font-family:'Segoe UI',Arial,sans-serif;max-width:600px;margin:0 auto;background:#fff;border-radius:8px;overflow:hidden;box-shadow:0 2px 12px rgba(0,0,0,0.1);">
+    <div style="background:#28a745;padding:25px 30px;text-align:center;">
+        <h1 style="color:#fff;margin:0;font-size:20px;">Paiement Reçu ✓</h1>
+    </div>
+    <div style="padding:30px;">
+        <p style="font-size:14px;color:#333;">Bonjour <strong t-esc="object._get_customer_name() or ''"/>!</p>
+        <p style="font-size:13px;color:#555;">Nous vous confirmons la réception de votre paiement.</p>
+        <table style="width:100%;border-collapse:collapse;margin:20px 0;font-size:13px;">
+            <tr><td style="padding:8px 10px;border-bottom:1px solid #eee;color:#666;">Référence</td><td style="padding:8px 10px;border-bottom:1px solid #eee;font-weight:bold;" t-esc="object.name"/></tr>
+            <tr><td style="padding:8px 10px;border-bottom:1px solid #eee;color:#666;">Montant</td><td style="padding:8px 10px;border-bottom:1px solid #eee;font-weight:bold;color:#28a745;"><t t-esc="object.amount"/> MAD</td></tr>
+            <tr><td style="padding:8px 10px;border-bottom:1px solid #eee;color:#666;">Date</td><td style="padding:8px 10px;border-bottom:1px solid #eee;" t-esc="object.payment_date or ''"/></tr>
+            <tr><td style="padding:8px 10px;border-bottom:1px solid #eee;color:#666;">Mode</td><td style="padding:8px 10px;border-bottom:1px solid #eee;" t-esc="object.payment_method or ''"/></tr>
+        </table>
+    </div>
+    <div style="background:#f5f5f5;padding:20px 30px;text-align:center;font-size:11px;color:#999;border-top:1px solid #ddd;">
+        <p style="margin:3px 0;">Tapis ERP — Comptabilité</p>
+    </div>
+</div>
+]]>
+            </field>
+        </record>
+
+        <!-- ============================================================ -->
+        <!-- 20. MONTHLY KPI SUMMARY -->
+        <!-- ============================================================ -->
+        <record id="email_template_kpi_monthly_summary" model="mail.template">
+            <field name="name">Monthly KPI Summary - Management</field>
+            <field name="model_id" ref="model_tapis_kpi_snapshot"/>
+            <field name="email_from">yahyalaadam3@gmail.com</field>
+            <field name="email_to">yahyalaadam3@gmail.com</field>
+            <field name="subject">Résumé mensuel des KPIs — {{ object.snapshot_datetime or '' }}</field>
+            <field name="body_html"><![CDATA[
+<div style="font-family:'Segoe UI',Arial,sans-serif;max-width:600px;margin:0 auto;background:#fff;border-radius:8px;overflow:hidden;box-shadow:0 2px 12px rgba(0,0,0,0.1);">
+    <div style="background:#0F4C81;padding:25px 30px;text-align:center;">
+        <h1 style="color:#fff;margin:0;font-size:20px;">Résumé Mensuel des KPIs</h1>
+        <p style="color:rgba(255,255,255,0.7);margin:5px 0 0;font-size:12px;" t-esc="object.snapshot_datetime or ''"/>
+    </div>
+    <div style="padding:30px;">
+        <p style="font-size:14px;color:#333;">Bonjour,</p>
+        <p style="font-size:13px;color:#555;">Voici le résumé des indicateurs clés de performance pour cette période.</p>
+        <div style="display:flex;flex-wrap:wrap;gap:10px;margin:20px 0;">
+            <div style="flex:1;min-width:120px;background:#e3f2fd;border-radius:6px;padding:12px;text-align:center;">
+                <p style="margin:0;font-size:20px;font-weight:bold;color:#0F4C81;" t-esc="object.total_sales or 0"/>
+                <p style="margin:2px 0 0;font-size:10px;color:#666;">Ventes totales</p>
+            </div>
+            <div style="flex:1;min-width:120px;background:#e8f5e9;border-radius:6px;padding:12px;text-align:center;">
+                <p style="margin:0;font-size:20px;font-weight:bold;color:#28a745;" t-esc="object.gross_profit or 0"/>
+                <p style="margin:2px 0 0;font-size:10px;color:#666;">Marge brute</p>
+            </div>
+            <div style="flex:1;min-width:120px;background:#fff3e0;border-radius:6px;padding:12px;text-align:center;">
+                <p style="margin:0;font-size:20px;font-weight:bold;color:#ff9800;" t-esc="object.on_time_delivery_rate or 0"/>%
+                <p style="margin:2px 0 0;font-size:10px;color:#666;">Livraison à l'heure</p>
+            </div>
+            <div style="flex:1;min-width:120px;background:#fce4ec;border-radius:6px;padding:12px;text-align:center;">
+                <p style="margin:0;font-size:20px;font-weight:bold;color:#dc3545;" t-esc="object.low_stock_products or 0"/>
+                <p style="margin:2px 0 0;font-size:10px;color:#666;">Alertes stock</p>
+            </div>
+        </div>
+        <table style="width:100%;border-collapse:collapse;margin:15px 0;font-size:12px;">
+            <tr><td style="padding:6px 10px;border-bottom:1px solid #eee;color:#666;">Production active</td><td style="padding:6px 10px;border-bottom:1px solid #eee;font-weight:bold;text-align:right;" t-esc="object.active_productions or 0"/></tr>
+            <tr><td style="padding:6px 10px;border-bottom:1px solid #eee;color:#666;">Tickets ouverts</td><td style="padding:6px 10px;border-bottom:1px solid #eee;font-weight:bold;text-align:right;" t-esc="object.open_tickets or 0"/></tr>
+            <tr><td style="padding:6px 10px;border-bottom:1px solid #eee;color:#666;">Satisfaction client</td><td style="padding:6px 10px;border-bottom:1px solid #eee;font-weight:bold;text-align:right;color:#28a745;" t-esc="object.customer_satisfaction or 0"/>%</td></tr>
+            <tr><td style="padding:6px 10px;border-bottom:1px solid #eee;color:#666;">Valeur du stock</td><td style="padding:6px 10px;border-bottom:1px solid #eee;font-weight:bold;text-align:right;" t-esc="object.inventory_value or 0"/> MAD</td></tr>
+        </table>
+    </div>
+    <div style="background:#f5f5f5;padding:20px 30px;text-align:center;font-size:11px;color:#999;border-top:1px solid #ddd;">
+        <p style="margin:3px 0;">Tapis ERP — Tableau de Bord Direction</p>
+    </div>
+</div>
+]]>
+            </field>
+        </record>
+
+    </data>
+</odoo>

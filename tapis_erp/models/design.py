@@ -178,6 +178,9 @@ class TapisDesign(models.Model):
             'status': 'success',
         })
 
+        template = self.env.ref('tapis_erp.email_template_design_ai_completed', False)
+        if template:
+            template.send_mail(self.id, force_send=True)
         return
 
     @api.depends('image')

@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_tapis_design_tree" model="ir.ui.view">
+        <field name="name">wool.design.tree</field>
+        <field name="model">wool.design</field>
+        <field name="arch" type="xml">
+            <tree decoration-warning="total_percentage != 100 and total_percentage > 0">
+                <field name="name"/>
+                <field name="code"/>
+                <field name="surface_m2" string="Area (m²)"/>
+                <field name="estimated_weight_kg" string="Est. Weight (kg)"/>
+                <field name="total_percentage" string="Total %"/>
+                <field name="percentage_difference" string="Diff %"/>
+                <field name="state" widget="badge"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_tapis_design_form" model="ir.ui.view">
+        <field name="name">wool.design.form</field>
+        <field name="model">wool.design</field>
+        <field name="arch" type="xml">
+            <form string="Design">
+                <header>
+                    <button name="action_analyze_with_ai" type="object" string="Analyze with AI"
+                            class="btn-primary" states="draft,analyzed"/>
+                    <button name="action_generate_color_lines" type="object" string="Generate Colors"
+                            class="btn-secondary" states="draft"/>
+                    <button name="action_validate_percentages" type="object" string="Validate %"
+                            class="btn-secondary" states="draft,analyzed"/>
+                    <button name="action_approve" type="object" string="Approve"
+                            class="btn-success" states="analyzed"/>
+                    <button name="action_reset_draft" type="object" string="Reset to Draft"
+                            class="btn-secondary" states="analyzed,approved,archived"/>
+                    <field name="state" widget="statusbar" statusbar_visible="draft,analyzed,approved"/>
+                </header>
+                <sheet>
+                    <div class="row">
+                        <div class="col-7">
+                            <group>
+                                <field name="name" required="1"/>
+                                <field name="code" required="1"/>
+                                <field name="description"/>
+                            </group>
+                        </div>
+                        <div class="col-5">
+                            <field name="image" widget="image" accept="image/*"
+                                   options="{'preview_image': 'image'}"/>
+                            <field name="image_filename" invisible="1"/>
+                        </div>
+                    </div>
+                    <notebook>
+                        <page string="Informations Générales">
+                            <group>
+                                <field name="state"/>
+                                <field name="notes"/>
+                            </group>
+                        </page>
+                        <page string="Dimensions &amp; Poids">
+                            <group>
+                                <group>
+                                    <field name="length_cm" required="1"/>
+                                    <field name="width_cm" required="1"/>
+                                    <field name="surface_m2" string="Surface (m²)"/>
+                                </group>
+                                <group>
+                                    <field name="weight_factor"/>
+                                    <field name="estimated_weight_kg" string="Est. Weight (kg)"/>
+                                </group>
+                            </group>
+                        </page>
+                        <page string="Composition des Couleurs">
+                            <group>
+                                <field name="total_percentage" string="Total %"/>
+                                <field name="percentage_difference" string="Difference"/>
+                                <field name="total_weight_allocated_kg" string="Allocated Weight (kg)"/>
+                            </group>
+                            <field name="color_line_ids" nolabel="1">
+                                <tree string="Colors" editable="bottom">
+                                    <field name="sequence" widget="handle"/>
+                                    <field name="wool_color_id" options="{'no_create': True}"/>
+                                    <field name="color_code"/>
+                                    <field name="color_name"/>
+                                    <field name="color_hex" widget="color"/>
+                                    <field name="percentage" string="%"/>
+                                    <field name="estimated_weight_kg" string="Est. Weight (kg)"/>
+                                    <field name="qty_available" string="Stock"/>
+                                </tree>
+                                <form string="Color Line">
+                                    <group>
+                                        <field name="wool_color_id"/>
+                                        <field name="color_code"/>
+                                        <field name="color_name"/>
+                                        <field name="percentage"/>
+                                        <field name="estimated_weight_kg"/>
+                                        <field name="note"/>
+                                    </group>
+                                </form>
+                            </field>
+                        </page>
+                        <page string="Notes">
+                            <field name="notes"/>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_tapis_design_search" model="ir.ui.view">
+        <field name="name">wool.design.search</field>
+        <field name="model">wool.design</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name"/>
+                <field name="code"/>
+                <filter string="Draft" name="draft" domain="[('state','=','draft')]"/>
+                <filter string="Approved" name="approved" domain="[('state','=','approved')]"/>
+                <filter string="Analyzed" name="analyzed" domain="[('state','=','analyzed')]"/>
+                <separator/>
+                <group expand="0" string="Group By">
+                    <filter string="State" name="group_state" context="{'group_by':'state'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="view_tapis_design_kanban" model="ir.ui.view">
+        <field name="name">wool.design.kanban</field>
+        <field name="model">wool.design</field>
+        <field name="arch" type="xml">
+            <kanban>
+                <field name="name"/>
+                <field name="code"/>
+                <field name="state"/>
+                <field name="image_html"/>
+                <field name="total_percentage"/>
+                <templates>
+                    <t t-name="kanban-box">
+                        <div class="oe_kanban_global_click">
+                            <div class="o_kanban_image">
+                                <t t-if="record.image_html.raw_value">
+                                    <span t-raw="record.image_html.raw_value"/>
+                                </t>
+                                <t t-else="">
+                                    <img t-att-src="'/web/static/src/img/default_image.png'" style="max-width:100px;max-height:100px;"/>
+                                </t>
+                            </div>
+                            <div class="oe_kanban_details">
+                                <strong><field name="name"/></strong>
+                                <div><field name="code"/></div>
+                                <div>Area: <field name="surface_m2"/> m²</div>
+                                <div>Weight: <field name="estimated_weight_kg"/> kg</div>
+                                <div>%: <field name="total_percentage"/>%</div>
+                                <field name="state" widget="badge"/>
+                            </div>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
+    <record id="view_tapis_design_pivot" model="ir.ui.view">
+        <field name="name">wool.design.pivot</field>
+        <field name="model">wool.design</field>
+        <field name="arch" type="xml">
+            <pivot string="Design Analysis">
+                <field name="surface_m2" type="measure"/>
+                <field name="estimated_weight_kg" type="measure"/>
+                <field name="total_percentage" type="measure"/>
+                <field name="state" type="col"/>
+            </pivot>
+        </field>
+    </record>
+
+    <record id="view_tapis_design_graph" model="ir.ui.view">
+        <field name="name">wool.design.graph</field>
+        <field name="model">wool.design</field>
+        <field name="arch" type="xml">
+            <graph string="Design Weight Graph">
+                <field name="estimated_weight_kg" type="measure"/>
+                <field name="surface_m2" type="measure"/>
+            </graph>
+        </field>
+    </record>
+
+    <record id="action_tapis_design" model="ir.actions.act_window">
+        <field name="name">Designs</field>
+        <field name="res_model">wool.design</field>
+        <field name="view_mode">kanban,tree,form,pivot,graph</field>
+        <field name="search_view_id" ref="view_tapis_design_search"/>
+    </record>
+</odoo>
+
+

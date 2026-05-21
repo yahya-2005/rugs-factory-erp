@@ -1,0 +1,6 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_wool_design_user,wool.design.user,model_wool_design,group_design_user,1,1,1,0
+access_wool_design_manager,wool.design.manager,model_wool_design,group_design_manager,1,1,1,1
+access_wool_design_color_line_user,wool.design.color.line.user,model_wool_design_color_line,group_design_user,1,1,1,0
+access_wool_design_color_line_manager,wool.design.color.line.manager,model_wool_design_color_line,group_design_manager,1,1,1,1
+

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <menuitem id="menu_wool_stock_root" name="Wool Stock"
+              sequence="80" web_icon="is_wool_stock,static/description/icon.png"/>
+
+    <menuitem id="menu_wool_colors" name="Wool Colors"
+              parent="menu_wool_stock_root"
+              action="action_wool_color"
+              sequence="10"/>
+
+    <menuitem id="menu_wool_stock_moves" name="Stock Movements"
+              parent="menu_wool_stock_root"
+              action="action_wool_stock_move"
+              sequence="20"/>
+
+    <menuitem id="menu_wool_stock_adjustments" name="Stock Adjustments"
+              parent="menu_wool_stock_root"
+              action="action_wool_stock_adjustment"
+              sequence="30"/>
+</odoo>

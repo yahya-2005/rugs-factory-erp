@@ -172,9 +172,27 @@ class TapisInvoice(models.Model):
             'target': 'current',
         }
 
+    def _get_customer_name(self):
+        return self.customer_id.name if self.customer_id else False
+
     def _compute_document_count(self):
         for rec in self:
             rec.document_count = self.env['tapis.document'].search_count([('invoice_id', '=', rec.id)])
+
+    def action_send_overdue_reminder(self):
+        self.ensure_one()
+        template = self.env.ref('tapis_erp.email_template_invoice_overdue', False)
+        if template:
+            template.send_mail(self.id, force_send=True)
+        self.message_post(body=_("Overdue reminder email sent for invoice %s.") % self.name)
+
+    @api.model
+    def cron_send_overdue_reminders(self):
+        now = fields.Datetime.now()
+        overdue = self.search([('state', '=', 'posted'), ('due_date', '<', now), ('amount_due', '>', 0)])
+        for inv in overdue:
+            inv.action_send_overdue_reminder()
+        return len(overdue)
 
     def action_view_documents(self):
         self.ensure_one()

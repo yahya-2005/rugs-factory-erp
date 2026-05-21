@@ -152,6 +152,9 @@ class TapisPurchase(models.Model):
             else:
                 rec.state = 'approved'
                 rec.message_post(body=_("Purchase order approved."))
+                template = self.env.ref('tapis_erp.email_template_purchase_created', False)
+                if template:
+                    template.send_mail(rec.id, force_send=True)
 
     def action_approve(self):
         for rec in self:
@@ -160,6 +163,9 @@ class TapisPurchase(models.Model):
             rec.state = 'approved'
             rec.message_post(body=_("Purchase order approved by %s.") % self.env.user.name)
             rec._trigger_communication('PURCHASE_APPROVED')
+            template = self.env.ref('tapis_erp.email_template_purchase_created', False)
+            if template:
+                template.send_mail(rec.id, force_send=True)
 
     def action_reject(self):
         for rec in self:
