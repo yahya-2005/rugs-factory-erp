@@ -1,0 +1,428 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_tapis_dw_config_form" model="ir.ui.view">
+        <field name="name">tapis.dw.config.form</field>
+        <field name="model">tapis.dw.config</field>
+        <field name="arch" type="xml">
+            <form string="Data Warehouse Configuration">
+                <header>
+                    <field name="state" widget="statusbar" statusbar_visible="draft,active,paused"/>
+                    <button name="action_run_etl" string="Run ETL" type="object"
+                            groups="tapis_erp.group_bi_data_engineer"
+                            class="btn-primary" states="active"/>
+                    <button name="action_rebuild_warehouse" string="Rebuild Warehouse" type="object"
+                            groups="tapis_erp.group_bi_data_engineer"
+                            confirm="This will delete all warehouse data and reload. Continue?"
+                            class="btn-danger" states="active"/>
+                    <button name="action_export_csv" string="Export CSV" type="object"
+                            groups="tapis_erp.group_bi_analyst"/>
+                    <button name="action_export_excel" string="Export Excel" type="object"
+                            groups="tapis_erp.group_bi_analyst"/>
+                </header>
+                <sheet>
+                    <group>
+                        <group string="General">
+                            <field name="name" required="1"/>
+                            <field name="code" required="1"/>
+                            <field name="active"/>
+                            <field name="company_id" groups="base.group_multi_company"/>
+                        </group>
+                        <group string="Extraction Settings">
+                            <field name="incremental_load"/>
+                            <field name="last_etl_datetime"/>
+                            <field name="retention_months"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Configuration">
+                            <group string="Scheduling">
+                                <field name="auto_run"/>
+                                <field name="cron_interval_number"/>
+                                <field name="cron_interval_type"/>
+                            </group>
+                            <group string="Warehouse Status">
+                                <field name="rows_in_warehouse"/>
+                                <field name="largest_fact_table"/>
+                                <field name="data_freshness"/>
+                                <field name="last_run_id"/>
+                                <field name="last_run_status"/>
+                                <field name="last_run_duration"/>
+                            </group>
+                        </page>
+                        <page string="ETL History">
+                            <field name="etl_run_ids" nolabel="1">
+                                <tree>
+                                    <field name="start_datetime"/>
+                                    <field name="end_datetime"/>
+                                    <field name="duration_seconds" widget="float_time"/>
+                                    <field name="status" decoration-danger="status == 'failed'"
+                                            decoration-success="status == 'success'"
+                                            decoration-warning="status == 'partial'"/>
+                                    <field name="rows_extracted"/>
+                                    <field name="rows_transformed"/>
+                                    <field name="rows_loaded"/>
+                                    <field name="error_message" optional="show"/>
+                                </tree>
+                            </field>
+                        </page>
+                        <page string="Metrics">
+                        </page>
+                        <page string="Notes">
+                            <field name="name" invisible="1"/>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_tapis_dw_config_tree" model="ir.ui.view">
+        <field name="name">tapis.dw.config.tree</field>
+        <field name="model">tapis.dw.config</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name"/>
+                <field name="code"/>
+                <field name="state" widget="badge"/>
+                <field name="data_freshness"/>
+                <field name="etl_run_count"/>
+                <field name="rows_in_warehouse"/>
+                <field name="active"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_tapis_dw_config_search" model="ir.ui.view">
+        <field name="name">tapis.dw.config.search</field>
+        <field name="model">tapis.dw.config</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name"/>
+                <field name="code"/>
+                <filter string="Active" name="active" domain="[('active','=',True)]"/>
+                <filter string="Paused" name="paused" domain="[('state','=','paused')]"/>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_tapis_dw_config" model="ir.actions.act_window">
+        <field name="name">Warehouse Configuration</field>
+        <field name="res_model">tapis.dw.config</field>
+        <field name="view_mode">tree,form</field>
+        <field name="search_view_id" ref="view_tapis_dw_config_search"/>
+        <field name="help" type="html">
+            <p>Configure your data warehouse and ETL pipeline here.</p>
+            <p>Set up extraction settings, scheduling, and run the ETL process.</p>
+        </field>
+    </record>
+
+    <!-- Dimension Views -->
+    <record id="view_tapis_dw_dim_product_tree" model="ir.ui.view">
+        <field name="name">tapis.dw.dim_product.tree</field>
+        <field name="model">tapis.dw.dim_product</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="surrogate_key"/>
+                <field name="name"/>
+                <field name="code"/>
+                <field name="category"/>
+                <field name="standard_cost"/>
+                <field name="is_current"/>
+                <field name="valid_from"/>
+                <field name="valid_to"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_tapis_dw_dim_product_form" model="ir.ui.view">
+        <field name="name">tapis.dw.dim_product.form</field>
+        <field name="model">tapis.dw.dim_product</field>
+        <field name="arch" type="xml">
+            <form string="Product Dimension">
+                <sheet>
+                    <group>
+                        <field name="surrogate_key"/>
+                        <field name="source_id"/>
+                        <field name="name"/>
+                        <field name="code"/>
+                        <field name="category"/>
+                        <field name="tags"/>
+                        <field name="standard_cost"/>
+                        <field name="list_price"/>
+                        <field name="active"/>
+                        <field name="is_current"/>
+                        <field name="valid_from"/>
+                        <field name="valid_to"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_tapis_dw_dim_customer_tree" model="ir.ui.view">
+        <field name="name">tapis.dw.dim_customer.tree</field>
+        <field name="model">tapis.dw.dim_customer</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="surrogate_key"/>
+                <field name="name"/>
+                <field name="email"/>
+                <field name="segment"/>
+                <field name="is_current"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_tapis_dw_dim_company_tree" model="ir.ui.view">
+        <field name="name">tapis.dw.dim_company.tree</field>
+        <field name="model">tapis.dw.dim_company</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="surrogate_key"/>
+                <field name="name"/>
+                <field name="currency"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_tapis_dw_dim_supplier_tree" model="ir.ui.view">
+        <field name="name">tapis.dw.dim_supplier.tree</field>
+        <field name="model">tapis.dw.dim_supplier</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="surrogate_key"/>
+                <field name="name"/>
+                <field name="rating"/>
+                <field name="is_current"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_tapis_dw_dim_user_tree" model="ir.ui.view">
+        <field name="name">tapis.dw.dim_user.tree</field>
+        <field name="model">tapis.dw.dim_user</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="surrogate_key"/>
+                <field name="name"/>
+                <field name="login"/>
+                <field name="role"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_tapis_dw_dim_resource_tree" model="ir.ui.view">
+        <field name="name">tapis.dw.dim_resource.tree</field>
+        <field name="model">tapis.dw.dim_resource</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="surrogate_key"/>
+                <field name="name"/>
+                <field name="resource_type"/>
+                <field name="cost_per_hour"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_tapis_dw_dim_date_tree" model="ir.ui.view">
+        <field name="name">tapis.dw.dim_date.tree</field>
+        <field name="model">tapis.dw.dim_date</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="date_key"/>
+                <field name="full_date"/>
+                <field name="year"/>
+                <field name="quarter"/>
+                <field name="month"/>
+                <field name="month_name"/>
+                <field name="day"/>
+                <field name="day_name"/>
+                <field name="is_weekend"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- Dimension Actions -->
+    <record id="action_tapis_dw_dim_product" model="ir.actions.act_window">
+        <field name="name">Product Dimensions</field>
+        <field name="res_model">tapis.dw.dim_product</field>
+        <field name="view_mode">tree,form</field>
+        <field name="context">{'create': False, 'edit': False}</field>
+    </record>
+
+    <record id="action_tapis_dw_dim_customer" model="ir.actions.act_window">
+        <field name="name">Customer Dimensions</field>
+        <field name="res_model">tapis.dw.dim_customer</field>
+        <field name="view_mode">tree,form</field>
+        <field name="context">{'create': False, 'edit': False}</field>
+    </record>
+
+    <record id="action_tapis_dw_dim_company" model="ir.actions.act_window">
+        <field name="name">Company Dimensions</field>
+        <field name="res_model">tapis.dw.dim_company</field>
+        <field name="view_mode">tree,form</field>
+        <field name="context">{'create': False, 'edit': False}</field>
+    </record>
+
+    <record id="action_tapis_dw_dim_supplier" model="ir.actions.act_window">
+        <field name="name">Supplier Dimensions</field>
+        <field name="res_model">tapis.dw.dim_supplier</field>
+        <field name="view_mode">tree,form</field>
+        <field name="context">{'create': False, 'edit': False}</field>
+    </record>
+
+    <record id="action_tapis_dw_dim_user" model="ir.actions.act_window">
+        <field name="name">User Dimensions</field>
+        <field name="res_model">tapis.dw.dim_user</field>
+        <field name="view_mode">tree,form</field>
+        <field name="context">{'create': False, 'edit': False}</field>
+    </record>
+
+    <record id="action_tapis_dw_dim_resource" model="ir.actions.act_window">
+        <field name="name">Resource Dimensions</field>
+        <field name="res_model">tapis.dw.dim_resource</field>
+        <field name="view_mode">tree,form</field>
+        <field name="context">{'create': False, 'edit': False}</field>
+    </record>
+
+    <record id="action_tapis_dw_dim_date" model="ir.actions.act_window">
+        <field name="name">Date Dimensions</field>
+        <field name="res_model">tapis.dw.dim_date</field>
+        <field name="view_mode">tree,form</field>
+        <field name="context">{'create': False, 'edit': False}</field>
+    </record>
+
+    <!-- Fact Views -->
+    <record id="view_tapis_dw_fact_sales_tree" model="ir.ui.view">
+        <field name="name">tapis.dw.fact_sales.tree</field>
+        <field name="model">tapis.dw.fact_sales</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="date_key"/>
+                <field name="product_key"/>
+                <field name="customer_key"/>
+                <field name="revenue"/>
+                <field name="cost"/>
+                <field name="gross_profit"/>
+                <field name="margin_percent"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_tapis_dw_fact_inventory_tree" model="ir.ui.view">
+        <field name="name">tapis.dw.fact_inventory.tree</field>
+        <field name="model">tapis.dw.fact_inventory</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="date_key"/>
+                <field name="product_key"/>
+                <field name="on_hand_qty"/>
+                <field name="available_qty"/>
+                <field name="inventory_value"/>
+                <field name="stockout_risk"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_tapis_dw_fact_production_tree" model="ir.ui.view">
+        <field name="name">tapis.dw.fact_production.tree</field>
+        <field name="model">tapis.dw.fact_production</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="date_key"/>
+                <field name="product_key"/>
+                <field name="resource_key"/>
+                <field name="produced_qty"/>
+                <field name="efficiency_percent"/>
+                <field name="delay_days"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_tapis_dw_fact_finance_tree" model="ir.ui.view">
+        <field name="name">tapis.dw.fact_finance.tree</field>
+        <field name="model">tapis.dw.fact_finance</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="date_key"/>
+                <field name="customer_key"/>
+                <field name="revenue"/>
+                <field name="expenses"/>
+                <field name="net_profit"/>
+                <field name="overdue_amount"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_tapis_dw_fact_quality_tree" model="ir.ui.view">
+        <field name="name">tapis.dw.fact_quality.tree</field>
+        <field name="model">tapis.dw.fact_quality</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="date_key"/>
+                <field name="product_key"/>
+                <field name="inspections_count"/>
+                <field name="defects_count"/>
+                <field name="defect_rate"/>
+                <field name="quality_score"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_tapis_dw_fact_support_tree" model="ir.ui.view">
+        <field name="name">tapis.dw.fact_support.tree</field>
+        <field name="model">tapis.dw.fact_support</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="date_key"/>
+                <field name="customer_key"/>
+                <field name="tickets_count"/>
+                <field name="resolution_hours"/>
+                <field name="satisfaction_score"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- Fact Actions -->
+    <record id="action_tapis_dw_fact_sales" model="ir.actions.act_window">
+        <field name="name">Sales Facts</field>
+        <field name="res_model">tapis.dw.fact_sales</field>
+        <field name="view_mode">tree</field>
+        <field name="context">{'create': False, 'edit': False}</field>
+    </record>
+
+    <record id="action_tapis_dw_fact_inventory" model="ir.actions.act_window">
+        <field name="name">Inventory Facts</field>
+        <field name="res_model">tapis.dw.fact_inventory</field>
+        <field name="view_mode">tree</field>
+        <field name="context">{'create': False, 'edit': False}</field>
+    </record>
+
+    <record id="action_tapis_dw_fact_production" model="ir.actions.act_window">
+        <field name="name">Production Facts</field>
+        <field name="res_model">tapis.dw.fact_production</field>
+        <field name="view_mode">tree</field>
+        <field name="context">{'create': False, 'edit': False}</field>
+    </record>
+
+    <record id="action_tapis_dw_fact_finance" model="ir.actions.act_window">
+        <field name="name">Finance Facts</field>
+        <field name="res_model">tapis.dw.fact_finance</field>
+        <field name="view_mode">tree</field>
+        <field name="context">{'create': False, 'edit': False}</field>
+    </record>
+
+    <record id="action_tapis_dw_fact_quality" model="ir.actions.act_window">
+        <field name="name">Quality Facts</field>
+        <field name="res_model">tapis.dw.fact_quality</field>
+        <field name="view_mode">tree</field>
+        <field name="context">{'create': False, 'edit': False}</field>
+    </record>
+
+    <record id="action_tapis_dw_fact_support" model="ir.actions.act_window">
+        <field name="name">Support Facts</field>
+        <field name="res_model">tapis.dw.fact_support</field>
+        <field name="view_mode">tree</field>
+        <field name="context">{'create': False, 'edit': False}</field>
+    </record>
+</odoo>

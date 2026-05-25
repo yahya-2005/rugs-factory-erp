@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="action_report_etl_execution" model="ir.actions.report">
+        <field name="name">ETL Execution Report</field>
+        <field name="model">tapis.etl.run</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">tapis_erp.report_etl_execution</field>
+        <field name="report_file">tapis_erp.report_etl_execution</field>
+        <field name="binding_model_id" ref="model_tapis_etl_run"/>
+        <field name="binding_type">report</field>
+        <field name="paperformat_id" ref="base.paperformat_euro"/>
+    </record>
+
+    <record id="action_report_data_warehouse_summary" model="ir.actions.report">
+        <field name="name">Data Warehouse Summary</field>
+        <field name="model">tapis.dw.config</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">tapis_erp.report_data_warehouse_summary</field>
+        <field name="report_file">tapis_erp.report_data_warehouse_summary</field>
+        <field name="binding_model_id" ref="model_tapis_dw_config"/>
+        <field name="binding_type">report</field>
+        <field name="paperformat_id" ref="base.paperformat_euro"/>
+    </record>
+</odoo>

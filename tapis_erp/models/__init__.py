@@ -79,3 +79,6 @@ from . import webhook_subscription
 from . import integration_queue
 from . import mobile_device
 from . import kpi_snapshot
+from . import data_warehouse
+from . import dimensions
+from . import facts

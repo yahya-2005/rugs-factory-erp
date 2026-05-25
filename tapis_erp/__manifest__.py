@@ -168,6 +168,12 @@
         'data/mobile_demo.xml',
         'data/email_templates.xml',
         'data/mail_cron.xml',
+        'data/data_warehouse_demo.xml',
+        'data/date_dimension_generator.xml',
+        'views/data_warehouse_views.xml',
+        'views/etl_run_views.xml',
+        'report/data_warehouse_report.xml',
+        'report/data_warehouse_template.xml',
     ],
     'demo': [
         'demo/demo_data.xml',

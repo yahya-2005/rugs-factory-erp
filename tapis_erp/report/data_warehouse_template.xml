@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="report_etl_execution">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="doc">
+                <t t-call="web.internal_layout">
+                    <div class="page">
+                        <h2>ETL Execution Report</h2>
+                        <table class="table table-bordered">
+                            <tr>
+                                <td><strong>Configuration</strong></td>
+                                <td t-esc="doc.config_id.name"/>
+                            </tr>
+                            <tr>
+                                <td><strong>Start Time</strong></td>
+                                <td t-esc="doc.start_datetime"/>
+                            </tr>
+                            <tr>
+                                <td><strong>End Time</strong></td>
+                                <td t-esc="doc.end_datetime"/>
+                            </tr>
+                            <tr>
+                                <td><strong>Duration</strong></td>
+                                <td t-esc="doc.duration_seconds"/> seconds
+                            </tr>
+                            <tr>
+                                <td><strong>Status</strong></td>
+                                <td><span t-esc="doc.status" t-attf-class="badge badge-#{doc.status == 'success' and 'success' or doc.status == 'failed' and 'danger' or 'warning'}"/></td>
+                            </tr>
+                        </table>
+                        <h3>Processing Summary</h3>
+                        <table class="table table-bordered">
+                            <tr>
+                                <th>Stage</th>
+                                <th>Rows</th>
+                            </tr>
+                            <tr>
+                                <td>Extracted</td>
+                                <td t-esc="doc.rows_extracted"/>
+                            </tr>
+                            <tr>
+                                <td>Transformed</td>
+                                <td t-esc="doc.rows_transformed"/>
+                            </tr>
+                            <tr>
+                                <td>Loaded</td>
+                                <td t-esc="doc.rows_loaded"/>
+                            </tr>
+                        </table>
+                        <p t-if="doc.error_message">
+                            <strong>Error:</strong>
+                            <span t-esc="doc.error_message"/>
+                        </p>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+
+    <template id="report_data_warehouse_summary">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="doc">
+                <t t-call="web.internal_layout">
+                    <div class="page">
+                        <h2>Data Warehouse Summary</h2>
+                        <h3 t-esc="doc.name"/>
+                        <table class="table table-bordered">
+                            <tr>
+                                <td><strong>Code</strong></td>
+                                <td t-esc="doc.code"/>
+                            </tr>
+                            <tr>
+                                <td><strong>Status</strong></td>
+                                <td t-esc="doc.state"/>
+                            </tr>
+                            <tr>
+                                <td><strong>Total Rows</strong></td>
+                                <td t-esc="doc.rows_in_warehouse"/>
+                            </tr>
+                            <tr>
+                                <td><strong>Largest Table</strong></td>
+                                <td t-esc="doc.largest_fact_table"/>
+                            </tr>
+                            <tr>
+                                <td><strong>Data Freshness</strong></td>
+                                <td t-esc="doc.data_freshness"/>
+                            </tr>
+                            <tr>
+                                <td><strong>Last ETL Duration</strong></td>
+                                <td t-esc="doc.last_run_duration"/> seconds
+                            </tr>
+                            <tr>
+                                <td><strong>Last ETL Status</strong></td>
+                                <td t-esc="doc.last_run_status or 'N/A'"/>
+                            </tr>
+                            <tr>
+                                <td><strong>ETL Runs</strong></td>
+                                <td t-esc="doc.etl_run_count"/>
+                            </tr>
+                        </table>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+</odoo>

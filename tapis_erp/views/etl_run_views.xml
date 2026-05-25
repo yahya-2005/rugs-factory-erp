@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_tapis_etl_run_form" model="ir.ui.view">
+        <field name="name">tapis.etl.run.form</field>
+        <field name="model">tapis.etl.run</field>
+        <field name="arch" type="xml">
+            <form string="ETL Run">
+                <sheet>
+                    <group>
+                        <field name="config_id"/>
+                        <field name="start_datetime"/>
+                        <field name="end_datetime"/>
+                        <field name="duration_seconds" widget="float_time"/>
+                        <field name="status" widget="badge"
+                                decoration-danger="status == 'failed'"
+                                decoration-success="status == 'success'"
+                                decoration-warning="status == 'partial'"/>
+                    </group>
+                    <group string="Row Counts">
+                        <field name="rows_extracted"/>
+                        <field name="rows_transformed"/>
+                        <field name="rows_loaded"/>
+                    </group>
+                    <field name="error_message" nolabel="1"
+                           attrs="{'invisible': [('error_message', '=', False)]}"/>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_tapis_etl_run_tree" model="ir.ui.view">
+        <field name="name">tapis.etl.run.tree</field>
+        <field name="model">tapis.etl.run</field>
+        <field name="arch" type="xml">
+            <tree decoration-danger="status == 'failed'" decoration-success="status == 'success'">
+                <field name="config_id"/>
+                <field name="start_datetime"/>
+                <field name="duration_seconds" widget="float_time"/>
+                <field name="status" widget="badge"/>
+                <field name="rows_extracted" sum="Total"/>
+                <field name="rows_loaded" sum="Total"/>
+                <field name="error_message"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_tapis_etl_run_search" model="ir.ui.view">
+        <field name="name">tapis.etl.run.search</field>
+        <field name="model">tapis.etl.run</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="config_id"/>
+                <filter string="Success" name="success" domain="[('status','=','success')]"/>
+                <filter string="Failed" name="failed" domain="[('status','=','failed')]"/>
+                <separator/>
+                <filter string="Today" name="today"
+                        domain="[('start_datetime','&gt;=', context_today().strftime('%%Y-%%m-%%d 00:00:00'))]"/>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_tapis_etl_run" model="ir.actions.act_window">
+        <field name="name">ETL Runs</field>
+        <field name="res_model">tapis.etl.run</field>
+        <field name="view_mode">tree,form</field>
+        <field name="search_view_id" ref="view_tapis_etl_run_search"/>
+        <field name="help" type="html">
+            <p>View the history of ETL pipeline executions.</p>
+            <p>Monitor success, failures, and rows processed.</p>
+        </field>
+    </record>
+
+    <!-- Data Warehouse Menu Items -->
+    <menuitem id="menu_dw_root" name="Data Warehouse"
+              parent="menu_dashboard_root" sequence="30"
+              groups="tapis_erp.group_bi_data_engineer,tapis_erp.group_bi_analyst"/>
+
+    <menuitem id="menu_dw_config" name="Warehouse Configuration"
+              parent="menu_dw_root" action="action_tapis_dw_config"
+              sequence="10" groups="tapis_erp.group_bi_data_engineer"/>
+
+    <menuitem id="menu_etl_runs" name="ETL Runs"
+              parent="menu_dw_root" action="action_tapis_etl_run"
+              sequence="20" groups="tapis_erp.group_bi_data_engineer"/>
+
+    <menuitem id="menu_dw_dimensions" name="Dimensions"
+              parent="menu_dw_root" sequence="30"
+              groups="tapis_erp.group_bi_analyst"/>
+
+    <menuitem id="menu_dw_dim_date" name="Date"
+              parent="menu_dw_dimensions" action="action_tapis_dw_dim_date"
+              sequence="10"/>
+    <menuitem id="menu_dw_dim_product" name="Products"
+              parent="menu_dw_dimensions" action="action_tapis_dw_dim_product"
+              sequence="20"/>
+    <menuitem id="menu_dw_dim_customer" name="Customers"
+              parent="menu_dw_dimensions" action="action_tapis_dw_dim_customer"
+              sequence="30"/>
+    <menuitem id="menu_dw_dim_company" name="Companies"
+              parent="menu_dw_dimensions" action="action_tapis_dw_dim_company"
+              sequence="40"/>
+    <menuitem id="menu_dw_dim_supplier" name="Suppliers"
+              parent="menu_dw_dimensions" action="action_tapis_dw_dim_supplier"
+              sequence="50"/>
+    <menuitem id="menu_dw_dim_user" name="Users"
+              parent="menu_dw_dimensions" action="action_tapis_dw_dim_user"
+              sequence="60"/>
+    <menuitem id="menu_dw_dim_resource" name="Resources"
+              parent="menu_dw_dimensions" action="action_tapis_dw_dim_resource"
+              sequence="70"/>
+
+    <menuitem id="menu_dw_facts" name="Facts"
+              parent="menu_dw_root" sequence="40"
+              groups="tapis_erp.group_bi_analyst"/>
+
+    <menuitem id="menu_dw_fact_sales" name="Sales"
+              parent="menu_dw_facts" action="action_tapis_dw_fact_sales"
+              sequence="10"/>
+    <menuitem id="menu_dw_fact_inventory" name="Inventory"
+              parent="menu_dw_facts" action="action_tapis_dw_fact_inventory"
+              sequence="20"/>
+    <menuitem id="menu_dw_fact_production" name="Production"
+              parent="menu_dw_facts" action="action_tapis_dw_fact_production"
+              sequence="30"/>
+    <menuitem id="menu_dw_fact_finance" name="Finance"
+              parent="menu_dw_facts" action="action_tapis_dw_fact_finance"
+              sequence="40"/>
+    <menuitem id="menu_dw_fact_quality" name="Quality"
+              parent="menu_dw_facts" action="action_tapis_dw_fact_quality"
+              sequence="50"/>
+    <menuitem id="menu_dw_fact_support" name="Support"
+              parent="menu_dw_facts" action="action_tapis_dw_fact_support"
+              sequence="60"/>
+</odoo>

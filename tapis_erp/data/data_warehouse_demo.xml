@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+        <record id="dw_config_default" model="tapis.dw.config">
+            <field name="name">Default Warehouse</field>
+            <field name="code">DW_DEFAULT</field>
+            <field name="active">True</field>
+            <field name="incremental_load">True</field>
+            <field name="retention_months">60</field>
+            <field name="auto_run">True</field>
+            <field name="cron_interval_number">1</field>
+            <field name="cron_interval_type">days</field>
+            <field name="state">active</field>
+        </record>
+    </data>
+</odoo>

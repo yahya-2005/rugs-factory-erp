@@ -42,11 +42,23 @@
             <field name="implied_ids" eval="[(4, ref('group_tapis_user'))]"/>
         </record>
 
-        <record id="group_multicompany_manager" model="res.groups">
-            <field name="name">Multi-Company Manager</field>
-            <field name="category_id" ref="base.module_category_custom"/>
-            <field name="implied_ids" eval="[(4, ref('group_security_manager'))]"/>
-        </record>
+    <record id="group_multicompany_manager" model="res.groups">
+        <field name="name">Multi-Company Manager</field>
+        <field name="category_id" ref="base.module_category_custom"/>
+        <field name="implied_ids" eval="[(4, ref('group_security_manager'))]"/>
+    </record>
+
+    <record id="group_bi_data_engineer" model="res.groups">
+        <field name="name">Data Engineer</field>
+        <field name="category_id" ref="base.module_category_custom"/>
+        <field name="implied_ids" eval="[(4, ref('group_tapis_manager'))]"/>
+    </record>
+
+    <record id="group_bi_analyst" model="res.groups">
+        <field name="name">BI Analyst</field>
+        <field name="category_id" ref="base.module_category_custom"/>
+        <field name="implied_ids" eval="[(4, ref('group_tapis_user'))]"/>
+    </record>
 
         <record id="group_forecast_manager" model="res.groups">
             <field name="name">Forecast Manager</field>
